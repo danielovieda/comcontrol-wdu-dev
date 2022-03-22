@@ -1,0 +1,211 @@
+<ngx-spinner></ngx-spinner>
+
+<div class="row d-flex justify-content-center mt-2" *ngIf="editMode && notFound">
+    <div class="col w-50 align-self-center">
+        <div class="alert alert-danger w-50 text-center border border-danger d-flex align-items-center">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div class="ms-2">
+                Vehicle <b>{{ editVehicle }}</b> not found.
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row m-3">
+    <div class="col-md">
+        <form [formGroup]="addVehicle">
+
+
+
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                      Vehicle Information
+                    </button>
+                  </h2>
+                  <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body">
+
+                        <div class="form-group mb-2">
+                            <label for="identifier">Identifier</label>
+                            <input type="text" class="form-control" id="identifier" aria-describedby="Identifier" 
+                            formControlName="identifier">
+                            <small>This will be the text or number shown at first glance in the dashboard.</small>
+                            
+                        </div>
+
+                        <div class="form-group mb-2">
+                            <label for="identifier">Status <span style="color: red">(required)</span></label>
+                            <select class="form-select form-select-lg mb-3" formControlName="status">
+                                
+                                <option value="active" selected>In Service</option>
+                                <option value="flag">In Service (Issue)</option>
+                                <option value="oos">Out of Service</option>
+                                <option value="inactive">Inactive</option>
+                                <option value="pm">PM</option>
+                                <option value="spare">Spare</option>
+                                
+                                
+                              </select>
+                            
+                        </div>
+
+                        <div class="form-group mb-2">
+                            <label for="year">Current Location <span style="color: red">(required)</span></label>
+                            <input type="text" class="form-control" id="year" aria-describedby="Current Location" 
+                            formControlName="currentLocation">
+                        </div>
+
+                        <div formGroupName="vehicle">
+
+                            <div class="form-group mb-2">
+                                <label for="year">Year</label>
+                                <input type="text" class="form-control" id="year" aria-describedby="Vehicle Year" 
+                                formControlName="year">
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <label for="make">Make</label>
+                                <input type="text" class="form-control" id="make" aria-describedby="Vehicle Make" 
+                                formControlName="make">
+                            </div>
+                
+                            <div class="form-group mb-2">
+                                <label for="model">Model</label>
+                                <input type="text" class="form-control" id="model" 
+                                formControlName="model">
+                                <small>Example: "CX45"</small>
+                            </div>
+                
+                            <div class="form-group mb-2">
+                                <label for="seatCount">Seat Count</label>
+                                <input type="text" class="form-control" id="seatCount" 
+                                formControlName="seatCount">
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <label for="length">Length</label>
+                                <input type="text" class="form-control" id="length" 
+                                formControlName="length">
+                                <small>Length in feet.</small>
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <label for="number">Vehicle Number <span style="color: red">(required)</span></label>
+                                <input type="text" class="form-control" id="number" formControlName="number" name="number" required
+                                >
+                                <small>Official vehicle number indicated on the vehicle itself. Example: "604". This number cannot be changed after vehicle is created.</small>
+                                
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <label for="vin">VIN</label>
+                                <input type="text" class="form-control" id="vin" formControlName="vin">
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <label for="license">License Plate</label>
+                                <input type="text" class="form-control" id="license" formControlName="license">
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <label for="license">Maintenance Number</label>
+                                <input type="text" class="form-control" id="maintId" formControlName="maintId">
+                            </div>
+
+                            
+
+                        </div>
+                    
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                      Default Information
+                    </button>
+                  </h2>
+                  <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                    <div class="accordion-body">
+
+
+                        <div class="form-group mb-2">
+                            <label for="defaultDriver">Default Driver</label>
+                            <input type="text" class="form-control" id="defaultDriver" formControlName="defaultDriver">
+                        </div>
+
+                        <div class="form-group mb-2">
+                            <label for="defaultRoute">Default Route</label>
+                            <select class="form-select form-select-lg mb-3" formControlName="defaultRouteId" (change)="selectedValue($event)">
+                                <option value="" selected></option>       
+                                <option  *ngFor="let route of routes, let i = index" [value]="route._id"> {{ route.routeShortname }} ({{ route.routeName }})</option>
+                                
+                              </select>
+                        </div>
+
+                        <div class="form-group mb-2">
+                            <label for="defaultYard">Default Yard</label>
+                            <input type="text" class="form-control" id="defaultYard" formControlName="defaultYard">
+                        </div>
+                    
+                    
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                        Additional Information
+                      </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                      <div class="accordion-body" formGroupName="vehicle">
+                        <p class="fs-2">Additional Information</p>
+                        
+                        <ng-container formArrayName="additionalId">
+                            <div class="form-group mb-2" *ngFor="let _ of additionalId.controls; index as i">
+                                <div [formGroupName]="i">
+                                    <hr>
+                                    
+                                    <label for="additionalId{{ i }}">Label</label>
+                                                      
+                                    <input type="text" class="form-control" id="additionalId{{ i }}" formControlName="label">
+                                    
+                                    <label for="additionalId{{ i }}">ID Number</label>
+                                    
+                                    <input type="text" class="form-control" id="additionalId{{ i }}" formControlName="number">
+                                    
+
+                                </div>
+                            </div>
+                        </ng-container>
+  
+                        <button class="btn btn-primary" type="button" (click)="addMoreIds()"><i class="fas fa-plus-circle fa-lg"></i></button>
+                      
+                      </div>
+                    </div>
+                  </div>
+              </div>
+
+
+              <input type="text" id="_id" formControlName="_id" hidden>
+
+           
+                
+
+            
+            <div class="text-center mt-2">
+                <button type="submit" class="btn shadow btn-lg" (click)="submit()" [class]="deleteMode? 'btn-danger':'btn-primary'"><i class="fas fa-paper-plane" *ngIf="!deleteMode"></i>
+                    <i class="far fa-trash-alt" *ngIf="deleteMode"></i>
+                     <span *ngIf="editMode"> Update </span><span *ngIf="!editMode"> Add Vehicle</span></button>
+            </div>
+
+            <div class="text-center mt-2" *ngIf="editMode && !deleteMode">
+                <button type="submit" class="btn btn-danger shadow btn-lg" (click)="delete()"><i class="far fa-trash-alt"></i> Delete</button>
+            </div>
+
+        </form>
+    </div>
+</div>

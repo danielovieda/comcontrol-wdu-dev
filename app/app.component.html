@@ -1,0 +1,17 @@
+<div class="container" *ngIf="loggedIn || debug">
+
+      <app-nav></app-nav>
+
+     
+    
+</div>
+
+<div class="container" *ngIf="!loggedIn && !debug">
+      <div class="row">
+            <div class="col mx-auto">
+                  <p>You must be logged in to use the application.</p>
+                  <p><button class="btn btn-primary" (click)="triggerLogin()">Log In</button></p>
+            </div>
+      </div>
+
+</div>

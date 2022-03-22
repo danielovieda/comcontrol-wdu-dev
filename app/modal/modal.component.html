@@ -1,0 +1,51 @@
+<!-- <h1 mat-dialog-title>You are from {{data.name}}</h1>
+
+<div mat-dialog-content>
+
+    <p>What's your favorite city?</p>
+    <mat-form-field>
+        <mat-label>Favorite City</mat-label>
+        <input matInput>
+    </mat-form-field>
+
+    <p>Your favorite food?</p>
+    <mat-form-field>
+        <mat-label>Favorite Food</mat-label>
+        <input matInput>
+    </mat-form-field>
+
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Get Food</button>
+    <button mat-button [mat-dialog-close]="data.city" cdkFocusInitial>Get City</button>
+</div> -->
+
+
+<h1 mat-dialog-title>Change Driver</h1>
+<form [formGroup]="changeDriverForm">
+
+    <div mat-dialog-content>
+
+        
+        <mat-form-field>
+            <mat-label>New Driver</mat-label>
+            <mat-select formControlName="driverId" (selectionChange)="selectedValue($event)">
+                <mat-option value="" selected>Remove Driver</mat-option>
+                <mat-option *ngFor="let driver of data.driver, let i = index" [value]="driver._id">
+                  {{ driver.firstName }} {{ driver.lastName }} 
+                  
+                  <span *ngIf="driver.nickname">({{ driver.nickname }})</span>
+                </mat-option>
+              </mat-select>
+        </mat-form-field>
+
+
+    </div>
+
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick(data.vehicle)">Change</button>
+        <button mat-button (click)="dialogRef.close()">Cancel</button>
+    </div>
+
+</form>

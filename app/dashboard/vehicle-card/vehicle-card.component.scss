@@ -1,0 +1,65 @@
+.vehicle {
+    font-weight: bold;
+    text-align: middle;
+    color: white;
+}
+
+
+.oos {
+    background-color: #cc0000;
+}
+
+.active {
+    background-color: #2ecd8a;
+}
+
+i {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.maxwidth {
+    min-width: 160px;
+    max-width: 160px;
+}
+
+.route {
+    text-overflow: ellipsis;
+    font-size: smaller;
+    overflow: hidden;
+    width: 125px;
+    display:block;
+    white-space: nowrap;
+}
+
+.driver {
+    font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 125px;
+    display:block;
+    white-space: nowrap;
+
+}
+
+.pm {
+    background-color: #fdfd96;
+    color: black;
+}
+
+.flag {
+    background-color: orange;
+}
+
+.inactive {
+    background-color: grey;
+
+}
+
+.spare {
+    background-color: orchid;
+}
+
+div ul li {
+    cursor: pointer;
+}

@@ -1,0 +1,374 @@
+<div *ngIf="type == 'normal'">
+
+    <h1 mat-dialog-title>Add Note</h1>
+    <form [formGroup]="addNoteForm">
+
+        <div mat-dialog-content>
+
+            
+            <mat-form-field>
+                <mat-label>Type</mat-label>
+                <mat-select formControlName="type">
+                    <mat-option value="info">Info</mat-option>
+                    <mat-option value="maintenance">Maintenance</mat-option>
+                    <mat-option value="oos">Out of Service</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            
+
+
+        </div>
+
+        <div mat-dialog-content>
+            <mat-form-field>
+                <mat-label>Note</mat-label>
+                <textarea matInput
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5" formControlName="note"></textarea>
+            </mat-form-field>
+        </div>
+
+        <div mat-dialog-actions>
+            <button mat-button (click)="saveNote(data.vehicle, data.number)">Add Note</button>
+            <button mat-button (click)="dialogRef.close()">Cancel</button>
+        </div>
+
+    </form>
+</div>
+
+<div *ngIf="type == 'passdown'">
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+
+
+                <h1 mat-dialog-title>Add Passdown</h1>
+                <form [formGroup]="addNoteForm">
+
+                <div class="form-group">
+
+                    
+                    <mat-form-field class="form-group w-100">
+                        <mat-label>Type</mat-label>
+                        <mat-select formControlName="type" class="form-control">
+                            <mat-option value="info">Info</mat-option>
+                            <mat-option value="maintenance">Maintenance</mat-option>
+                            <mat-option value="oos">Out of Service</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    
+
+
+                </div>
+
+                <div mat-dialog-content class="form-group w-100">
+                    <mat-form-field class="form-group w-100">
+                        <mat-label>Note</mat-label>
+                        <textarea matInput
+                        cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="1"
+                        cdkAutosizeMaxRows="5" formControlName="note" class="form-control w-100"></textarea>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <button (click)="togglePin()" class="btn" [ngClass]="pinned == true ? 'btn-primary' : 'btn-secondary'">Mark as Pinned</button>
+                </div>
+
+                <div mat-dialog-actions class="form-group text-center">
+                    <button mat-button (click)="saveNote(data.vehicle, data.number)" class="btn btn-primary">Add Note</button>
+                    <button mat-button (click)="dialogRef.close()" class="btn btn-danger">Cancel</button>
+                </div>
+
+            </form>
+
+
+
+
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+
+<div *ngIf="false">
+
+    <div class="modal" id="passdownModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Add note to passdown</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <form [formGroup]="addNoteForm">
+                <div class="modal-body">
+
+
+
+
+                    <div mat-dialog-content class="form-group">
+
+                    
+                        <mat-form-field>
+                            <mat-label>Type</mat-label>
+                            <mat-select formControlName="type" class="form-control">
+                                <mat-option value="info">Info</mat-option>
+                                <mat-option value="maintenance">Maintenance</mat-option>
+                                <mat-option value="oos">Out of Service</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+    
+                        
+    
+    
+                    </div>
+
+                    <div mat-dialog-content class="form-group">
+                        <mat-form-field>
+                            <mat-label>Note</mat-label>
+                            <textarea matInput
+                            cdkTextareaAutosize
+                            #autosize="cdkTextareaAutosize"
+                            cdkAutosizeMinRows="1"
+                            cdkAutosizeMaxRows="5" formControlName="note" class="form-control"></textarea>
+                        </mat-form-field>
+                    </div>
+
+
+
+
+                </div>
+                <div class="modal-footer">
+
+                    <div mat-dialog-actions class="form-group">
+                        <button mat-button (click)="saveNote(data.vehicle, data.number)" class="btn btn-primary">Add Note</button>
+                        <button mat-button (click)="dialogRef.close()" class="btn btn-danger">Cancel</button>
+                    </div>
+
+
+                </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+
+</div>
+
+
+<!-- DRIVER CALLOUT FORM -->
+<div *ngIf="type == 'off'">
+
+    <h1 mat-dialog-title>Add Driver Off Time</h1>
+    <form [formGroup]="addNoteForm">
+
+        <div mat-dialog-content>
+ 
+            <mat-form-field>
+                <mat-label>Driver</mat-label>
+                <mat-select formControlName="driverList"  (selectionChange)="selectedValue($event)">
+                    <mat-option *ngFor="let driver of data.drivers" [value]="driver._id">{{driver.firstName}} {{driver.lastName}}</mat-option>
+                </mat-select>
+
+              </mat-form-field> 
+            </div>
+
+            
+
+              <div mat-dialog-content>
+            <mat-form-field>
+                <mat-label>Reason</mat-label>
+                <mat-select formControlName="type">
+                    <mat-option value="vacation">Vacation</mat-option>
+                    <mat-option value="sick">Sick</mat-option>
+                    <mat-option value="other">Other</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            
+
+
+        </div>
+
+        <div mat-dialog-content>
+            <mat-form-field>
+                <mat-label>Routes</mat-label>
+                <mat-select formControlName="routeList" (selectionChange)="selectedRoute($event)">
+                    <mat-option *ngFor="let route of data.routes" [value]="route._id">{{route.routeShortname}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            
+
+
+        </div>
+
+        <div mat-dialog-content>
+            <mat-form-field>
+                <mat-label>Notes</mat-label>
+                <textarea matInput
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5" formControlName="note"></textarea>
+            </mat-form-field>
+        </div>
+
+        <div mat-dialog-actions>
+            <button mat-button (click)="saveCallOut()">Submit</button>
+            <button mat-button (click)="dialogRef.close()">Cancel</button>
+        </div>
+
+    </form>
+</div>
+
+
+
+<!-- DRIVER PROTECTION FORM -->
+<div *ngIf="type == 'protection'">
+
+    <h1 mat-dialog-title>Add Driver Protection</h1>
+    <form [formGroup]="addNoteForm">
+
+        <div mat-dialog-content>
+ 
+            <mat-form-field>
+                <mat-label>Driver</mat-label>
+                <mat-select formControlName="driverList"  (selectionChange)="selectedValue($event)">
+                    <mat-option *ngFor="let driver of data.drivers" [value]="driver._id">{{driver.firstName}} {{driver.lastName}}</mat-option>
+                </mat-select>
+
+              </mat-form-field> 
+            </div>
+
+            
+
+              <div mat-dialog-content>
+            <mat-form-field>
+                <mat-label>Routes</mat-label>
+                <mat-select formControlName="routeList" (selectionChange)="selectedRoute($event)">
+                    <mat-option *ngFor="let route of data.routes" [value]="route._id">{{route.routeShortname}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            
+
+
+        </div>
+
+        <div mat-dialog-content>
+            <mat-form-field>
+                <mat-label>Notes</mat-label>
+                <textarea matInput
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5" formControlName="note"></textarea>
+            </mat-form-field>
+        </div>
+
+        <div mat-dialog-actions>
+            <button mat-button (click)="saveProtection()">Submit</button>
+            <button mat-button (click)="dialogRef.close()">Cancel</button>
+        </div>
+
+    </form>
+</div>
+
+<!-- ADD PM FORM -->
+<div *ngIf="type == 'pm'">
+
+    <h1 mat-dialog-title>Add Vehicle PM</h1>
+    <form [formGroup]="addNoteForm">
+
+        <div mat-dialog-content>
+ 
+            <mat-form-field>
+                <mat-label>Vehicle</mat-label>
+                <mat-select formControlName="vehicleList"  (selectionChange)="selectedValue($event)">
+                    <mat-option *ngFor="let vehicle of data.vehicles" [value]="vehicle._id">{{ vehicle.number }}</mat-option>
+                </mat-select>
+
+              </mat-form-field> 
+            </div>
+
+
+        <div mat-dialog-content>
+            <mat-form-field>
+                <mat-label>Notes</mat-label>
+                <textarea matInput
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5" formControlName="note"></textarea>
+            </mat-form-field>
+        </div>
+
+        <div mat-dialog-actions>
+            <button mat-button (click)="savePm()">Submit</button>
+            <button mat-button (click)="dialogRef.close()">Cancel</button>
+        </div>
+
+    </form>
+</div>
+
+
+<!-- ADD NOTE FORM -->
+<div *ngIf="type == 'note'">
+
+    <h1 mat-dialog-title>Add Note</h1>
+    <form [formGroup]="addNoteForm">
+
+        <div mat-dialog-content>
+ 
+            <mat-form-field>
+                <mat-label>Style</mat-label>
+                <mat-select formControlName="style">
+                    
+                    
+                    <mat-option value="text-white bg-primary">Informational</mat-option>
+                    <mat-option value="text-dark bg-light">Low Priority</mat-option>
+                    <mat-option value="text-dark bg-warning">Medium Priority</mat-option>
+                    <mat-option value="text-white bg-danger">Critical</mat-option>
+                    
+                </mat-select>
+
+              </mat-form-field> 
+            </div>
+
+        <div mat-dialog-content>
+            <mat-form-field>
+                <mat-label>Note</mat-label>
+                <textarea matInput
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5" formControlName="note"></textarea>
+            </mat-form-field>
+        </div>
+
+
+
+        <div>
+            <mat-checkbox formControlName="pinned"
+            matTooltip="Display everyday moving forward until note is closed."
+            matTooltipClass="btn btn-secondary">Pin to passdown</mat-checkbox>
+        </div>
+
+        <div mat-dialog-actions>
+            <button mat-button (click)="savePassdownNote()">Submit</button>
+            <button mat-button (click)="dialogRef.close()">Cancel</button>
+        </div>
+
+    </form>
+</div>

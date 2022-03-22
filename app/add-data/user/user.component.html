@@ -1,0 +1,71 @@
+<ngx-spinner></ngx-spinner>
+
+<div class="row m-3">
+    <div class="col-md">
+        <form [formGroup]="userForm">
+            
+
+              
+
+            <div class="form-group mb-2">
+                <label for="exampleInputEmail1">Email address <span style="color: red">(required)</span></label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  formControlName="email">
+                
+            </div>
+
+            <div class="form-group mb-2">
+                <label for="exampleInputEmail1">Company</label>
+                <select class="form-control"  formControlName="company">
+                    <option value="wdu">WDU</option>
+                </select>
+              </div>
+
+              <div class="form-group mb-2">
+                <label for="site">Site <span style="color: red">(required)</span></label>
+                <select class="form-control"  formControlName="site">
+                    <option value="genentech">Genentech</option>
+                </select>
+              </div>
+
+              <div class="form-group mb-2">
+                <label for="role">User Role <span style="color: red">(required)</span></label>
+                <select class="form-control"  formControlName="role">
+                    <option value="10" selected disabled>Please select a specific role for the user.</option>
+                    <option value="admin">Admin</option>
+                    <option value="driver">Driver</option>
+                    <option value="2">Ops Mgr</option>
+                    <option value="3">Dispatch</option>
+                    <option value="4">Fleet Mgr</option>
+                    <option value="5">Safety Mgr</option>
+                </select>
+              </div>
+
+              <div class="form-group mb-2">
+                <label for="firsName">First Name <span style="color: red">(required)</span></label>
+                <input type="text" class="form-control" id="firstName" aria-describedby="Add Username" formControlName="firstName">
+              </div>
+
+              <div class="form-group mb-2">
+                <label for="lastName">Last Name <span style="color: red">(required)</span></label>
+                <input type="text" class="form-control" id="lastName" aria-describedby="Add Username" formControlName="lastName">
+              </div>
+
+              <div class="form-group mb-2">
+                <label for="nickname">Nickname</label>
+                <input type="text" class="form-control" id="nickname" aria-describedby="Add Username" formControlName="nickname">
+                <small>Nickname will be shown next to First Name in dashboard.</small>
+              </div>
+
+              <div class="form-group mb-2">
+                <label for="phone">Phone Number</label>
+                <input type="text" class="form-control" id="phone" aria-describedby="Add Username" formControlName="phone">
+              </div>
+
+            
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary shadow btn-lg"
+                (click)="submit()"><i class="fas fa-paper-plane"></i> Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

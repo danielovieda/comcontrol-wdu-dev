@@ -1,0 +1,27 @@
+
+{
+    "uid": "123",
+    "username": "daniel",
+    "password": "123456",
+    "company": "wdu",
+    "site": "genentech",
+    "role": "admin",
+    "contact": {
+        "first": "Daniel",
+        "last": "Ovieda",
+        "nickname": "Danny",
+        "phone": "925-437-2447",
+        "email": "daniel.o@wedriveu.com"
+        },
+    "settings" : {
+        "language": "en"
+    },
+    "working_schedule": {
+            "mon_in": "12:00",
+            "mon_out": "22:30"
+            
+        },
+    "default_driving_shift": "not sure"
+    
+}
+

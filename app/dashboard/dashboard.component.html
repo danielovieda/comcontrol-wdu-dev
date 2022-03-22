@@ -1,0 +1,10 @@
+<app-filter-bar></app-filter-bar>
+
+
+<div class="row m-2">
+    <div class="col-md text-center">
+        
+            <app-vehicle-card *ngFor="let vehicles of vehicleList" [data]="vehicles" [driverList]="driverList"></app-vehicle-card>
+        
+    </div>
+</div>

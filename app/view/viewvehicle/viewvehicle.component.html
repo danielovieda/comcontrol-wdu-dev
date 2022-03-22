@@ -1,0 +1,125 @@
+<div class="row d-flex justify-content-center m-3 mb-1" *ngIf="vehicleId">
+    <div class="col">
+        <div class="card">
+            <div class="card-header hdr">
+
+                <i class="fas fa-pencil-alt cursor" routerLink="../../../manage/vehicle/{{ vehicleData._id }}"></i> &nbsp; 
+                {{ vehicleData.vehicle.number }}
+
+                <span *ngIf="vehicleData.identifier">- {{ vehicleData.identifier }}</span>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col" *ngIf="vehicleData.currentLocation">
+                        <p><b>Current Location: </b> {{ vehicleData.currentLocation | titlecase }}</p>
+                    </div>
+
+                    <div class="col" *ngIf="vehicleData.status">
+                        <p><b>Current Status: </b> {{ vehicleData.status | uppercase }}</p>
+                    </div>
+
+                    <div class="col" *ngIf="vehicleData.defaultDriver">
+                        <p><b>Default Driver: </b> {{ vehicleData.defaultDriver | titlecase }}</p>
+                    </div>
+
+                    <div class="col" *ngIf="vehicleData.defaultRoute">
+                        <p><b>Default Route: </b> {{ vehicleData.defaultRoute | titlecase }}</p>
+                    </div>
+
+                    <div class="col" *ngIf="vehicleData.defaultYard">
+                        <p><b>Default Yard: </b> {{ vehicleData.defaultYard | titlecase }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col" *ngIf="vehicleData.vehicle.year">
+                        <p><b>Year: </b> {{ vehicleData.vehicle.year | titlecase }}</p>
+                    </div>
+
+                    <div class="col" *ngIf="vehicleData.vehicle.make">
+                        <p><b>Make: </b> {{ vehicleData.vehicle.make | titlecase }}</p>
+                    </div>
+
+                    <div class="col" *ngIf="vehicleData.vehicle.model">
+                        <p><b>Model: </b> {{ vehicleData.vehicle.model | titlecase }}</p>
+                    </div>
+
+                    <div class="col" *ngIf="vehicleData.vehicle.seatCount">
+                        <p><b>Seat Count: </b> {{ vehicleData.vehicle.seatCount | titlecase }}</p>
+                    </div>
+
+                    <div class="col" *ngIf="vehicleData.vehicle.length">
+                        <p><b>Length: </b> {{ vehicleData.vehicle.length | titlecase }}'</p>
+                    </div>
+
+
+
+                </div>
+
+                <div class="row">
+                    <div class="col" *ngIf="vehicleData.vehicle.vin">
+                        <p><b>VIN: </b> {{ vehicleData.vehicle.vin }}</p>
+                    </div>
+
+                    <div class="col" *ngIf="vehicleData.vehicle.license">
+                        <p><b>License: </b> {{ vehicleData.vehicle.license }}</p>
+                    </div>
+
+                    <div class="col" *ngIf="vehicleData.vehicle.maintId">
+                        <p><b>Maintenance ID: </b> {{ vehicleData.vehicle.maintId }}</p>
+                    </div>
+
+
+                </div>
+
+                <div class="row" *ngIf="vehicleData.vehicle.additionalId.length >= 1 
+                    && vehicleData.vehicle.additionalId[0].label != '' 
+                    && vehicleData.vehicle.additionalId[0].number != ''
+                    && vehicleData.vehicle.additionalId[0].label != null
+                    && vehicleData.vehicle.additionalId[0].number != null ">
+                    <div class="col" *ngFor="let more of vehicleData.vehicle.additionalId">
+                        <p><b>{{ more.label }}: </b> {{ more.number }}</p>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row me-3 ms-3 mb-1">
+    
+    <div class="col text-end">
+        <button class="btn btn-primary" (click)="addNoteDialog(vehicleId)"><i class="fas fa-plus"></i>&nbsp; Add Note</button>
+    </div>
+</div>
+<div class="row me-3 ms-3">
+    <div class="col-sm-4 mb-2"  *ngFor="let note of noteData; let i = index">
+        <div class="card" [ngClass]="[note.status == 'open' ? 'text-white bg-primary' : '', note.status == 'closed' ? 'text-dark bg-light' : '', note.status == 'open' && note.type == 'oos' ? 'text-white bg-danger' : '', note.status == 'open' && note.type == 'maintenance' ? 'text-white bg-warning' : '']">
+            <div class="card-header">
+                <span *ngIf="note.type == 'info'"><i class="fas fa-info-circle"></i></span>
+                <span *ngIf="note.type == 'maintenance'"><i class="fas fa-wrench"></i></span>
+                <span *ngIf="note.type == 'oos'"><i class="fas fa-exclamation-triangle"></i></span>
+            </div>
+            <div class="card-body bg-light mb-0">
+                <!-- <h5 class="card-title">Special title treatment</h5> -->
+                <p class="card-text text-dark">
+                    {{ note.note }} </p>
+                <div class="text-end" *ngIf="note.status == 'open'">
+                    <button class="btn btn-sm" 
+                    [class]="note.status == 'open' ? 'btn-outline-success' : 'btn-success'"
+                    (click)="closeNote(note._id)"><i class="fas fa-check"></i></button><span>&nbsp;</span>
+                </div>
+                <div class="text-end" *ngIf="note.status == 'closed'">
+                    <p class="mb-0"><small><i>Closed by {{ note.closedBy }} <u [matTooltip]="note.closedTimestamp" class="cursor">{{ note.closedTimestamp | timeAgo}}</u>.</i></small></p>
+                </div>
+                
+            </div>
+            <div class="card-footer text-center pb-0"
+            [class]="note.status == 'open' ? 'text-white' : 'text-muted'">
+                <p><small><i><u [matTooltip]="note.timestamp" class="cursor">Created {{ note.timestamp | timeAgo }} by {{ note.username }}</u></i></small></p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+
+
+<mat-sidenav-container class="example-container">
+    <mat-sidenav #sidenav mode="over" [(opened)]="opened" class="navbar navbar-light bg-light" (click)="sidenav.toggle()">
+    <div class="text-center">
+        <img src="https://d2q79iu7y748jz.cloudfront.net/s/_squarelogo/a3446990268ee2c4c9c0ecf521ee5ce9" class="img-fluid img-thumbnail" />
+    </div>
+
+        <app-menu-options (click)="sidenav.toggle()"></app-menu-options>
+
+        <div *ngIf="getProfile()" class="shadow-sm p-2 mx-auto">Logged in as: {{ getProfile().name }}</div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div (click)="sidenav.toggle()" style="cursor: pointer;">
+            <i class="fas fa-bars fa-3x"></i>
+        </div>
+
+        <router-outlet></router-outlet>
+
+    </mat-sidenav-content>
+</mat-sidenav-container>

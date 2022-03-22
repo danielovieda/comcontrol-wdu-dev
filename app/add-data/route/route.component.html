@@ -1,0 +1,38 @@
+<ngx-spinner></ngx-spinner>
+
+<div class="row m-3">
+    <div class="col-md">
+        <form [formGroup]="routeForm">
+            <div class="form-group mb-2">
+                <label for="routeName">Route Name </label>
+                <input type="text" class="form-control" id="routeName" aria-describedby="Route Name" formControlName="routeName">
+              </div>
+
+              <div class="form-group mb-2">
+                <label for="routeShortname">Shortname <span style="color: red">(required)</span></label>
+                <input type="text" class="form-control" id="routeShortname" formControlName="routeShortname">
+                <small>Route nomenclature ("Blue Line", "GENE42", etc)</small>
+            </div>
+
+            
+
+            <div class="form-group mb-2">
+                <label for="defaultVehicle">Assigned Driver</label>
+
+                <select class="form-select form-select-lg mb-3" formControlName="assignedDriver">
+                    <option value="" selected></option>       
+                    <option  *ngFor="let driver of drivers, let i = index" [value]="driver._id"> {{ driver.firstName }} {{ driver.lastName }} ({{ driver.nickname }})</option>
+                    
+                  </select>
+                
+            </div>
+
+            
+            <div class="text-center mt-2">
+                <button type="submit" class="btn btn-primary shadow btn-lg"
+                (click)="submit()"><i class="fas fa-paper-plane"></i> Submit</button>
+            </div>
+            
+        </form>
+    </div>
+</div>

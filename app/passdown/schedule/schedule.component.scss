@@ -1,0 +1,29 @@
+.menuLink {
+    float: right;
+    cursor: pointer;
+}
+
+
+.modal-backdrop {
+    z-index: -1;
+  }
+
+.fix {
+    z-index: 100;
+}
+
+.cursor {
+    cursor: pointer;
+}
+
+.nocursor {
+    cursor: default;
+}
+
+.fixMargin {
+    bottom: -20px;
+}
+
+.listy li:nth-child(3) {
+    display: inline;
+}
