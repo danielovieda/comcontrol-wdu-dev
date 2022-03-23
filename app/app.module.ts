@@ -49,6 +49,7 @@ import { ViewuserComponent } from './view/viewuser/viewuser.component';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { TimeAgoPipe } from './pipes/time-ago.pipe';
 import { ProfileComponent } from './profile/profile.component';
+import { ListComponent } from './list/list.component';
 
 
 
@@ -83,6 +84,7 @@ import { ProfileComponent } from './profile/profile.component';
     ViewuserComponent,
     TimeAgoPipe,
     ProfileComponent,
+    ListComponent,
     
   ],
   imports: [

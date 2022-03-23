@@ -1,22 +1,2 @@
 
 
-<ul *ngIf="loggedIn" class="list-group">
-    <li class="nav-item list-group-item list-group-item-action" 
-    routerLinkActive="active" routerLink="/dashboard"><i class="fas fa-sitemap"></i> Dashboard</li>
-
-    <li class="nav-item list-group-item list-group-item-action" 
-    routerLinkActive="active" [routerLink]="['/passdown/' + date]"><i class="fas fa-info-circle"></i> Passdown</li>
-
-    <!-- <li class="list-group-item list-group-item-action" 
-    routerLinkActive="active" routerLink="/tasks"><i class="fas fa-tasks"></i> Tasks</li> -->
-    
-    <li class="list-group-item list-group-item-action" 
-    routerLinkActive="active" routerLink="/manage"><i class="fa-solid fa-square-plus"></i> Manage</li>
-    <!-- <li class="list-group-item list-group-item-action" 
-    routerLinkActive="active" routerLink="/settings"><i class="fas fa-cog"></i> Settings</li> -->
-    <li class="list-group-item list-group-item-action" 
-    routerLinkActive="active" routerLink="/profile"><i class="fa-solid fa-user"></i> My Profile</li>
-
-    <li class="list-group-item list-group-item-action" 
-    routerLinkActive="active" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</li>
-</ul>

@@ -9,3 +9,30 @@
   img {
     max-width: 220px;
   }
+
+  .big {
+    font-size: x-large;
+  }
+
+  .float {
+    float: right;
+  }
+
+  .cursor {
+    cursor: pointer;
+  }
+
+  .list-group-item {
+    font-size: medium;
+    cursor: pointer;
+}
+
+.list-group-item a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.list-group-item .active a {
+    color: white;
+    cursor: pointer;
+}

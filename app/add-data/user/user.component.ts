@@ -15,8 +15,9 @@ export class UserComponent implements OnInit {
 
   userForm: FormGroup
   editUserId: any
-  genericError: string = 'An unknown error occurred.'
+  genericError: string = 'User does not exist.'
   editMode: boolean = false
+  deleteMode: boolean = false
 
   constructor(private route: ActivatedRoute, private service: BackendService,
     private spinner: NgxSpinnerService,
@@ -83,12 +84,24 @@ export class UserComponent implements OnInit {
 
   saveUserData(data: any) {
     this.service.updateUser(data).subscribe(
-      response => this.toastr.success(response.success)
+      response => {
+        if (response.success) {
+          this.toastr.success(response.success)
+          this.userForm.reset()
+          this.deleteMode = false
+          setTimeout(() => {
+            this.router.navigateByUrl('/manage/user')
+          }, 1000)
+        } else {
+          this.toastr.error('Could not delete user.')
+        }
+      }
     )
     if (!this.editMode) {
       this.userForm.reset()
     }
   }
+
 
   loadUserData(data: any) {
     if (data == null) {
@@ -115,6 +128,13 @@ export class UserComponent implements OnInit {
       nickname: data.nickname,
       phone: data.phone
     })
+  }
+
+  delete() {
+    let del = new FormControl('user_id')
+    this.userForm.addControl('delete', del)
+    this.deleteMode = true
+    this.toastr.warning('Click update to confirm deletion.')
   }
   
 

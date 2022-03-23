@@ -6,6 +6,7 @@ import { UserComponent } from './add-data/user/user.component';
 import { VehicleComponent } from './add-data/vehicle/vehicle.component';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ListComponent } from './list/list.component';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { PassdownComponent } from './passdown/passdown.component';
@@ -30,6 +31,7 @@ const routes: Routes = [
     { path: 'vehicle', component: VehicleComponent },
     { path: 'vehicle/:id', component: VehicleComponent }
   ]},
+  { path: 'list/users', component: ListComponent},
   { path: 'logout', component: LogoutComponent },
   { path: 'view', component: ViewComponent, children: [
     { path: 'vehicle', component: ViewvehicleComponent },

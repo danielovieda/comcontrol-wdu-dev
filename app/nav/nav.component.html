@@ -1,21 +1,49 @@
 
 
 <mat-sidenav-container class="example-container">
-    <mat-sidenav #sidenav mode="over" [(opened)]="opened" class="navbar navbar-light bg-light" (click)="sidenav.toggle()">
+    <mat-sidenav #sidenav mode="over" [(opened)]="opened" class="navbar navbar-light bg-light">
     <div class="text-center">
         <img src="https://d2q79iu7y748jz.cloudfront.net/s/_squarelogo/a3446990268ee2c4c9c0ecf521ee5ce9" class="img-fluid img-thumbnail" />
     </div>
-
-        <app-menu-options (click)="sidenav.toggle()"></app-menu-options>
+        
+            <ul *ngIf="loggedIn" class="list-group cursor" (click)="sidenav.close()">
+                <li class="list-group-item list-group-item-action" 
+                routerLinkActive="active" routerLink="/dashboard"><i class="fas fa-sitemap"></i> Dashboard</li>
+            
+                <li class="list-group-item list-group-item-action" 
+                routerLinkActive="active" [routerLink]="['/passdown/' + date]"
+                ><i class="fas fa-info-circle"></i> Passdown</li>
+            
+                <!-- <li class="list-group-item list-group-item-action" 
+                routerLinkActive="active" routerLink="/tasks"><i class="fas fa-tasks"></i> Tasks</li> -->
+                
+                <li class="list-group-item list-group-item-action" 
+                routerLinkActive="active" routerLink="/manage"
+                ><i class="fa-solid fa-square-plus"></i> Add</li>
+            
+                <li class="list-group-item list-group-item-action" 
+                routerLinkActive="active" routerLink="/list/users"
+                ><i class="fa-solid fa-bus"></i> Drivers</li>
+                <!-- <li class="list-group-item list-group-item-action" 
+                routerLinkActive="active" routerLink="/settings"><i class="fas fa-cog"></i> Settings</li> -->
+                <!-- <li class="list-group-item list-group-item-action" 
+                routerLinkActive="active" routerLink="/profile"><i class="fa-solid fa-user"></i> My Profile</li> -->
+            
+                <li class="list-group-item list-group-item-action" 
+                routerLinkActive="active" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</li>
+            </ul>
+        
+        
 
         <div *ngIf="getProfile()" class="shadow-sm p-2 mx-auto">Logged in as: {{ getProfile().name }}</div>
     </mat-sidenav>
     <mat-sidenav-content>
-        <div (click)="sidenav.toggle()" style="cursor: pointer;">
-            <i class="fas fa-bars fa-3x"></i>
+        <div class="border p-1">
+             <i class="fas fa-bars fa-2x cursor" (click)="sidenav.open()"></i>&nbsp;<span class="big cursor" (click)="sidenav.open()">MENU</span><span class="big float">Command & Control</span>
         </div>
 
         <router-outlet></router-outlet>
 
     </mat-sidenav-content>
 </mat-sidenav-container>
+
