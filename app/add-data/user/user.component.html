@@ -60,6 +60,42 @@
                 <label for="phone">Phone Number</label>
                 <input type="text" class="form-control" id="phone" aria-describedby="Add Username" formControlName="phone">
               </div>
+              
+              <div class="text-center" [ngClass]="!editMode ? 'hide' : ''">
+
+                <div class="example-container" >
+                  <h2>Known Routes</h2>
+                  <div
+      cdkDropList
+      #todoList="cdkDropList"
+      [cdkDropListData]="knownRoutes"
+      [cdkDropListConnectedTo]="[doneList]"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of knownRoutes" cdkDrag>{{item.routeShortname}}</div>
+    </div>
+  </div>
+  
+  <div class="example-container">
+    <h2>Available Routes</h2>
+  
+    <div
+      cdkDropList
+      #doneList="cdkDropList"
+      [cdkDropListData]="availableRoutes"
+      [cdkDropListConnectedTo]="[todoList]"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of availableRoutes" cdkDrag>{{item.routeShortname}}</div>
+    </div>
+                </div>
+
+              </div>
+              
+
+
+
+
 
             
               <div class="text-center mt-2">
@@ -71,6 +107,10 @@
             <div class="text-center mt-2" *ngIf="editMode && !deleteMode">
                 <button type="submit" class="btn btn-danger shadow btn-lg" (click)="delete()"><i class="far fa-trash-alt"></i> Delete</button>
             </div>
+
+            <button class="btn btn-primary" (click)="logIt()">log</button>
+
+            
 
         </form>
     </div>

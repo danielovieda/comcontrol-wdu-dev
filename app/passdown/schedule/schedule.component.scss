@@ -27,3 +27,11 @@
 .listy li:nth-child(3) {
     display: inline;
 }
+.circle {
+    background: #456BD9;
+    border-radius: 50%;
+    color: #fff;
+    height: 5em;
+    position: relative;
+    width: 5em;
+  }

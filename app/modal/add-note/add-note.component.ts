@@ -23,6 +23,8 @@ export class AddNoteComponent  {
   selectedData: any = {}
   selectedRouteData: any = {}
   notValidError: string = "Ensure form is valid."
+  editNoteId: string
+  comments: {}
   
 
   constructor(private userService: UserService, private datepipe: DatePipe, public dialogRef: MatDialogRef<AddNoteComponent>,
@@ -65,7 +67,7 @@ export class AddNoteComponent  {
           })
 
           console.log('adding a pm')
-        } else if (data.type == 'note') {
+        } else if (data.type == 'note' || data.type == 'editNote') {
           console.log('adding a passdown DATE note')
           this.type = 'note'
           this.addNoteForm = new FormGroup ({
@@ -73,6 +75,15 @@ export class AddNoteComponent  {
             note: new FormControl('', Validators.required),
             pinned: new FormControl(false)
           })
+
+          if (data.type == 'editNote') {
+            this.editNoteId = data.id
+            this.type = 'editNote'
+            this.addNoteForm.get('style').setValue(data.style)
+            this.addNoteForm.get('note').setValue(data.note)
+            this.comments = data.comments
+          }
+
         } else {
 
           console.log('vehicle note from passdown page')
@@ -218,15 +229,36 @@ export class AddNoteComponent  {
 
       this.timestamp = this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss a');
 
-      this.dialogRef.close({
-         noteId: uuidv4(),
-         style: this.addNoteForm.get('style').value,
-         note: this.addNoteForm.get('note').value,
-         pinned: this.addNoteForm.get('pinned').value,
-         timestamp: this.timestamp,
-         user: this.userService.getUser(),
-         userId: this.userService.getUserId()
-      });
+
+      if (this.type == 'note') {
+        this.dialogRef.close({
+          noteId: uuidv4(),
+          style: this.addNoteForm.get('style').value,
+          note: this.addNoteForm.get('note').value,
+          pinned: this.addNoteForm.get('pinned').value,
+          timestamp: this.timestamp,
+          user: this.userService.getUser(),
+          userId: this.userService.getUserId()
+       });
+      }
+
+      if (this.type == 'editNote') {
+        console.log('saving edited note !!!')
+
+        this.dialogRef.close({
+          noteId: this.editNoteId,
+          style: this.addNoteForm.get('style').value,
+          note: this.addNoteForm.get('note').value,
+          pinned: false,
+          timestamp: this.timestamp,
+          edited: true,
+          user: this.userService.getUser(),
+          userId: this.userService.getUserId(),
+          comment: this.data.comments
+       });
+
+      }
+      
      }
 
      togglePin() {
@@ -247,6 +279,8 @@ export class AddNoteComponent  {
         text: event.source.triggerValue
       };
     }
+
+  
 
   
 

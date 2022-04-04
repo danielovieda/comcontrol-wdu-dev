@@ -324,9 +324,10 @@
 
 
 <!-- ADD NOTE FORM -->
-<div *ngIf="type == 'note'">
+<div *ngIf="type == 'note' || type == 'editNote'">
 
-    <h1 mat-dialog-title>Add Note</h1>
+    <h1 mat-dialog-title *ngIf="type == 'note'">Add Note</h1>
+    <h1 mat-dialog-title *ngIf="type == 'editNote'">Editing Note</h1>
     <form [formGroup]="addNoteForm">
 
         <div mat-dialog-content>
@@ -359,7 +360,7 @@
 
 
 
-        <div>
+        <div *ngIf="type == 'note'">
             <mat-checkbox formControlName="pinned"
             matTooltip="Display everyday moving forward until note is closed."
             matTooltipClass="btn btn-secondary">Pin to passdown</mat-checkbox>

@@ -28,6 +28,7 @@ export class PassdownComponent implements OnInit {
     pm: [{}],
     note: [{}]
   }
+  search: boolean = false
 
   constructor(private service: BackendService,
     private toastr: ToastrService,
@@ -155,6 +156,16 @@ export class PassdownComponent implements OnInit {
       }
     )
 
+  }
+
+  hideNotes(e: any) {
+    
+    if (e.target.value === '') {
+      this.search = false
+    } else {
+      this.search = true
+    }
+    
   }
 
 }

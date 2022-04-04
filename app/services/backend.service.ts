@@ -53,6 +53,14 @@ export class BackendService {
 
   private getSettingsUrl = environment.BASE_API_URL + '/get/settings/'
 
+  private searchNoteUrl = environment.BASE_API_URL + '/search/note/'
+
+  private editNoteUrl = environment.BASE_API_URL + '/edit/passdown_note/'
+
+  private addPassdownCommentUrl = environment.BASE_API_URL + '/add/comment/'
+
+  private deletePassdownCommentUrl = environment.BASE_API_URL + '/remove/comment/'
+
   constructor(private http: HttpClient) { }
 
   getVehicle(id: string): Observable<any> {
@@ -184,6 +192,21 @@ export class BackendService {
     return this.http.post<any>(this.updatePinnedUrl, data)
   }
   
-  
+  searchForNote(needle: string): Observable<any> {
+    return this.http.get(this.searchNoteUrl + needle)
+  }
+
+  editNote(id: string, data: any): Observable<any> {
+    return this.http.post<any>(this.editNoteUrl + id, data)
+  }
+
+  addPassdownComment(id: string, data: any): Observable<any> {
+    return this.http.post<any>(this.addPassdownCommentUrl + id, data)
+  }
+
+  removePassdownComment(id: string, data: {}): Observable<any> {
+    return this.http.post<any>(this.deletePassdownCommentUrl + id, data)
+  }
+
 
 }

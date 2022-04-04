@@ -6,6 +6,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { AddNoteComponent } from 'src/app/modal/add-note/add-note.component';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-schedule',
@@ -28,11 +29,20 @@ export class ScheduleComponent implements OnInit {
     vehicleList: any
     timestamp: any
     pinnedNotes: any
+    showComment = -1
+    showDelete = -1
+    currentComment: string = ''
 
     genericError: string = 'An error has occurred. Please try again.'
 
   ngOnInit(): void {
-    
+
+    this.service.getPinned().subscribe(
+      response => {
+        this.pinnedNotes = response
+      }
+    )
+
 
     this.service.getDriverList('mini').subscribe(
       response => {
@@ -52,12 +62,16 @@ export class ScheduleComponent implements OnInit {
       }
     )
 
-    this.service.getPinned().subscribe(
-      response => {
-        this.pinnedNotes = response
-      }
-    )
+    
 
+  }
+
+  showCommentBox(i: number) {
+    if (i === this.showComment) {
+      this.showComment = -1
+    } else {
+      this.showComment = i
+    }
   }
 
   navBack() {
@@ -92,6 +106,89 @@ export class ScheduleComponent implements OnInit {
       this.saveNote(result, type, this.data.date);
     });
 
+  }
+
+  editNote(id: string, style: string, note: string, comments: {}) {
+    console.log('editing this note... ' + id)
+
+    let type = 'editNote'
+
+    const dialogRef = this.dialog.open(AddNoteComponent, {
+      data: { vehicle: '', id: id, type: type, style: style, note: note, comments: comments }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.saveEditedNote(id, result);
+    });
+
+  }
+
+  saveEditedNote(id: string, data: any) {
+    if (!data) {
+      console.log('no data to save')
+      return
+    }
+
+    this.service.editNote(id, data).subscribe(
+      response => {
+        if (response) {
+          this.toastr.success(response.success)
+          this.reload()
+        } else {
+          this.toastr.error(this.genericError)
+        }
+      }
+    )
+
+  }
+
+
+  addComment(id: string, comment: string) {
+    if (comment.trim().length < 3) {
+      this.toastr.error("Your comment isn't long enough. Try again.")
+      return
+    }
+    this.timestamp = this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss a');
+
+    let payload = {
+      commentId: uuidv4(),
+      comment: comment,
+      timestamp: this.timestamp,
+      user: this.userService.getUser(),
+      userId: this.userService.getUserId()
+    }
+
+    this.service.addPassdownComment(id, payload).subscribe(
+      response => {
+        if (response) {
+          this.toastr.success(response.success)
+          this.reload()
+        } else {
+          this.toastr.error(this.genericError)
+        }
+      }
+    )
+
+
+  }
+
+  deleteComment(id: string, date: string, userId: string) {
+    if (userId != this.userService.getUserId() ) {
+      this.toastr.error('Unable to delete comment.')
+      return
+    }
+    console.log(id, userId)
+
+     this.service.removePassdownComment(id, {}).subscribe(
+       response => {
+         if (response) {
+           this.toastr.success(response.success)
+           this.reload()
+         } else {
+           this.toastr.error(this.genericError)
+         }
+       }
+     )
   }
 
   saveNote(data: any, type: string, date: string) {

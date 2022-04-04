@@ -21,6 +21,9 @@ export class DashboardComponent implements OnInit {
   }
 
   vehicleList = [{}]
+  shownVehicleList = [{}]
+  filterToggle: boolean = true
+  currentFilter: string
 
   addVehicle(data: any) {
     for(let i = 0; i < data.length; i++) {
@@ -33,6 +36,36 @@ export class DashboardComponent implements OnInit {
         identifier: data[i].identifier,
         driverId: data[i].defaultDriverId
       })
+    }
+
+    this.shownVehicleList = this.vehicleList
+  }
+
+  filter(filtStatus: any) {
+
+    if (this.currentFilter === filtStatus) {
+      this.filterToggle = !this.filterToggle
+    }
+    
+
+    if (this.filterToggle) {
+      this.shownVehicleList = this.vehicleList.filter(status => this.filterStatus(status, filtStatus))
+      this.currentFilter = filtStatus
+    } else {
+      this.shownVehicleList = this.vehicleList
+      this.currentFilter = ''
+      this.filterToggle = true
+    }
+    
+    
+  }
+
+  filterStatus(element: any, status: string) {
+
+    if (element.status === status) { 
+      return true
+    } else {
+      return false
     }
   }
 

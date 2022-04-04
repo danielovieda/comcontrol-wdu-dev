@@ -50,6 +50,9 @@ import { MatCheckboxModule} from '@angular/material/checkbox';
 import { TimeAgoPipe } from './pipes/time-ago.pipe';
 import { ProfileComponent } from './profile/profile.component';
 import { ListComponent } from './list/list.component';
+import { SearchComponent } from './search/search.component';
+import { DragDropModule} from '@angular/cdk/drag-drop';
+
 
 
 
@@ -85,6 +88,7 @@ import { ListComponent } from './list/list.component';
     TimeAgoPipe,
     ProfileComponent,
     ListComponent,
+    SearchComponent,
     
   ],
   imports: [
@@ -114,7 +118,7 @@ import { ListComponent } from './list/list.component';
     MatTooltipModule,
     MatMenuModule,
     MatCheckboxModule,
-    
+    DragDropModule
   ],
   providers: [
     DatePipe,

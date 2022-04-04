@@ -1,24 +1,18 @@
-<ngx-spinner></ngx-spinner>
 
 
-<div class="row me-3 ms-3 mb-1" *ngIf="scheduleData">
+<div class="row me-3 ms-3 mb-3">
     <div class="col">
-        <app-schedule [data]="scheduleData"></app-schedule>
+        <button class="btn btn-danger shadow float" *ngIf="results" (click)="clearSearch()"><i class="fa-solid fa-xmark"></i></button>
+        <input type="text" class="form-control shadow float w-50" [ngClass]="results ? 'me-2' : ''" 
+        (keyup)="search($event)" placeholder="Search Notes"
+        #searchText>
+        
+        
     </div>
 </div>
 
-
-        <app-search (keyup)="hideNotes($event)"></app-search>
-
-
-<!-- <div class="row me-3 ms-3 mb-1">
-    
-    <div class="col text-end">
-        <button class="btn btn-primary" (click)="addNote()"><i class="fas fa-plus"></i>&nbsp; Add Passdown Note</button>
-    </div>
-</div> -->
-<div class="row me-3 ms-3" *ngIf="!loading && !search">
-    <div class="col-sm-4 mb-2" *ngFor="let note of passdown; let i = index">
+<div class="row me-3 ms-3" *ngIf="results">
+    <div class="col-sm-4 mb-2" *ngFor="let note of searchResults; let i = index">
         <div class="card shadow" [ngClass]="[note.status == 'open' && note.type == 'info' ? 'text-white bg-primary' : '', note.status == 'open' && note.type == 'oos' ? 'text-white bg-danger' : '', note.status == 'open' && note.type == 'maintenance' ? 'text-dark bg-warning text-dark' : '']">
             
             <div class="card-header">
@@ -49,5 +43,3 @@
         </div>
     </div>
 </div>
-
-

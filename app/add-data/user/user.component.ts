@@ -5,6 +5,7 @@ import { BackendService } from '../../services/backend.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-user',
@@ -18,6 +19,9 @@ export class UserComponent implements OnInit {
   genericError: string = 'User does not exist.'
   editMode: boolean = false
   deleteMode: boolean = false
+  routeList: any
+  availableRoutes: any = []
+  knownRoutes: any = []
 
   constructor(private route: ActivatedRoute, private service: BackendService,
     private spinner: NgxSpinnerService,
@@ -43,6 +47,17 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.service.getRouteList().subscribe(
+      response => {
+        if (response) {
+          this.availableRoutes = response
+        } else {
+          this.toastr.error('Could not load route list.')
+        }
+      }
+    )
+
+
 
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.editUserId = params.get('id')
@@ -55,8 +70,17 @@ export class UserComponent implements OnInit {
         response => {
           if (response) {
             this.spinner.show()
+
+
+
+
             this.loadUserData(response)
             this.editMode = true
+            this.toastr.success('Editing user')
+
+
+
+
           } else {
             this.toastr.error(this.genericError)
           }
@@ -79,7 +103,13 @@ export class UserComponent implements OnInit {
       this.userForm.get('_id').setValue('')
     }
 
-    this.saveUserData(this.userForm.value)
+    let payload = this.userForm.value
+    payload.knownRoutes = this.knownRoutes
+
+    console.log('logging payload')
+    console.log(JSON.stringify(payload))
+
+    this.saveUserData(payload)
   }
 
   saveUserData(data: any) {
@@ -90,7 +120,7 @@ export class UserComponent implements OnInit {
           this.userForm.reset()
           this.deleteMode = false
           setTimeout(() => {
-            this.router.navigateByUrl('/manage/user')
+            this.router.navigateByUrl('/manage/user/' + data._id)
           }, 1000)
         } else {
           this.toastr.error('Could not delete user.')
@@ -126,8 +156,39 @@ export class UserComponent implements OnInit {
       firstName: data.firstName,
       lastName: data.lastName,
       nickname: data.nickname,
-      phone: data.phone
+      phone: data.phone,
     })
+
+    if (data.knownRoutes) {
+      this.knownRoutes = data.knownRoutes
+
+
+    
+      for (let y = 0; y < this.knownRoutes.length; y++) {
+        let removeIndex = this.availableRoutes.findIndex(item => item._id === this.knownRoutes[y]._id)
+
+
+          this.availableRoutes.splice(removeIndex, 1)
+
+        
+      }
+
+      
+      
+    }
+  }
+
+  filterTest(obj: any, obj2: any) {
+    console.log('object 1')
+    console.log(obj)
+    console.log('object 2')
+    console.log(obj2)
+    let index = obj.findIndex((x: { _id: string; }) => x._id === obj2._id)
+    if (index >= 0) {
+      return false
+    } else {
+      return true
+    }
   }
 
   delete() {
@@ -135,6 +196,24 @@ export class UserComponent implements OnInit {
     this.userForm.addControl('delete', del)
     this.deleteMode = true
     this.toastr.warning('Click update to confirm deletion.')
+  }
+
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
+  }
+
+  logIt() {
+    console.log(this.knownRoutes)
   }
   
 
