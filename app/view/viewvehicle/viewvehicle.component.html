@@ -94,32 +94,4 @@
         <button class="btn btn-primary" (click)="addNoteDialog(vehicleId)"><i class="fas fa-plus"></i>&nbsp; Add Note</button>
     </div>
 </div>
-<div class="row me-3 ms-3">
-    <div class="col-sm-4 mb-2"  *ngFor="let note of noteData; let i = index">
-        <div class="card" [ngClass]="[note.status == 'open' ? 'text-white bg-primary' : '', note.status == 'closed' ? 'text-dark bg-light' : '', note.status == 'open' && note.type == 'oos' ? 'text-white bg-danger' : '', note.status == 'open' && note.type == 'maintenance' ? 'text-white bg-warning' : '']">
-            <div class="card-header">
-                <span *ngIf="note.type == 'info'"><i class="fas fa-info-circle"></i></span>
-                <span *ngIf="note.type == 'maintenance'"><i class="fas fa-wrench"></i></span>
-                <span *ngIf="note.type == 'oos'"><i class="fas fa-exclamation-triangle"></i></span>
-            </div>
-            <div class="card-body bg-light mb-0">
-                <!-- <h5 class="card-title">Special title treatment</h5> -->
-                <p class="card-text text-dark">
-                    {{ note.note }} </p>
-                <div class="text-end" *ngIf="note.status == 'open'">
-                    <button class="btn btn-sm" 
-                    [class]="note.status == 'open' ? 'btn-outline-success' : 'btn-success'"
-                    (click)="closeNote(note._id)"><i class="fas fa-check"></i></button><span>&nbsp;</span>
-                </div>
-                <div class="text-end" *ngIf="note.status == 'closed'">
-                    <p class="mb-0"><small><i>Closed by {{ note.closedBy }} <u [matTooltip]="note.closedTimestamp" class="cursor">{{ note.closedTimestamp | timeAgo}}</u>.</i></small></p>
-                </div>
-                
-            </div>
-            <div class="card-footer text-center pb-0"
-            [class]="note.status == 'open' ? 'text-white' : 'text-muted'">
-                <p><small><i><u [matTooltip]="note.timestamp" class="cursor">Created {{ note.timestamp | timeAgo }} by {{ note.username }}</u></i></small></p>
-            </div>
-        </div>
-    </div>
-</div>
+<app-vehicle-note-card [noteData]="noteData"></app-vehicle-note-card>

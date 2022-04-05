@@ -8,46 +8,7 @@
 </div>
 
 
-        <app-search (keyup)="hideNotes($event)"></app-search>
+<app-search (keyup)="hideNotes($event)"></app-search>
 
-
-<!-- <div class="row me-3 ms-3 mb-1">
     
-    <div class="col text-end">
-        <button class="btn btn-primary" (click)="addNote()"><i class="fas fa-plus"></i>&nbsp; Add Passdown Note</button>
-    </div>
-</div> -->
-<div class="row me-3 ms-3" *ngIf="!loading && !search">
-    <div class="col-sm-4 mb-2" *ngFor="let note of passdown; let i = index">
-        <div class="card shadow" [ngClass]="[note.status == 'open' && note.type == 'info' ? 'text-white bg-primary' : '', note.status == 'open' && note.type == 'oos' ? 'text-white bg-danger' : '', note.status == 'open' && note.type == 'maintenance' ? 'text-dark bg-warning text-dark' : '']">
-            
-            <div class="card-header">
-                <span *ngIf="note.type == 'info' && note.vehicleId != 'none'"><i class="fas fa-info-circle"></i></span>
-                <span *ngIf="note.type == 'maintenance' && note.vehicleId != 'none'"><i class="fas fa-wrench"></i></span>
-                <span *ngIf="note.type == 'oos' && note.vehicleId != 'none'"><i class="fas fa-exclamation-triangle"></i></span>
-
-                <span *ngIf="note.pinned" class="me-1"><i class="fas fa-thumbtack"></i></span>
-                <span *ngIf="note.vehicleId == 'none'"><i class="fas fa-sticky-note"></i></span>
-
-                <span class="ms-1 font-weight-bold">{{ note.number }}</span>
-
-                <span class="vehicleLink" routerLink="../../view/vehicle/{{note.vehicleId}}" *ngIf="note.vehicleId != 'none'"
-                matTooltip="Go to {{note.number}}"
-                matTooltipClass="btn btn-secondary"><i class="fas fa-external-link-alt"></i></span>
-                <span class="vehicleLink" *ngIf="note.vehicleId == 'none' && note.status != 'closed'" (click)="closeNote(note._id)">
-                    <i class="fas fa-times fa-lg"></i>
-                </span>
-                
-            </div>
-            <div class="card-body pb-2 pt-2">
-                <p>{{note.note}}</p>
-
-                <div class="text-end">
-                    <p class="mb-0"><small><i><u [matTooltip]="note.timestamp" class="cursor">{{ note.timestamp | timeAgo }} by {{ note.username }}</u></i></small></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
+<app-vehicle-note-card [noteData]="passdown" *ngIf="!loading && !search" page="passdown"></app-vehicle-note-card>

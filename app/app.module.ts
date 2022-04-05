@@ -52,6 +52,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ListComponent } from './list/list.component';
 import { SearchComponent } from './search/search.component';
 import { DragDropModule} from '@angular/cdk/drag-drop';
+import { VehicleNoteCardComponent } from './vehicle-note-card/vehicle-note-card.component';
 
 
 
@@ -89,6 +90,7 @@ import { DragDropModule} from '@angular/cdk/drag-drop';
     ProfileComponent,
     ListComponent,
     SearchComponent,
+    VehicleNoteCardComponent,
     
   ],
   imports: [

@@ -6,6 +6,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { AddNoteComponent } from 'src/app/modal/add-note/add-note.component';
 import { DatePipe } from '@angular/common';
 import { UserService } from 'src/app/services/user.service';
+import { v4 as uuidv4 } from 'uuid';
 
 
 @Component({
@@ -19,6 +20,8 @@ export class ViewvehicleComponent implements OnInit {
   vehicleData: any
   noteData:any
   timestamp: any
+  showComment: number = -1
+  genericError: string = 'An error has occurred. Please try again.'
   
 
   constructor(private service: BackendService,
@@ -38,6 +41,43 @@ export class ViewvehicleComponent implements OnInit {
       
      
     
+  }
+
+  addComment(id: string, comment: string) {
+    if (comment.trim().length < 3) {
+      this.toastr.error("Your comment isn't long enough. Try again.")
+      return
+    }
+    this.timestamp = this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss a');
+
+    let payload = {
+      commentId: uuidv4(),
+      comment: comment,
+      timestamp: this.timestamp,
+      user: this.userService.getUser(),
+      userId: this.userService.getUserId()
+    }
+
+    this.service.addMaintComment(id, payload).subscribe(
+      response => {
+        if (response) {
+          this.toastr.success(response.success)
+          this.reload()
+        } else {
+          this.toastr.error(this.genericError)
+        }
+      }
+    )
+
+
+  }
+
+  showCommentBox(i: number) {
+    if (i === this.showComment) {
+      this.showComment = -1
+    } else {
+      this.showComment = i
+    }
   }
 
   loadData(id: string) {
@@ -154,8 +194,10 @@ export class ViewvehicleComponent implements OnInit {
 
   }
 
-  filterNotes(type: string) {
-    this.noteData = this.noteData.filter((noteType: string) => noteType == 'maintenance')
+  reload() {
+    setTimeout(() => {
+      location.reload()
+    }, 1700);
   }
 
 }

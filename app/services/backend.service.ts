@@ -61,6 +61,12 @@ export class BackendService {
 
   private deletePassdownCommentUrl = environment.BASE_API_URL + '/remove/comment/'
 
+  private addMaintCommentUrl = environment.BASE_API_URL + '/add/maintComment/'
+
+  private remoteMaintCommentUrl = environment.BASE_API_URL + '/remove/maintComment/'
+
+  private deleteMaintNoteUrl = environment.BASE_API_URL + '/delete/maintNote/'
+
   constructor(private http: HttpClient) { }
 
   getVehicle(id: string): Observable<any> {
@@ -206,6 +212,18 @@ export class BackendService {
 
   removePassdownComment(id: string, data: {}): Observable<any> {
     return this.http.post<any>(this.deletePassdownCommentUrl + id, data)
+  }
+
+  addMaintComment(id: string, data: any): Observable<any> {
+    return this.http.post<any>(this.addMaintCommentUrl + id, data)
+  }
+
+  removeMaintComment(id: string, data: {}): Observable<any> {
+    return this.http.post<any>(this.remoteMaintCommentUrl + id, data)
+  }
+
+  deleteMaintNote(id: string): Observable<any> {
+    return this.http.delete<any>(this.deleteMaintNoteUrl + id)
   }
 
 

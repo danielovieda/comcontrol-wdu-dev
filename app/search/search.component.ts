@@ -13,9 +13,9 @@ export class SearchComponent implements OnInit {
 
   @ViewChild('searchText') inputSearch: any
 
-  searchResults: any
+  searchResults: [] = []
   results: boolean = false
-  notFound: string
+  notFound: string = ""
   timestamp: any
 
 

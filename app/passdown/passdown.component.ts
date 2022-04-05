@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 import { UserService } from 'src/app/services/user.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-passdown',
@@ -29,6 +30,8 @@ export class PassdownComponent implements OnInit {
     note: [{}]
   }
   search: boolean = false
+  showComment: number = -1
+  genericError: string = "An error has occurred. Please try again."
 
   constructor(private service: BackendService,
     private toastr: ToastrService,
@@ -70,6 +73,62 @@ export class PassdownComponent implements OnInit {
     )
   }
 
+  addComment(id: string, comment: string) {
+    if (comment.trim().length < 3) {
+      this.toastr.error("Your comment isn't long enough. Try again.")
+      return
+    }
+    this.timestamp = this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss a');
+
+    let payload = {
+      commentId: uuidv4(),
+      comment: comment,
+      timestamp: this.timestamp,
+      user: this.userService.getUser(),
+      userId: this.userService.getUserId()
+    }
+
+    this.service.addMaintComment(id, payload).subscribe(
+      response => {
+        if (response) {
+          this.toastr.success(response.success)
+          this.reload()
+        } else {
+          this.toastr.error(this.genericError)
+        }
+      }
+    )
+
+
+  }
+
+  deleteComment(id: string, userId: string) {
+    if (userId != this.userService.getUserId() ) {
+      this.toastr.error('Unable to delete comment.')
+      return
+    }
+    console.log(id, userId)
+
+     this.service.removeMaintComment(id, {}).subscribe(
+       response => {
+         if (response) {
+           this.toastr.success(response.success)
+           this.reload()
+         } else {
+           this.toastr.error(this.genericError)
+         }
+       }
+     )
+  }
+
+  showCommentBox(i: number) {
+    if (i === this.showComment) {
+      this.showComment = -1
+    } else {
+      this.showComment = i
+    }
+  }
+
   addNote() {
     const dialogRef = this.dialog.open(AddNoteComponent, {
       data: { vehicle: '' }, minWidth: '40%', minHeight: '40%'
@@ -80,7 +139,7 @@ export class PassdownComponent implements OnInit {
     });
   }
 
-  closeNote(id: string) {
+  closeNote(id: string, index: number) {
     this.timestamp = this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss a');
 
     let payload = {
@@ -89,11 +148,18 @@ export class PassdownComponent implements OnInit {
       closedTimestamp: this.timestamp,
       closedBy: this.userService.getUser()
     }
-    this.service.updateNote(payload).subscribe(
-      response => this.toastr.success(response.success)
-    )
 
-    this.refreshNotes()
+    
+
+     this.service.updateNote(payload).subscribe(
+       response => {
+         this.toastr.success(response.success)
+         this.passdown.splice(index, 1)
+       }
+       
+     )
+
+
   }
 
   refreshNotes() {
@@ -167,5 +233,13 @@ export class PassdownComponent implements OnInit {
     }
     
   }
+
+  reload() {
+    setTimeout(() => {
+      location.reload()
+    }, 1700);
+  }
+
+  
 
 }
