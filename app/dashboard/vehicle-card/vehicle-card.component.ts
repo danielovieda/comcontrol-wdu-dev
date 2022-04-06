@@ -27,39 +27,17 @@ export class VehicleCardComponent implements OnInit {
 
   @Input() data: any
   @Input() driverList: any
+  @Input() mini: boolean
 
   ngOnInit(): void {
     
   }
 
-  showInfo(vehicle: any) {
-    this.service.getVehicle(vehicle).subscribe(
-      response => this.toastrInfo(response)
-    )
-  }
-
-  toastrInfo(data: any) {
-    
-       
-
-    this.toastr.info(
-      'Current Location: <b>' + data.currentLocation + '</b><br>' +
-      'Length: <b>' + data.vehicle.length + '</b>\'<br>' +
-      'Maintenance ID: <b>' + data.vehicle.maintId + '</b><br>' , 
-      'Vehicle (' + data.vehicle.number + ')',
-      {
-        enableHtml: true,
-        closeButton: true,
-        disableTimeOut: true
-      }
-    )
-  }
-
-    
+   
 
   changeDriverDialog(vehicleId: string): void {
 
-    console.log('vehicleId: ' + vehicleId)
+    
 
     
 
@@ -74,11 +52,11 @@ export class VehicleCardComponent implements OnInit {
 
   updateDriver(data: any) {
     if (!data) {
-      console.log('no vehicleId')
+      
       return
     }
     let payload = { _id: data.vehicleId, defaultDriverId: data.driverId, defaultDriver: data.driver }
-    console.log(payload)
+   
      this.service.updateVehicle(payload).subscribe(
        response => this.toastr.success(response.success)
      )
@@ -103,8 +81,7 @@ export class VehicleCardComponent implements OnInit {
 
   addNoteDialog(vehicleId: string, number: string): void {
 
-    console.log('vehicleId: ' + vehicleId)
-    console.log('number: ' + number)
+    
 
     
 
@@ -120,7 +97,7 @@ export class VehicleCardComponent implements OnInit {
 
   saveNote(data: any) {
     if (!data) {
-      console.log('no data to save note')
+      
       return
     }
 
@@ -137,8 +114,7 @@ export class VehicleCardComponent implements OnInit {
       note: data.note
     }
 
-    console.log('from note')
-    console.log(payload)
+ 
 
     this.service.addNote(payload).subscribe(
       response => this.toastr.success(response.success)
@@ -148,7 +124,7 @@ export class VehicleCardComponent implements OnInit {
  
 
   updateStatus(vehicleId: string, status: string) {
-    console.log('triggered ' + vehicleId + ' ' + status)
+    
     let payload = {
       _id: vehicleId,
       status: status
@@ -172,8 +148,5 @@ export class VehicleCardComponent implements OnInit {
     }, 1700);
   }
   
-  consoleLog(data: any) {
-    console.log(data)
-  }
 
 }

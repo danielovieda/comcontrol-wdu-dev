@@ -72,8 +72,6 @@ export class DashboardComponent implements OnInit {
   getVehicles() {
     this.service.getVehicleList().subscribe(
       response => {
-        console.log('vehicle list')
-        console.log(response)
         this.addVehicle(response)
 
       }
@@ -81,7 +79,7 @@ export class DashboardComponent implements OnInit {
   }
 
   loadDriverList() {
-    console.log('loaded')
+   
     this.service.getDriverList("mini").subscribe(
       response => this.driverList = response
     )

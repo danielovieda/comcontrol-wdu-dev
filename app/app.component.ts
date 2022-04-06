@@ -19,16 +19,16 @@ export class AppComponent {
   debug = false
 
   ngOnInit(): void {
-    console.log('ngonit')
+    
     this.auth.isLoading$.subscribe(
       response => {
         if (response) {
-          console.log('hey its true.')
+          
         } else {
           this.auth.isAuthenticated$.subscribe(
             response => {
               if (response) {
-                console.log('im in like shin')
+                
                 this.loggedIn = true
                 this.auth.user$.subscribe(
                   response => {
@@ -36,7 +36,7 @@ export class AppComponent {
                   }
                 )
               } else {
-                console.log('im not in.. cause i suck')
+                //Not logged in.
                 
               }
             }

@@ -1,28 +1,15 @@
 
     <div class="btn-group dropdown m-1 maxwidth me-4">
 
-        <button class="btn btn-outline-secondary p-1 text-center" type="button" (click)="showInfo(data.vehicle)">
-                    <div class="border rounded vehicle" [class]="data.status">{{ data.vehicle }}</div>
-                    <p class="text-start mb-0 driver">{{ data.name }}</p>
-                    <p class="text-start m-0 route">{{ data.route }}</p>
-        </button>
-
-        <button type="button" class="btn btn-lg btn-outline-secondary dropdown-toggle dropdown-toggle-split" 
+        <button class="btn btn-outline-secondary p-1 text-center" type="button"
         [matMenuTriggerFor]="vehicleMenu"
         [matMenuTriggerData]="{id: data._id, vehicle: data.vehicle, driverId: data.driverId}">
-            <span class="visually-hidden">Toggle Dropdown</span>
+                    <div class="border rounded vehicle" [class]="data.status">{{ data.vehicle }}</div>
+                    <p class="text-start mb-0 driver" *ngIf="mini">{{ data.name }}</p>
+                    <p class="text-start m-0 route" *ngIf="mini">{{ data.route }}</p>
+                   
         </button>
 
-        <!-- <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" (click)="changeDriverDialog(data._id)"><i class="fas fa-pencil-alt"></i> Change Driver</a></li>
-            <li><a class="dropdown-item" (click)="addNoteDialog(data._id, data.vehicle)"><i class="fas fa-plus"></i> Add Note</a></li>
-            
-            <li><a class="dropdown-item" routerLink="../manage/vehicle/{{data._id}}"><i class="fas fa-bus"></i> Edit Vehicle</a></li>
-            <li><a class="dropdown-item" routerLink="../view/vehicle/{{data._id}}"><i class="fas fa-info-circle"></i> Details</a></li>
-
-                
-
-        </ul> -->
 
     </div>
 
@@ -39,7 +26,7 @@
             <button mat-menu-item routerLink="../manage/vehicle/{{data._id}}"><i class="fas fa-bus"></i> Edit Vehicle</button>
             
             <button mat-menu-item routerLink="../view/vehicle/{{data._id}}"><i class="fas fa-info-circle"></i> Details</button>
-            <!-- <button mat-menu-item (click)="consoleLog(data)">Log</button> -->
+
           </ng-template>
       </mat-menu>
 

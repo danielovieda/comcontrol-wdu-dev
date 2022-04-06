@@ -77,7 +77,6 @@
     <ng-template matMenuContent let-vehicleId="vehicleId" let-noteId="noteId" let-index="index" let-status="status" let-userId="userId">
         <button mat-menu-item routerLink="../../view/vehicle/{{vehicleId}}" *ngIf="page === 'passdown'"><i class="fa-solid fa-bus fa-sm"></i> <span class="menuLink"><small>Details</small></span></button>
         <button mat-menu-item (click)="closeNote(noteId, index)" *ngIf="status === 'open'"><i class="fa-solid fa-circle-check"></i> <span class="menuLink"><small>Resolve</small></span></button>
-        <button mat-menu-item *ngIf="status === 'closed' && page != 'passdown' && userId != whoAmI()">No options available.</button>
         <button mat-menu-item *ngIf="userId === whoAmI()" (click)="deleteMaintNote(noteId, index)"><i class="fa-solid fa-trash"></i> <span class="menuLink"><small>Delete</small></span></button>
         <button mat-menu-item *ngIf="status === 'closed'" (click)="reOpen(noteId)"><i class="fa-solid fa-arrow-rotate-right"></i> <span class="menuLink"><small>Reopen</small></span></button>
     </ng-template>

@@ -46,14 +46,14 @@ export class PassdownComponent implements OnInit {
       this.passdownDate = params.get('date')
     })
 
-    console.log('passdown date ' + this.passdownDate)
+    
 
 
     this.service.getPassdown('none').subscribe(
       response => {
         if (response) {
           this.passdown = response
-          console.log(response)
+          
         } else {
           this.haveResponse = false
         }
@@ -65,7 +65,7 @@ export class PassdownComponent implements OnInit {
       response => {
         if (response) {
           this.scheduleData = response
-          console.log(this.scheduleData)
+          
         } else {
           this.scheduleData = { date: this.passdownDate }
         }
@@ -107,7 +107,7 @@ export class PassdownComponent implements OnInit {
       this.toastr.error('Unable to delete comment.')
       return
     }
-    console.log(id, userId)
+    
 
      this.service.removeMaintComment(id, {}).subscribe(
        response => {
@@ -173,7 +173,7 @@ export class PassdownComponent implements OnInit {
         response => {
           if (response) {
             this.passdown = response
-            console.log(response)
+            
             this.loading = false
            
           } else {
@@ -190,7 +190,7 @@ export class PassdownComponent implements OnInit {
 
   savePassdownNote(data: any) {
     if (!data) {
-      console.log('no passdown note to save')
+      
       return
     }
 
@@ -212,7 +212,7 @@ export class PassdownComponent implements OnInit {
 
     this.service.addNote(payload).subscribe(
       response => {
-        console.log(response)
+        
         if (response) {
           this.toastr.success(response.success)
           this.refreshNotes()

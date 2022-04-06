@@ -77,7 +77,7 @@ export class ScheduleComponent implements OnInit {
   navBack() {
     let yesterday = new Date(this.data.date)
     yesterday.setDate(yesterday.getDate() - 1)
-    console.log(yesterday)
+    
 
     this.router.navigateByUrl('/passdown/' + this.datepipe.transform(yesterday, 'MM-dd-yyyy')).then(() => {
       window.location.reload()
@@ -95,7 +95,7 @@ export class ScheduleComponent implements OnInit {
 
   addToPassdown(type: string) {
 
-    console.log('adding to passdown...')
+    
 
 
     const dialogRef = this.dialog.open(AddNoteComponent, {
@@ -109,7 +109,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   editNote(id: string, style: string, note: string, comments: {}) {
-    console.log('editing this note... ' + id)
+    
 
     let type = 'editNote'
 
@@ -125,7 +125,7 @@ export class ScheduleComponent implements OnInit {
 
   saveEditedNote(id: string, data: any) {
     if (!data) {
-      console.log('no data to save')
+      
       return
     }
 
@@ -177,7 +177,7 @@ export class ScheduleComponent implements OnInit {
       this.toastr.error('Unable to delete comment.')
       return
     }
-    console.log(id, userId)
+    
 
      this.service.removePassdownComment(id, {}).subscribe(
        response => {
@@ -192,12 +192,9 @@ export class ScheduleComponent implements OnInit {
   }
 
   saveNote(data: any, type: string, date: string) {
-    console.log('what data are we trying to save?')
-    console.log(data)
-    console.log('date?')
-    console.log(date)
+    
     if (!data) {
-      console.log('no data to save')
+     
       return
     }
 
@@ -276,7 +273,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   deleteNote(date: string, id: string) {
-    console.log('delete note?')
+    
     this.service.removePassdownNote(date, id, {}).subscribe(
         response => {
           if (response) {
@@ -331,7 +328,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   deleteCallOut(date: string, id: string) {
-    console.log(date + ' ' + id)
+    
     this.service.removeCallout(date, id, {}).subscribe(
       response => {
         if (response) {
@@ -371,7 +368,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   confirmProtection(id: string) {
-    console.log(id)
+    
     this.timestamp = this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss a');
 
     let payload = {

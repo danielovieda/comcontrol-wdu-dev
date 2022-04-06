@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
-import { Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -30,11 +30,11 @@ export class UserService {
   }
 
   loadProfile() {
-    console.log('loading profile')
+    
     this.auth.user$.subscribe(
       profile => this.profile = profile
     )
-    console.log(this.profile)
+    
   }
 
   getProfile() {
@@ -47,12 +47,11 @@ export class UserService {
 
   saveProfile(data: any) {
     this.profile = data
-    console.log('from the service....')
-    console.log(this.profile)
+  
   }
 
   logProfile() {
-    console.log(this.profile)
+    
   }
 
   getUser() {
