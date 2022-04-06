@@ -1,5 +1,5 @@
 <div class="row me-3 ms-3">
-    <div class="col-sm-4 mb-2" *ngFor="let note of noteData; let i = index">
+    <div class="col-3 mb-2 minwidth p-1" *ngFor="let note of noteData; let i = index">
         <div class="card shadow" [ngClass]="[note.status == 'open' && note.type == 'info' ? 'text-white bg-primary' : '', note.status == 'open' && note.type == 'oos' ? 'text-white bg-danger' : '', note.status == 'open' && note.type == 'maintenance' ? 'text-dark bg-warning text-dark' : '']">
             
             <div class="card-header">

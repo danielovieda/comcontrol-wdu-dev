@@ -61,16 +61,6 @@ export class VehicleCardComponent implements OnInit {
        response => this.toastr.success(response.success)
      )
 
-     let navigationExtras: NavigationExtras = {
-      queryParams: {
-         refreshToken: (new Date).getTime() //pass a dummy parameter (i.e. the time in milliseconds since 1970 or use the npm uuid library), forces reload of unique url
-      },
-    };
-
-     setTimeout(() => {
-       this.router.navigate(['/dashboard'], navigationExtras)
-     }, 1000);
-
      setTimeout(() => {
       location.reload()
     }, 1000);

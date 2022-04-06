@@ -1,216 +1,177 @@
 <div class="card shadow-sm mb-2">
-    <div class="card-header"><span class="cursor" (click)="navBack()"><i class="fa-solid fa-caret-left fa-lg"></i></span> {{ data.date }} <span class="cursor" (click)="navNext()"><i class="fa-solid fa-caret-right fa-lg"></i></span>
+  <div class="card-header"><span class="cursor" (click)="navBack()"><i class="fa-solid fa-caret-left fa-lg"></i></span>
+    {{ data.date }} <span class="cursor" (click)="navNext()"><i class="fa-solid fa-caret-right fa-lg"></i></span>
 
-        <span class="menuLink" [matMenuTriggerFor]="passdownMenu"><i class="fa-solid fa-ellipsis-vertical"></i></span>
-    </div>
-    <div class="card-body">
+    <span class="menuLink" [matMenuTriggerFor]="passdownMenu"><i class="fa-solid fa-ellipsis-vertical"></i></span>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-1">
 
-      <!-- <ul class="list-group list-group-horizontal-sm mb-2">
-        <li class="list-group-item m-1 ms-0 border rounded bg-danger text-center shadow-sm"><i class="fa-solid fa-phone-flip fa-lg"></i></li>
-        <li class="list-group-item m-1 border rounded shadow-sm cursor"  *ngFor="let drivers of data.off_time; let i = index"
-        matTooltip="{{ drivers.note }} ({{ drivers.user }} @ {{ drivers.timestamp }})"
-        matTooltipClass="fixMargin"
-        [matTooltipClass]="[drivers.type == 'vacation' ? 'btn btn-success btn-sm' : '', drivers.type == 'sick' ? 'btn btn-danger btn-sm' : '', drivers.type == 'other' ? 'btn btn-primary btn-sm' : '']"
-        [matMenuTriggerFor]="calloutMenu"
-        [matMenuTriggerData]="{id: drivers.driverId, date: data.date}">{{ drivers.driver }}
-        <span *ngIf="drivers.routeId">({{drivers.route}})</span>
-    </li>
-        <li class="list-group-item m-1 border rounded text-center cursor shadow-sm" (click)="addToPassdown('off')"><i class="fa-solid fa-square-plus fa-lg"></i></li>
-      </ul> -->
-      
-
-      <!-- <ul class="list-group list-group-horizontal-lg mb-2">
-        <li class="list-group-item m-1 ms-0 border rounded bg-success text-center shadow-sm"><i class="fa-solid fa-shield fa-lg"></i></li>
-        <li class="list-group-item m-1 border rounded shadow-sm cursor"  *ngFor="let drivers of data.protection; let i = index"
-        [matMenuTriggerFor]="protectionMenu"
-        [matMenuTriggerData]="{id: drivers.driverId, date: data.date, protectionId: drivers.uid}"
-        [ngClass]="drivers.confirmed != '' ? 'text-white bg-success' : ''"
-        [matTooltip]="drivers.confirmed != '' ? 'Confirmed by: ' + drivers.confirmedBy + ' @ ' + drivers.confirmed + ' (' + drivers.note + ')' : 'Added by: ' + drivers.user + ' @ ' + drivers.timestamp + ' (' + drivers.note + ')'"
-        [matTooltipClass]="drivers.confirmed != '' ? 'btn btn-success btn-sm' : 'btn btn-danger btn-sm'"
-        >{{ drivers.driver }} ({{drivers.route}})
-        </li>
-      
-        
-        <li class="list-group-item m-1 border rounded text-center cursor shadow-sm" (click)="addToPassdown('protection')"><i class="fa-solid fa-square-plus fa-lg"></i></li>
-      </ul> -->
-
-      <!-- <ul class="list-group list-group-horizontal-sm mb-2">
-        <li class="list-group-item m-1 ms-0 border rounded bg-warning text-center shadow-sm"><i class="fa-solid fa-wrench fa-lg"></i></li>
-        <li class="list-group-item m-1 ms-0 border rounded shadow-sm cursor"  *ngFor="let vehicles of data.pm; let i = index"
-        [matMenuTriggerFor]="vehicleMenu"
-        [matMenuTriggerData]="{id: vehicles.vehicleId, date: data.date}">{{ vehicles.vehicle }}</li>
-        <li class="list-group-item m-1 border rounded text-center cursor shadow-sm"  (click)="addToPassdown('pm')"><i class="fa-solid fa-square-plus fa-lg"></i></li>
-      </ul> -->
-
-      <div class="row">
-        <div class="col-md-1">
-          
-          <div class="card shadow-sm bg-danger mb-2 p-2 text-center align-middle">
-            <span><i class="fa-solid fa-phone-flip fa-lg"></i></span>
-          </div>
-        </div>
-        <div class="col-md-1 w-auto" *ngFor="let drivers of data.off_time; let i = index">
-          <div class="card mb-2 p-2 shadow-sm text-center cursor"
-          matTooltip="{{ drivers.note }} ({{ drivers.user }} {{ drivers.timestamp }})"
-        [matTooltipClass]="[drivers.type == 'vacation' ? 'btn btn-success btn-sm' : '', drivers.type == 'sick' ? 'btn btn-danger btn-sm' : '', drivers.type == 'other' ? 'btn btn-primary btn-sm' : '']"
-        [matMenuTriggerFor]="calloutMenu"
-        [matMenuTriggerData]="{id: drivers.driverId, date: data.date, routeId: drivers.routeId}"
-          >
-          
-          <span *ngIf="drivers.routeId">{{ drivers.driver }} ({{drivers.route}})</span>
-          <span *ngIf="!drivers.routeId">{{ drivers.driver }}</span>
-          </div>
-        </div>
-        <div class="col-md-1">
-          
-          <div class="card shadow-sm mb-2 p-2 text-center align-middle cursor" (click)="addToPassdown('off')"
-          matTooltip="Add Driver Off Time">
-            <span><i class="fa-solid fa-square-plus fa-lg"></i></span>
-          </div>
+        <div class="card shadow-sm bg-danger mb-2 p-2 text-center align-middle">
+          <span><i class="fa-solid fa-phone-flip fa-lg"></i></span>
         </div>
       </div>
+      <div class="col-md-1 w-auto" *ngFor="let drivers of data.off_time; let i = index">
+        <div class="card mb-2 p-2 shadow-sm text-center cursor"
+          matTooltip="{{ drivers.note }} ({{ drivers.user }} {{ drivers.timestamp }})"
+          [matTooltipClass]="[drivers.type == 'vacation' ? 'btn btn-success btn-sm' : '', drivers.type == 'sick' ? 'btn btn-danger btn-sm' : '', drivers.type == 'other' ? 'btn btn-primary btn-sm' : '']"
+          [matMenuTriggerFor]="calloutMenu"
+          [matMenuTriggerData]="{id: drivers.driverId, date: data.date, routeId: drivers.routeId}">
 
-
-
-      <div class="row">
-        <div class="col-md-1">
-          
-          <div class="card shadow-sm bg-success mb-2 p-2 text-center align-middle">
-            <span><i class="fa-solid fa-shield fa-lg"></i></span>
-          </div>
+          <span *ngIf="drivers.routeId">{{ drivers.driver }} ({{drivers.route}})</span>
+          <span *ngIf="!drivers.routeId">{{ drivers.driver }}</span>
         </div>
-        <div class="col-md-1 w-auto" *ngFor="let drivers of data.protection; let i = index">
-          <div class="card mb-2 p-2 shadow-sm text-center cursor"
-          [matMenuTriggerFor]="protectionMenu"
+      </div>
+      <div class="col-md-1">
+
+        <div class="card shadow-sm mb-2 p-2 text-center align-middle cursor" (click)="addToPassdown('off')"
+          matTooltip="Add Driver Off Time">
+          <span><i class="fa-solid fa-square-plus fa-lg"></i></span>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="row">
+      <div class="col-md-1">
+
+        <div class="card shadow-sm bg-success mb-2 p-2 text-center align-middle">
+          <span><i class="fa-solid fa-shield fa-lg"></i></span>
+        </div>
+      </div>
+      <div class="col-md-1 w-auto" *ngFor="let drivers of data.protection; let i = index">
+        <div class="card mb-2 p-2 shadow-sm text-center cursor" [matMenuTriggerFor]="protectionMenu"
           [matMenuTriggerData]="{id: drivers.driverId, date: data.date, protectionId: drivers.uid}"
           [ngClass]="drivers.confirmed != '' ? 'text-white bg-success' : ''"
           [matTooltip]="drivers.confirmed != '' ? 'Confirmed by: ' + drivers.confirmedBy + ' @ ' + drivers.confirmed + ' (' + drivers.note + ')' : 'Added by: ' + drivers.user + ' @ ' + drivers.timestamp + ' (' + drivers.note + ')'"
           [matTooltipClass]="drivers.confirmed != '' ? 'btn btn-success btn-sm' : 'btn btn-danger btn-sm'">
-            {{ drivers.driver }} ({{drivers.route}})
-          </div>
+          {{ drivers.driver }} ({{drivers.route}})
         </div>
-        <div class="col-md-1">
-          
-          <div class="card shadow-sm mb-2 p-2 text-center align-middle cursor" (click)="addToPassdown('protection')"
+      </div>
+      <div class="col-md-1">
+
+        <div class="card shadow-sm mb-2 p-2 text-center align-middle cursor" (click)="addToPassdown('protection')"
           matTooltip="Add Driver Protection">
-            <span><i class="fa-solid fa-square-plus fa-lg"></i></span>
-          </div>
+          <span><i class="fa-solid fa-square-plus fa-lg"></i></span>
         </div>
       </div>
+    </div>
 
 
 
 
-      <div class="row">
-        <div class="col-md-1">
-          
-          <div class="card shadow-sm bg-warning mb-2 p-2 text-center align-middle">
-            <span><i class="fa-solid fa-wrench fa-lg"></i></span>
-          </div>
+    <div class="row">
+      <div class="col-md-1">
+
+        <div class="card shadow-sm bg-warning mb-2 p-2 text-center align-middle">
+          <span><i class="fa-solid fa-wrench fa-lg"></i></span>
         </div>
-        <div class="col-md-1 w-auto" *ngFor="let vehicles of data.pm; let i = index"
-        [matMenuTriggerFor]="vehicleMenu"
-        [matMenuTriggerData]="{id: vehicles.vehicleId, date: data.date}"
-        >
-          <div class="card mb-2 p-2 shadow-sm text-center cursor">
-            {{ vehicles.vehicle }}
-          </div>
+      </div>
+      <div class="col-md-1 w-auto" *ngFor="let vehicles of data.pm; let i = index" [matMenuTriggerFor]="vehicleMenu"
+        [matMenuTriggerData]="{id: vehicles.vehicleId, date: data.date}">
+        <div class="card mb-2 p-2 shadow-sm text-center cursor">
+          {{ vehicles.vehicle }}
         </div>
-        <div class="col-md-1">
-          
-          <div class="card shadow-sm mb-2 p-2 text-center align-middle cursor" (click)="addToPassdown('pm')"
+      </div>
+      <div class="col-md-1">
+
+        <div class="card shadow-sm mb-2 p-2 text-center align-middle cursor" (click)="addToPassdown('pm')"
           matTooltip="Add Vehicle Preventative Maintenance">
-            <span><i class="fa-solid fa-square-plus fa-lg"></i></span>
+          <span><i class="fa-solid fa-square-plus fa-lg"></i></span>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- PINNED NOTES -->
+    <div class="row">
+      <div class="col-3 p-1" *ngFor="let notes of pinnedNotes; let i = index">
+        <div class="card mb-2 shadow-sm" [class]="notes.style ? notes.style : 'text-white bg-warning'">
+          <div class="card-header">
+            <span class="me-1"><i class="fas fa-thumbtack"></i></span>
+            <span class="menuLink" (click)="closePinned(i)" matTooltip="Close note"><i
+                class="fa-solid fa-xmark fa-lg"></i></span>
+          </div>
+          <div class="card-body pb-2 pt-2">
+            <p class="card-text">{{ notes.note }}</p>
+
+            <div class="text-end">
+              <p class="mb-0"><small><i><u [matTooltip]="notes.timestamp" class="cursor">{{ notes.timestamp | timeAgo }}
+                      by {{ notes.user }}</u></i></small>
+                <span *ngIf="notes.userId == whoAmI()" class="ms-3 cursor" (click)="deletePinned(notes._id)"
+                  matTooltip="Delete note"><i class="fa-solid fa-trash"></i></span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-3 p-1" *ngFor="let notes of data.note; let i = index">
+        <div class="card mb-2 shadow-sm" [class]="notes.style ? notes.style : 'text-white bg-warning'">
+          <div class="card-body pb-2 pt-2">
+            <p class="card-text">{{ notes.note }}</p>
+
+            <!-- COMMENTS LOOP -->
+            <div class="card-text mb-1 p-1 border-bottom border-dark cursor"
+              *ngFor="let comment of notes.comment, let index = index"
+              matTooltip="{{comment.user}} {{comment.timestamp | timeAgo}}" [matMenuTriggerFor]="deleteCommentMenu"
+              [matMenuTriggerData]="{id: comment.commentId, date: data.date, userId: comment.userId}">
+              <div>
+                <span class="badge border bg-light text-dark p-1 me-2 font-weight-bold">{{ comment.user | slice:0:1
+                  }}</span>
+                <small>{{ comment.comment }}</small>
+              </div>
+
+
+            </div>
+
+            <!-- END COMMENTS -->
+
+            <div class="card-text" [id]="'comments' + i" *ngIf="showComment === i">
+              <div class="mb-1">
+                <textarea class="form-control" rows="3" #commentBox
+                  (keyup.enter)="addComment(notes.noteId, commentBox.value)"></textarea>
+              </div>
+              <div class="text-end mb-1">
+                <button class="btn btn-secondary btn-sm" (click)="addComment(notes.noteId, commentBox.value)"><small><i
+                      class="fa-solid fa-check"></i></small></button>
+              </div>
+            </div>
+
+            <div class="text-end">
+
+              <p class="mb-0"><small><i><u [matTooltip]="notes.timestamp" class="cursor">{{ notes.timestamp | timeAgo }}
+                      by {{ notes.user }}</u></i><b *ngIf="notes.edited" class="ms-2 cursor"
+                    matTooltip="Note was edited.">*</b></small>
+
+                <span class="ms-3 cursor" (click)="showCommentBox(i)" matTooltip="Add Comment">
+                  <i class="fa-solid fa-comment"></i>
+                </span>
+                <span *ngIf="notes.userId == whoAmI()" class="ms-3 cursor"
+                  (click)="editNote(notes.noteId, notes.style, notes.note, notes.comment)" matTooltip="Edit note"><i
+                    class="fa-solid fa-pencil"></i></span>
+
+                <span *ngIf="notes.userId == whoAmI()" class="ms-3 cursor" (click)="deleteNote(data.date, notes.noteId)"
+                  matTooltip="Delete note"><i class="fa-solid fa-trash"></i></span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="card shadow-sm">
+          <div class="card-body text-center m-0 cursor" (click)="addToPassdown('note')" matTooltip="Add Passdown Note">
+            <p class="card-text m-0"><i class="fa-solid fa-square-plus fa-lg"></i></p>
           </div>
         </div>
       </div>
 
 
-      <!-- PINNED NOTES -->
-      <div class="row">
-        <div class="col-sm-4" *ngFor="let notes of pinnedNotes; let i = index">
-          <div class="card mb-2 shadow-sm" [class]="notes.style ? notes.style : 'text-white bg-warning'">
-            <div class="card-header">
-              <span class="me-1"><i class="fas fa-thumbtack"></i></span>
-              <span class="menuLink"
-              (click)="closePinned(i)"
-              matTooltip="Close note"><i class="fa-solid fa-xmark fa-lg"></i></span>
-            </div>
-            <div class="card-body pb-2 pt-2">
-              <p class="card-text">{{ notes.note }}</p>
+    </div>
 
-              <div class="text-end">
-                <p class="mb-0"><small><i><u [matTooltip]="notes.timestamp" class="cursor">{{ notes.timestamp | timeAgo }} by {{ notes.user }}</u></i></small>
-                <span *ngIf="notes.userId == whoAmI()" class="ms-3 cursor" (click)="deletePinned(notes._id)"
-                matTooltip="Delete note"><i class="fa-solid fa-trash"></i></span>
-                </p>
-            </div>
-            </div>
-        </div>
-        </div>
-
-          <div class="col-sm-4" *ngFor="let notes of data.note; let i = index">
-            <div class="card mb-2 shadow-sm" [class]="notes.style ? notes.style : 'text-white bg-warning'">
-                <div class="card-body pb-2 pt-2">
-                  <p class="card-text">{{ notes.note }}</p>
-
-                  <!-- COMMENTS LOOP -->
-                  <div class="card-text mb-1 p-1 border-bottom border-dark cursor" 
-                  *ngFor="let comment of notes.comment, let index = index" 
-                  matTooltip="{{comment.user}} {{comment.timestamp | timeAgo}}"
-                  [matMenuTriggerFor]="deleteCommentMenu"
-                  [matMenuTriggerData]="{id: comment.commentId, date: data.date, userId: comment.userId}">
-                  <div>
-                    <span class="badge border bg-light text-dark p-1 me-2 font-weight-bold">{{ comment.user | slice:0:1 }}</span>
-                    <small>{{ comment.comment }}</small>
-                  </div>
-                  
-                  
-                  </div>
-
-                  <!-- END COMMENTS -->
-
-                  <div class="card-text" [id]="'comments' + i" *ngIf="showComment === i">
-                    <div class="mb-1">
-                      <textarea class="form-control" rows="3" #commentBox (keyup.enter)="addComment(notes.noteId, commentBox.value)"></textarea>
-                    </div>
-                    <div class="text-end mb-1">
-                      <button class="btn btn-secondary btn-sm" (click)="addComment(notes.noteId, commentBox.value)"><small><i class="fa-solid fa-check"></i></small></button>
-                    </div>
-                  </div>
-
-                  <div class="text-end">
-                    
-                    <p class="mb-0"><small><i><u [matTooltip]="notes.timestamp" class="cursor">{{ notes.timestamp | timeAgo }} by {{ notes.user }}</u></i><b *ngIf="notes.edited" class="ms-2 cursor" matTooltip="Note was edited.">*</b></small>
-                    
-                      <span class="ms-3 cursor" (click)="showCommentBox(i)" matTooltip="Add Comment">
-                        <i class="fa-solid fa-comment"></i>
-                      </span>
-                      <span *ngIf="notes.userId == whoAmI()" class="ms-3 cursor" 
-                      (click)="editNote(notes.noteId, notes.style, notes.note, notes.comment)"
-                      matTooltip="Edit note"><i class="fa-solid fa-pencil"></i></span>
-
-                      <span *ngIf="notes.userId == whoAmI()" class="ms-3 cursor" 
-                    (click)="deleteNote(data.date, notes.noteId)"
-                    matTooltip="Delete note"><i class="fa-solid fa-trash"></i></span>
-                    </p>
-                </div>
-                </div>
-            </div>
-            </div>
-
-            <div class="col-sm-4">
-                <div class="card shadow-sm">
-                    <div class="card-body text-center m-0 cursor"  (click)="addToPassdown('note')"
-                    matTooltip="Add Passdown Note">
-                      <p class="card-text m-0"><i class="fa-solid fa-square-plus fa-lg"></i></p>
-                    </div>
-                </div>
-            </div>
-            
-          
-      </div>
-      
 
 
   </div>
@@ -218,26 +179,35 @@
 
   <mat-menu #calloutMenu="matMenu">
     <ng-template matMenuContent let-id="id" let-date="date" let-routeId="routeId">
-        <button mat-menu-item routerLink="../../manage/user/{{id}}"><i class="fa-solid fa-person fa-sm"></i> <span class="menuLink"><small>Manage Driver</small></span></button>
-        <button mat-menu-item routerLink="../../manage/route/{{routeId}}"><i class="fa-solid fa-route"></i> <span class="menuLink"><small>Manage Route</small></span></button>
-        <button mat-menu-item (click)="deleteCallOut(date, id)"><i class="fa-solid fa-trash fa-sm"></i> <span class="menuLink"><small>Delete</small></span></button>
-      </ng-template>
+      <button mat-menu-item routerLink="../../manage/user/{{id}}"><i class="fa-solid fa-person fa-sm"></i> <span
+          class="menuLink"><small>Manage Driver</small></span></button>
+      <button mat-menu-item routerLink="../../manage/route/{{routeId}}"><i class="fa-solid fa-route"></i> <span
+          class="menuLink"><small>Manage Route</small></span></button>
+      <button mat-menu-item (click)="deleteCallOut(date, id)"><i class="fa-solid fa-trash fa-sm"></i> <span
+          class="menuLink"><small>Delete</small></span></button>
+    </ng-template>
   </mat-menu>
 
   <mat-menu #protectionMenu="matMenu">
     <ng-template matMenuContent let-id="id" let-date="date" let-protection="protectionId">
-        <button mat-menu-item (click)="confirmProtection(protection)"><i class="fa-solid fa-check-double fa-sm"></i> <span class="menuLink"><small>Confirm</small></span></button>
-        <button mat-menu-item routerLink="../../manage/user/{{id}}"><i class="fa-solid fa-person fa-sm"></i> <span class="menuLink"><small>Manage Driver</small></span></button>
-        <button mat-menu-item (click)="doSomething(id)"><i class="fa-solid fa-route fa-sm"></i> <span class="menuLink"><small>Manage Route</small></span></button>
-        <button mat-menu-item (click)="deleteProtection(date, id)"><i class="fa-solid fa-trash fa-sm"></i> <span class="menuLink"><small>Delete</small></span></button>
-      </ng-template>
+      <button mat-menu-item (click)="confirmProtection(protection)"><i class="fa-solid fa-check-double fa-sm"></i> <span
+          class="menuLink"><small>Confirm</small></span></button>
+      <button mat-menu-item routerLink="../../manage/user/{{id}}"><i class="fa-solid fa-person fa-sm"></i> <span
+          class="menuLink"><small>Manage Driver</small></span></button>
+      <button mat-menu-item (click)="doSomething(id)"><i class="fa-solid fa-route fa-sm"></i> <span
+          class="menuLink"><small>Manage Route</small></span></button>
+      <button mat-menu-item (click)="deleteProtection(date, id)"><i class="fa-solid fa-trash fa-sm"></i> <span
+          class="menuLink"><small>Delete</small></span></button>
+    </ng-template>
   </mat-menu>
 
   <mat-menu #vehicleMenu="matMenu">
     <ng-template matMenuContent let-id="id" let-date="date">
-        <button mat-menu-item routerLink="../../view/vehicle/{{id}}"><i class="fa-solid fa-bus fa-sm"></i> <span class="menuLink"><small>Details</small></span></button>
-        <button mat-menu-item (click)="deletePm(date, id)"><i class="fa-solid fa-trash fa-sm"></i> <span class="menuLink"><small>Delete</small></span></button>
-      </ng-template>
+      <button mat-menu-item routerLink="../../view/vehicle/{{id}}"><i class="fa-solid fa-bus fa-sm"></i> <span
+          class="menuLink"><small>Details</small></span></button>
+      <button mat-menu-item (click)="deletePm(date, id)"><i class="fa-solid fa-trash fa-sm"></i> <span
+          class="menuLink"><small>Delete</small></span></button>
+    </ng-template>
   </mat-menu>
 
   <mat-menu #passdownMenu="matMenu">
@@ -251,6 +221,7 @@
 
   <mat-menu #deleteCommentMenu="matMenu">
     <ng-template matMenuContent let-id="id" let-userId="userId" let-date="date">
-      <button mat-menu-item (click)="deleteComment(id,date,userId)"><i class="fa-solid fa-trash fa-sm"></i> <span class="menuLink"><small>Delete</small></span></button>
+      <button mat-menu-item (click)="deleteComment(id,date,userId)"><i class="fa-solid fa-trash fa-sm"></i> <span
+          class="menuLink"><small>Delete</small></span></button>
     </ng-template>
   </mat-menu>

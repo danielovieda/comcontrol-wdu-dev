@@ -1,34 +1,36 @@
+<div class="btn-group dropdown m-1">
 
-    <div class="btn-group dropdown m-1 maxwidth me-4">
-
-        <button class="btn btn-outline-secondary p-1 text-center" type="button"
+    <button class="btn btn-outline-secondary text-center" type="button" [ngClass]="mini ? 'p-0' : 'p-1'"
         [matMenuTriggerFor]="vehicleMenu"
         [matMenuTriggerData]="{id: data._id, vehicle: data.vehicle, driverId: data.driverId}">
-                    <div class="border rounded vehicle" [class]="data.status">{{ data.vehicle }}</div>
-                    <p class="text-start mb-0 driver" *ngIf="mini">{{ data.name }}</p>
-                    <p class="text-start m-0 route" *ngIf="mini">{{ data.route }}</p>
-                   
-        </button>
+        <div class="border rounded vehicle ps-2 pe-2" [class]="data.status">{{ data.vehicle }}</div>
+        <p class="text-start mb-0 driver" *ngIf="!mini">{{ data.name }}</p>
+        <p class="text-start m-0 route" *ngIf="!mini">{{ data.route }}</p>
+
+    </button>
+</div>
 
 
-    </div>
+<mat-menu #vehicleMenu="matMenu">
+    <ng-template matMenuContent let-id="id" let-date="date" let-vehicle="vehicle">
+        <button mat-menu-item [matMenuTriggerFor]="statusMenu" [matMenuTriggerData]="{id: id}"><i
+                class="fa-solid fa-flag"></i> Change Status</button>
+        <button mat-menu-item (click)="addNoteDialog(id, vehicle)"><i class="fas fa-plus"></i> Add Note</button>
+        <button mat-menu-item 
+        [routerLink]="mini ? '../../manage/user/' + data.driverId : '../manage/user/' + data.driverId"
+        *ngIf="data.driverId != ''"><i class="fa-solid fa-pencil"></i> Manage
+            Driver</button>
 
+        <button mat-menu-item (click)="changeDriverDialog(id)"><i class="fa-solid fa-person"></i> Change Driver</button>
 
-    <mat-menu #vehicleMenu="matMenu">
-        <ng-template matMenuContent let-id="id" let-date="date" let-vehicle="vehicle">
-            <button mat-menu-item [matMenuTriggerFor]="statusMenu"
-            [matMenuTriggerData]="{id: id}"><i class="fa-solid fa-flag"></i> Change Status</button>
-            <button mat-menu-item (click)="addNoteDialog(id, vehicle)"><i class="fas fa-plus"></i> Add Note</button>
-            <button mat-menu-item routerLink="../manage/user/{{data.driverId}}"><i class="fa-solid fa-pencil"></i> Manage Driver</button>
+        <button mat-menu-item [routerLink]="mini ? '../../manage/vehicle/' + data._id : '../manage/vehicle/' + data._id"><i class="fas fa-bus"></i> Edit
+            Vehicle</button>
 
-            <button mat-menu-item (click)="changeDriverDialog(id)"><i class="fa-solid fa-person"></i> Change Driver</button>
-            
-            <button mat-menu-item routerLink="../manage/vehicle/{{data._id}}"><i class="fas fa-bus"></i> Edit Vehicle</button>
-            
-            <button mat-menu-item routerLink="../view/vehicle/{{data._id}}"><i class="fas fa-info-circle"></i> Details</button>
+        <button mat-menu-item [routerLink]="mini ? '../../view/vehicle/' + data._id : '../view/vehicle/' + data._id"><i class="fas fa-info-circle"></i>
+            Details</button>
 
-          </ng-template>
-      </mat-menu>
+    </ng-template>
+</mat-menu>
 
 <mat-menu #statusMenu="matMenu">
     <ng-template matMenuContent let-id="id">

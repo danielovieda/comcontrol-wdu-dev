@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { BackendService } from '../services/backend.service'
 
 @Component({
@@ -7,6 +7,7 @@ import { BackendService } from '../services/backend.service'
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  @Input() mini: boolean = false
 
   driverList: any = [{}]
 
