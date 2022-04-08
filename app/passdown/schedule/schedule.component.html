@@ -221,7 +221,9 @@
 
   <mat-menu #deleteCommentMenu="matMenu">
     <ng-template matMenuContent let-id="id" let-userId="userId" let-date="date">
-      <button mat-menu-item (click)="deleteComment(id,date,userId)"><i class="fa-solid fa-trash fa-sm"></i> <span
+      <button mat-menu-item (click)="deleteComment(id,date,userId)"
+      *ngIf="userId === whoAmI()"><i class="fa-solid fa-trash fa-sm"></i> <span
           class="menuLink"><small>Delete</small></span></button>
+          <button mat-menu-item *ngIf="userId != whoAmI()">No options available.</button>
     </ng-template>
   </mat-menu>

@@ -15,22 +15,22 @@ export class TimeAgoPipe implements PipeTransform {
         return "Just now";
       }
       const intervals = {
-        year: 365 * 24 * 60 * 60,
-        month: (52 * 7 * 24 * 60 * 60) / 12,
-        week: 7 * 24 * 60 * 60,
-        day: 24 * 60 * 60,
-        hour: 60 * 60,
-        minute: 60,
-        second: 1
+        Y: 365 * 24 * 60 * 60,
+        M: (52 * 7 * 24 * 60 * 60) / 12,
+        wk: 7 * 24 * 60 * 60,
+        d: 24 * 60 * 60,
+        h: 60 * 60,
+        m: 60,
+        s: 1
       };
       let counter;
       for (const i of Object.keys(intervals)) {
         counter = Math.floor(seconds / intervals[i]);
         if (counter > 0) {
           if (counter === 1) {
-            return counter + " " + i + " ago";
+            return counter + i + " ago";
           } else {
-            return counter + " " + i + "s ago";
+            return counter + i + " ago";
           }
         }
       }
