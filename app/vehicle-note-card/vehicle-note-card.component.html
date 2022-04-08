@@ -31,7 +31,7 @@
                 [matMenuTriggerData]="{id: comment.commentId, userId: comment.userId}"
                 >
                 <div>
-                  <span class="badge border bg-light text-dark p-1 me-1 fw-bold">{{ comment.user | slice:0:1 }}</span>
+                  <span class="badge border bg-light text-dark p-1 me-1 fw-bold">{{ comment.user | uppercase | slice:0:1 }}</span>
                   <span class="badge border p-1 me-2 fw-light" [ngClass]="[note.status == 'open' && note.type == 'info' ? 'text-white bg-primary' : '', note.status == 'open' && note.type == 'oos' ? 'text-white bg-danger' : '', note.status == 'open' && note.type == 'maintenance' ? 'text-dark bg-warning text-dark' : '', note.status == 'closed' ? 'text-dark': '']">{{ comment.timestamp | timeAgo }}</span>
                   <small>{{ comment.comment }}</small>
                 </div>
@@ -49,7 +49,19 @@
                   </div>
 
                 <div class="text-end">
-                    <p class="mb-0"><small><i><u [matTooltip]="note.timestamp" class="cursor">{{ note.timestamp | timeAgo }} by {{ note.username }}</u></i></small>
+                    <p class="mb-0">
+                        <span class="badge border border-dark p-1 me-1 fw-light cursor"
+                        [matTooltip]="'Opened by ' + note.username + ' at ' + note.timestamp"
+                        [ngClass]="[note.status == 'open' && note.type == 'info' ? 'text-white bg-primary border-white' : '', note.status == 'open' && note.type == 'oos' ? 'text-white bg-danger border-white' : '', note.status == 'open' && note.type == 'maintenance' ? 'text-dark bg-warning text-dark' : '', note.status == 'closed' ? 'text-dark': '']">
+                        <i class="fa-solid fa-plus"></i> {{ note.timestamp | timeAgo }} by {{ note.username | uppercase | slice:0:1  }}</span>
+
+                        <span *ngIf="note.status === 'closed'"
+                        class="badge border p-1 me-1 fw-light cursor"
+                        [matTooltip]="'Closed by ' + note.closedBy + ' at ' + note.closedTimestamp"
+                        [ngClass]="[note.status === 'closed' ? 'text-light bg-success border-dark': '']">
+                        <i class="fa-solid fa-check"></i> {{ note.closedTimestamp | timeAgo }} by {{ note.closedBy | uppercase | slice:0:1 }}</span>
+
+                        <!-- <small><i><u [matTooltip]="note.timestamp" class="cursor">{{ note.timestamp | timeAgo }} by {{ note.username }}</u></i></small> -->
                     
                         <span class="ms-2 cursor" (click)="showCommentBox(i)" matTooltip="Add Comment">
                             <i class="fa-solid fa-comment"></i>
