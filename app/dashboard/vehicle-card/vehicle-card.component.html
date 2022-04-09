@@ -1,9 +1,14 @@
-<div class="btn-group dropdown m-1">
+<div class="btn-group m-1">
 
     <button class="btn btn-outline-secondary text-center" type="button" [ngClass]="mini ? 'p-0' : 'p-1'"
         [matMenuTriggerFor]="vehicleMenu"
-        [matMenuTriggerData]="{id: data._id, vehicle: data.vehicle, driverId: data.driverId}">
-        <div class="border rounded vehicle ps-2 pe-2" [class]="data.status">{{ data.vehicle }}</div>
+        [matMenuTriggerData]="{id: data._id, vehicle: data.vehicle, driverId: data.driverId}"
+        [matTooltip]="data.defaultYard !== data.currentLocation ? data.currentLocation : ''">
+        <div class="border rounded vehicle ps-2 pe-2" [class]="data.status">
+            
+            {{ data.vehicle }} <span *ngIf="data.identifier !== null">- {{ data.identifier }}</span>
+            <span *ngIf="data.defaultYard !== data.currentLocation"><i class="fa-solid fa-location-dot"></i></span>
+        </div>
         <p class="text-start mb-0 driver" *ngIf="!mini">{{ data.name }}</p>
         <p class="text-start m-0 route" *ngIf="!mini">{{ data.route }}</p>
 
@@ -28,6 +33,10 @@
 
         <button mat-menu-item [routerLink]="mini ? '../../view/vehicle/' + data._id : '../view/vehicle/' + data._id"><i class="fas fa-info-circle"></i>
             Details</button>
+
+            <button mat-menu-item (click)="showVehicleDialog(data._id)"><i class="fa-solid fa-eye"></i>
+                Glance</button>
+
 
     </ng-template>
 </mat-menu>

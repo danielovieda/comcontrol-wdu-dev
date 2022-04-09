@@ -16,6 +16,8 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class ViewvehicleComponent implements OnInit {
 
+  @Input() whichVehicle: string
+
   vehicleId: any
   vehicleData: any
   noteData:any
@@ -35,10 +37,15 @@ export class ViewvehicleComponent implements OnInit {
     
       this.route.paramMap.subscribe((params: ParamMap) => {
         this.vehicleId = params.get('id')
-        this.loadData(this.vehicleId)
+        
       })
 
-      
+      if (this.vehicleId === null) {
+        this.loadData(this.whichVehicle)
+        this.vehicleId = this.whichVehicle
+      } else {
+        this.loadData(this.vehicleId)
+      }
      
     
   }

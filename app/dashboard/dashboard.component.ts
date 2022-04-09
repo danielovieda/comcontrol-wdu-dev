@@ -27,10 +27,13 @@ export class DashboardComponent implements OnInit {
   currentFilter: string
 
   addVehicle(data: any) {
+    //console.log(data)
     for(let i = 0; i < data.length; i++) {
       this.vehicleList.push({
         _id: data[i]._id,
         vehicle: data[i].vehicle.number,
+        currentLocation: data[i].currentLocation,
+        defaultYard: data[i].defaultYard,
         name: data[i].defaultDriver,
         route: data[i].defaultRoute,
         status: data[i].status,
@@ -38,6 +41,8 @@ export class DashboardComponent implements OnInit {
         driverId: data[i].defaultDriverId
       })
     }
+
+    //console.log(this.vehicleList)
 
     this.shownVehicleList = this.vehicleList
   }

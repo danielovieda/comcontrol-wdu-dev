@@ -7,6 +7,7 @@ import { AddNoteComponent } from 'src/app/modal/add-note/add-note.component';
 import { DatePipe } from '@angular/common';
 import { Router, NavigationExtras, ActivatedRoute, ParamMap } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { ViewmodalComponent } from 'src/app/view/viewmodal/viewmodal.component';
 
 @Component({
   selector: 'app-vehicle-card',
@@ -31,6 +32,13 @@ export class VehicleCardComponent implements OnInit {
 
   ngOnInit(): void {
     
+  }
+
+  showVehicleDialog(vehicleId: string): void {
+    console.log('which vehicle ', vehicleId)
+    const dialogRef = this.dialog.open(ViewmodalComponent, {
+      data: { vehicle: vehicleId}
+    });
   }
 
    
