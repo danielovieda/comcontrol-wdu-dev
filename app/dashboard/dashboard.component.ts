@@ -94,7 +94,7 @@ export class DashboardComponent implements OnInit {
 
   getStatusCount(status: string): number {
     const vehicles = [...this.vehicleList]
-    return Number(vehicles.filter((vehicle: any) => vehicle.status === status).length)
+    return vehicles.filter((vehicle: any) => vehicle.status === status).length
   }
 
 }
