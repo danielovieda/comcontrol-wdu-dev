@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 
 
 @Component({
@@ -7,6 +7,12 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   styleUrls: ['./filter-bar.component.scss']
 })
 export class FilterBarComponent implements OnInit {
+  @Input() totalActive: number
+  @Input() totalFlag: number
+  @Input() totalOOS: number
+  @Input() totalPM: number
+  @Input() totalSpare: number
+
 
   @Output() filterEvent = new EventEmitter();
 

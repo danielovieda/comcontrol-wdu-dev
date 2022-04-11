@@ -42,9 +42,10 @@ export class DashboardComponent implements OnInit {
       })
     }
 
-    //console.log(this.vehicleList)
+    
 
     this.shownVehicleList = this.vehicleList
+    
   }
 
   filter(filtStatus: any) {
@@ -89,6 +90,11 @@ export class DashboardComponent implements OnInit {
     this.service.getDriverList("mini").subscribe(
       response => this.driverList = response
     )
+  }
+
+  getStatusCount(status: string): number {
+    const vehicles = [...this.vehicleList]
+    return Number(vehicles.filter((vehicle: any) => vehicle.status === status).length)
   }
 
 }

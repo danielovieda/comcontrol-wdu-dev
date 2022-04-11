@@ -1,9 +1,9 @@
 <div class="row m-2 me-5 text-center justify-content-end">
     
-            <div class="col-2 m-3 active rounded p-2 text-light cursor" (click)="filter('active')">Active</div> 
-            <div class="col-2 m-3  flag rounded   p-2 text-light cursor" (click)="filter('flag')">Active w/ Issue</div>
-            <div class="col-2 m-3  oos rounded   p-2 text-light cursor" (click)="filter('oos')">Out of Service</div>
-            <div class="col-2 m-3  pm rounded   p-2 text-dark cursor" (click)="filter('pm')">PM</div>
-            <div class="col-2 m-3  spare rounded   p-2 text-light cursor" (click)="filter('spare')">Spare</div> 
+            <div class="col-2 m-3 active rounded p-2 text-light cursor" (click)="filter('active')">Active <small>({{totalActive}})</small></div> 
+            <div class="col-2 m-3  flag rounded   p-2 text-light cursor" (click)="filter('flag')">Active w/ Issue <small>({{totalFlag}})</small></div>
+            <div class="col-2 m-3  oos rounded   p-2 text-light cursor" (click)="filter('oos')">OOS <small>({{totalOOS}})</small></div>
+            <div class="col-2 m-3  pm rounded   p-2 text-dark cursor" (click)="filter('pm')">PM <small>({{totalPM}})</small></div>
+            <div class="col-2 m-3  spare rounded   p-2 text-light cursor" (click)="filter('spare')">Spare <small>({{totalSpare}})</small></div> 
     
 </div>

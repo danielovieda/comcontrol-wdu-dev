@@ -1,4 +1,9 @@
-<app-filter-bar (filterEvent)="filter($event)"></app-filter-bar>
+<app-filter-bar (filterEvent)="filter($event)"
+[totalActive]="getStatusCount('active')"
+[totalFlag]="getStatusCount('flag')"
+[totalOOS]="getStatusCount('oos')"
+[totalPM]="getStatusCount('pm')"
+[totalSpare]="getStatusCount('spare')"></app-filter-bar>
 
 
 <div class="row m-2">
