@@ -8,10 +8,17 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 })
 export class ViewmodalComponent {
   whichVehicle: string
+  whichUser: string
+  whichRoute: string
 
   constructor(public dialogRef: MatDialogRef<ViewmodalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { 
-      this.whichVehicle = data.vehicle
+      if (data.vehicle){
+        this.whichVehicle = data.vehicle
+      }
+      if(data.user) {
+
+      }
     }
 
   

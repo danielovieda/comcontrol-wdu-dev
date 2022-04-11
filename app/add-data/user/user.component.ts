@@ -211,10 +211,6 @@ export class UserComponent implements OnInit {
       );
     }
   }
-
-  logIt() {
-    console.log(this.knownRoutes)
-  }
   
 
 }

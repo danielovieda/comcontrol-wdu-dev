@@ -36,7 +36,7 @@ export class AppComponent {
                   }
                 )
               } else {
-                //Not logged in.
+                this.triggerLogin()
                 
               }
             }

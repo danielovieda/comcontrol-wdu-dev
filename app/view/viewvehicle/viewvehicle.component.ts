@@ -167,6 +167,7 @@ export class ViewvehicleComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.saveNote(result);
+      
     });
   }
 
@@ -194,7 +195,10 @@ export class ViewvehicleComponent implements OnInit {
     console.log(payload)
 
     this.service.addNote(payload).subscribe(
-      response => this.toastr.success(response.success)
+      response => {
+        this.toastr.success(response.success)
+        this.noteData.unshift(payload)
+      }
     )
 
     this.refreshNotes()

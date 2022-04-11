@@ -1,1 +1,3 @@
-<app-viewvehicle [whichVehicle]="whichVehicle"></app-viewvehicle>
+<app-viewvehicle [whichVehicle]="whichVehicle" *ngIf="whichVehicle"></app-viewvehicle>
+<app-viewuser *ngIf="whichUser"></app-viewuser>
+<app-viewroute *ngIf="whichRoute"></app-viewroute>

@@ -35,7 +35,6 @@ import { ViewComponent } from './view/view.component';
 import { ViewvehicleComponent } from './view/viewvehicle/viewvehicle.component';
 import { AddNoteComponent } from './modal/add-note/add-note.component';
 import { DatePipe } from '@angular/common';
-import { ViewnotesComponent } from './view/viewnotes/viewnotes.component';
 
 import { AuthModule } from '@auth0/auth0-angular';
 import { PassdownComponent } from './passdown/passdown.component';
@@ -81,7 +80,6 @@ import { ViewmodalComponent } from './view/viewmodal/viewmodal.component';
     ViewComponent,
     ViewvehicleComponent,
     AddNoteComponent,
-    ViewnotesComponent,
     PassdownComponent,
     CalendarComponent,
     ScheduleComponent,
