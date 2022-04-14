@@ -136,6 +136,7 @@ export class VehicleNoteCardComponent implements OnInit {
       response => {
         if (response) {
           this.toastr.success(response.success)
+          this.service.addHistory('ADDED', 'COMMENT', payload.commentId, id)
           this.reload()
         } else {
           this.toastr.error(this.genericError)

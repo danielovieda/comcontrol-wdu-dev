@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { DatePipe } from '@angular/common';
+import { UserService } from './user.service';
 
 
 @Injectable({
@@ -67,7 +69,11 @@ export class BackendService {
 
   private deleteMaintNoteUrl = environment.BASE_API_URL + '/delete/maintNote/'
 
-  constructor(private http: HttpClient) { }
+  private addHistoryUrl = environment.BASE_API_URL + '/add/history/'
+
+  constructor(private http: HttpClient,
+    private datepipe: DatePipe,
+    private userService: UserService) { }
 
   getVehicle(id: string): Observable<any> {
     return this.http.get(this.getVehicleUrl + id)
@@ -224,6 +230,23 @@ export class BackendService {
 
   deleteMaintNote(id: string): Observable<any> {
     return this.http.delete<any>(this.deleteMaintNoteUrl + id)
+  }
+
+  addHistory(action: string, item: string, itemId: string, on: string): Observable<any> {
+    let date = this.getToday()
+    let data = {
+      timestamp: this.getTimestamp(),
+      message: this.userService.getUser() + ' ' + action + ' ' + item + '(' + itemId + ') to ' + on
+    }
+    return this.http.post<any>(this.addHistoryUrl + date, data)
+  }
+
+  getTimestamp(): string {
+    return this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss a');
+  }
+
+  getToday(): string {
+    return this.datepipe.transform((new Date), 'MM-dd-yyyy')
   }
 
 
