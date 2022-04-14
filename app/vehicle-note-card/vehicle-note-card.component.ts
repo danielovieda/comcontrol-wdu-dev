@@ -41,6 +41,7 @@ export class VehicleNoteCardComponent implements OnInit {
       response => {
         if (response) {
           this.toastr.success(response.success)
+          this.service.addHistory('DELETED', 'NOTE', id, 'VEHICLE', '', '').subscribe()
           this.noteData.splice(index, 1)
         } else {
           this.toastr.error(this.genericError)
@@ -64,6 +65,7 @@ export class VehicleNoteCardComponent implements OnInit {
     this.service.updateNote(payload).subscribe(
       response => {
         this.toastr.success(response.success)
+        this.service.addHistory('CLOSED', 'NOTE', id, 'VEHICLE', '', '').subscribe()
         if (this.page === 'passdown') {
           this.noteData.splice(index, 1)
         } else {
@@ -89,6 +91,7 @@ export class VehicleNoteCardComponent implements OnInit {
       response => {
         if (response) {
           this.toastr.success(response.success)
+          this.service.addHistory('REOPENED', 'NOTE', '', 'VEHICLE', id, '').subscribe()
           this.reload()
 
         } else {
@@ -109,6 +112,7 @@ export class VehicleNoteCardComponent implements OnInit {
       response => {
         if (response) {
           this.toastr.success(response.success)
+          this.service.addHistory('DELETED', 'COMMENT', id, 'VEHICLE', '', '').subscribe()
           this.reload()
         } else {
           this.toastr.error(this.genericError)
@@ -136,7 +140,7 @@ export class VehicleNoteCardComponent implements OnInit {
       response => {
         if (response) {
           this.toastr.success(response.success)
-          this.service.addHistory('ADDED', 'COMMENT', payload.commentId, id)
+          this.service.addHistory('ADDED', 'COMMENT', payload.commentId, 'VEHICLE', id, payload.comment).subscribe()
           this.reload()
         } else {
           this.toastr.error(this.genericError)

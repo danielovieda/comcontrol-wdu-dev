@@ -232,11 +232,11 @@ export class BackendService {
     return this.http.delete<any>(this.deleteMaintNoteUrl + id)
   }
 
-  addHistory(action: string, item: string, itemId: string, on: string): Observable<any> {
+  addHistory(action: string, item: string, itemId: string, on: string, onId: string, content: string): Observable<any> {
     let date = this.getToday()
     let data = {
       timestamp: this.getTimestamp(),
-      message: this.userService.getUser() + ' ' + action + ' ' + item + '(' + itemId + ') to ' + on
+      message: this.userService.getUser() + ' ' + action + ' ' + item + '(' + itemId + ') to ' + on + ' (' + onId + '): ' + content
     }
     return this.http.post<any>(this.addHistoryUrl + date, data)
   }
