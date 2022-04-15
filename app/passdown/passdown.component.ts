@@ -42,6 +42,8 @@ export class PassdownComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.spinner.show()
+
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.passdownDate = params.get('date')
     })
@@ -71,6 +73,11 @@ export class PassdownComponent implements OnInit {
         }
       }
     )
+
+    setTimeout(() => {
+      this.spinner.hide()
+    },2000)
+    
   }
 
   addComment(id: string, comment: string) {

@@ -7,6 +7,7 @@ import { AddNoteComponent } from 'src/app/modal/add-note/add-note.component';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
+import { ViewmodalComponent } from 'src/app/view/viewmodal/viewmodal.component';
 
 @Component({
   selector: 'app-schedule',
@@ -133,6 +134,7 @@ export class ScheduleComponent implements OnInit {
       response => {
         if (response) {
           this.toastr.success(response.success)
+          this.service.addHistory('EDITED', 'NOTE', id, '', '', data.note).subscribe()
           this.reload()
         } else {
           this.toastr.error(this.genericError)
@@ -162,6 +164,7 @@ export class ScheduleComponent implements OnInit {
       response => {
         if (response) {
           this.toastr.success(response.success)
+          this.service.addHistory('ADDED', 'COMMENT', payload.commentId, 'PASSDOWN NOTE', id, payload.comment).subscribe()
           this.reload()
         } else {
           this.toastr.error(this.genericError)
@@ -183,6 +186,7 @@ export class ScheduleComponent implements OnInit {
        response => {
          if (response) {
            this.toastr.success(response.success)
+           this.service.addHistory('DELETED','COMMENT', id, 'PASSDOWN NOTE', '', '').subscribe()
            this.reload()
          } else {
            this.toastr.error(this.genericError)
@@ -203,6 +207,7 @@ export class ScheduleComponent implements OnInit {
         response => {
           if (response) {
             this.toastr.success(response.success)
+            this.service.addHistory('ADDED', 'DRIVER OFF TIME', '', data.driver, data.driverId, data.note).subscribe()
           } else {
             this.toastr.error(this.genericError)
           }
@@ -215,6 +220,7 @@ export class ScheduleComponent implements OnInit {
         response => {
           if (response) {
             this.toastr.success(response.success)
+            this.service.addHistory('ADDED', 'DRIVER PROTECTION', '', data.driver, data.driverId, data.note).subscribe()
           } else {
             this.toastr.error(this.genericError)
           }
@@ -228,6 +234,7 @@ export class ScheduleComponent implements OnInit {
         response => {
           if (response) {
             this.toastr.success(response.success)
+            this.service.addHistory('ADDED', 'VEHICLE PM', '', data.vehicle, data.vehicleId, data.note).subscribe()
           } else {
             this.toastr.error(this.genericError)
           }
@@ -241,6 +248,7 @@ export class ScheduleComponent implements OnInit {
         response => {
           if (response) {
             this.toastr.success(response.success)
+            this.service.addHistory('ADDED', 'PASSDOWN NOTE', '', '', date, data.note).subscribe()
           } else {
             this.toastr.error(this.genericError)
           }
@@ -255,6 +263,7 @@ export class ScheduleComponent implements OnInit {
         response => {
           if (response) {
             this.toastr.success(response.success)
+            this.service.addHistory('ADDED PINNED', 'PASSDOWN NOTE', '', '', date, data.note).subscribe()
           } else {
             this.toastr.error(this.genericError)
           }
@@ -278,6 +287,7 @@ export class ScheduleComponent implements OnInit {
         response => {
           if (response) {
             this.toastr.success(response.success)
+            this.service.addHistory('DELETED', 'PASSDOWN NOTE',id,date,'','').subscribe()
             this.reload()
           } else {
             this.toastr.error(this.genericError)
@@ -294,6 +304,7 @@ export class ScheduleComponent implements OnInit {
       response => {
         if (response) {
           this.toastr.success(response.success)
+          this.service.addHistory('DELETED PINNED', 'PASSDOWN NOTE',id,'','','').subscribe()
           this.reload()
         } else {
           this.toastr.error(this.genericError)
@@ -314,6 +325,7 @@ export class ScheduleComponent implements OnInit {
       response => {
         if (response) {
           this.toastr.success(response.success)
+          this.service.addHistory('CLOSED PINNED', 'PASSDOWN NOTE',this.pinnedNotes[index].noteId,'','','').subscribe()
           this.reload()
         } else {
           this.toastr.error(this.genericError)
@@ -333,6 +345,7 @@ export class ScheduleComponent implements OnInit {
       response => {
         if (response) {
           this.toastr.success(response.success)
+          this.service.addHistory('DELETED', 'OFF TIME', id, date,'','').subscribe()
           this.reload()
         } else {
           this.toastr.error(this.genericError)
@@ -346,6 +359,7 @@ export class ScheduleComponent implements OnInit {
       response => {
         if (response) {
           this.toastr.success(response.success)
+          this.service.addHistory('DELETED', 'PROTECTION', id, date,'','').subscribe()
           this.reload()
         } else {
           this.toastr.error(this.genericError)
@@ -359,6 +373,7 @@ export class ScheduleComponent implements OnInit {
       response => {
         if (response) {
           this.toastr.success(response.success)
+          this.service.addHistory('DELETED', 'PM', id, date,'','').subscribe()
           this.reload()
         } else {
           this.toastr.error(this.genericError)
@@ -381,6 +396,7 @@ export class ScheduleComponent implements OnInit {
       response => {
         if (response) {
           this.toastr.success(response.success)
+          this.service.addHistory('CONFIRMED', 'PROTECTION', id, '','','').subscribe()
           this.reload()
         } else {
           this.toastr.error(this.genericError)
@@ -394,6 +410,14 @@ export class ScheduleComponent implements OnInit {
     setTimeout(() => {
       location.reload()
     }, 1700);
+  }
+
+  showHistoryDialog(): void {
+   
+    
+    const dialogRef = this.dialog.open(ViewmodalComponent, {
+      data: { history: this.data.history }
+    });
   }
 
 }

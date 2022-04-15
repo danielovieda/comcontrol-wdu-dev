@@ -10,6 +10,7 @@ export class ViewmodalComponent {
   whichVehicle: string
   whichUser: string
   whichRoute: string
+  whichHistory: any
 
   constructor(public dialogRef: MatDialogRef<ViewmodalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { 
@@ -18,6 +19,10 @@ export class ViewmodalComponent {
       }
       if(data.user) {
 
+      }
+      if (data.history) {
+        this.whichHistory = data.history
+        console.log('triggered?')
       }
     }
 
