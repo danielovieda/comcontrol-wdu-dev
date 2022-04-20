@@ -87,7 +87,7 @@
 
     <!-- PINNED NOTES -->
     <!-- <div class="row"> -->
-      <!-- <div class="col-3 p-1" *ngFor="let notes of pinnedNotes; let i = index">
+    <!-- <div class="col-3 p-1" *ngFor="let notes of pinnedNotes; let i = index">
         <div class="card mb-2 shadow-sm" [class]="notes.style ? notes.style : 'text-white bg-warning'">
           <div class="card-header">
             <span class="me-1"><i class="fas fa-thumbtack"></i></span>
@@ -107,11 +107,14 @@
           </div>
         </div>
       </div> -->
-      <app-vehicle-note-card [noteData]="pinnedNotes" noteType="pinned"></app-vehicle-note-card>
 
-      <app-vehicle-note-card [noteData]="data.note" noteType="passdown" [passdownDate]="data.date"></app-vehicle-note-card>
+    <app-vehicle-note-card [noteData]="pinnedNotes" noteType="pinned"></app-vehicle-note-card>
+    <app-vehicle-note-card [noteData]="data.note" noteType="passdown" [passdownDate]="data.date">
+    </app-vehicle-note-card>
+  </div>
 
-      <!-- <div class="col-3 p-1" *ngFor="let notes of data.note; let i = index">
+
+  <!-- <div class="col-3 p-1" *ngFor="let notes of data.note; let i = index">
         <div class="card mb-2 shadow-sm" [class]="notes.style ? notes.style : 'text-white bg-warning'">
           <div class="card-body pb-2 pt-2">
             <p class="card-text">{{ notes.note }}</p>
@@ -163,71 +166,73 @@
           </div>
         </div>
       </div> -->
-
-      <div class="col-sm-4">
+  <div class="d-flex flex-wrap justify-content-center">
+    <div class="row">
+      <div class="col-sm-1 col-md-1 col-lg-2 col-xxl-1 m-1" style="width: 100px">
         <div class="card shadow-sm">
           <div class="card-body text-center m-0 cursor" (click)="addToPassdown('note')" matTooltip="Add Passdown Note">
             <p class="card-text m-0"><i class="fa-solid fa-square-plus fa-lg"></i></p>
           </div>
         </div>
       </div>
-
-
-    <!-- </div> -->
-
-
-
+    </div>
   </div>
 
 
-  <mat-menu #calloutMenu="matMenu">
-    <ng-template matMenuContent let-id="id" let-date="date" let-routeId="routeId">
-      <button mat-menu-item routerLink="../../manage/user/{{id}}"><i class="fa-solid fa-person fa-sm"></i> <span
-          class="menuLink"><small>Manage Driver</small></span></button>
-      <button mat-menu-item routerLink="../../manage/route/{{routeId}}"><i class="fa-solid fa-route"></i> <span
-          class="menuLink"><small>Manage Route</small></span></button>
-      <button mat-menu-item (click)="deleteCallOut(date, id)"><i class="fa-solid fa-trash fa-sm"></i> <span
-          class="menuLink"><small>Delete</small></span></button>
-    </ng-template>
-  </mat-menu>
+  <!-- </div> -->
 
-  <mat-menu #protectionMenu="matMenu">
-    <ng-template matMenuContent let-id="id" let-date="date" let-protection="protectionId">
-      <button mat-menu-item (click)="confirmProtection(protection)"><i class="fa-solid fa-check-double fa-sm"></i> <span
-          class="menuLink"><small>Confirm</small></span></button>
-      <button mat-menu-item routerLink="../../manage/user/{{id}}"><i class="fa-solid fa-person fa-sm"></i> <span
-          class="menuLink"><small>Manage Driver</small></span></button>
-      <button mat-menu-item (click)="doSomething(id)"><i class="fa-solid fa-route fa-sm"></i> <span
-          class="menuLink"><small>Manage Route</small></span></button>
-      <button mat-menu-item (click)="deleteProtection(date, id)"><i class="fa-solid fa-trash fa-sm"></i> <span
-          class="menuLink"><small>Delete</small></span></button>
-    </ng-template>
-  </mat-menu>
 
-  <mat-menu #vehicleMenu="matMenu">
-    <ng-template matMenuContent let-id="id" let-date="date">
-      <button mat-menu-item routerLink="../../view/vehicle/{{id}}"><i class="fa-solid fa-bus fa-sm"></i> <span
-          class="menuLink"><small>Details</small></span></button>
-      <button mat-menu-item (click)="deletePm(date, id)"><i class="fa-solid fa-trash fa-sm"></i> <span
-          class="menuLink"><small>Delete</small></span></button>
-    </ng-template>
-  </mat-menu>
 
-  <mat-menu #passdownMenu="matMenu">
-    <ng-template matMenuContent>
-      <button mat-menu-item (click)="addToPassdown('off')">Add Driver Off Time</button>
-      <button mat-menu-item (click)="addToPassdown('protection')">Add Driver Protection</button>
-      <button mat-menu-item (click)="addToPassdown('pm')">Add PM</button>
-      <button mat-menu-item (click)="addToPassdown('note')">Add Note</button>
-      <button mat-menu-item (click)="showHistoryDialog()">View History</button>
-    </ng-template>
-  </mat-menu>
+</div>
 
-  <mat-menu #deleteCommentMenu="matMenu">
-    <ng-template matMenuContent let-id="id" let-userId="userId" let-date="date">
-      <button mat-menu-item (click)="deleteComment(id,date,userId)"
-      *ngIf="userId === whoAmI()"><i class="fa-solid fa-trash fa-sm"></i> <span
-          class="menuLink"><small>Delete</small></span></button>
-          <button mat-menu-item *ngIf="userId != whoAmI()">No options available.</button>
-    </ng-template>
-  </mat-menu>
+
+<mat-menu #calloutMenu="matMenu">
+  <ng-template matMenuContent let-id="id" let-date="date" let-routeId="routeId">
+    <button mat-menu-item routerLink="../../manage/user/{{id}}"><i class="fa-solid fa-person fa-sm"></i> <span
+        class="menuLink"><small>Manage Driver</small></span></button>
+    <button mat-menu-item routerLink="../../manage/route/{{routeId}}"><i class="fa-solid fa-route"></i> <span
+        class="menuLink"><small>Manage Route</small></span></button>
+    <button mat-menu-item (click)="deleteCallOut(date, id)"><i class="fa-solid fa-trash fa-sm"></i> <span
+        class="menuLink"><small>Delete</small></span></button>
+  </ng-template>
+</mat-menu>
+
+<mat-menu #protectionMenu="matMenu">
+  <ng-template matMenuContent let-id="id" let-date="date" let-protection="protectionId">
+    <button mat-menu-item (click)="confirmProtection(protection)"><i class="fa-solid fa-check-double fa-sm"></i> <span
+        class="menuLink"><small>Confirm</small></span></button>
+    <button mat-menu-item routerLink="../../manage/user/{{id}}"><i class="fa-solid fa-person fa-sm"></i> <span
+        class="menuLink"><small>Manage Driver</small></span></button>
+    <button mat-menu-item (click)="doSomething(id)"><i class="fa-solid fa-route fa-sm"></i> <span
+        class="menuLink"><small>Manage Route</small></span></button>
+    <button mat-menu-item (click)="deleteProtection(date, id)"><i class="fa-solid fa-trash fa-sm"></i> <span
+        class="menuLink"><small>Delete</small></span></button>
+  </ng-template>
+</mat-menu>
+
+<mat-menu #vehicleMenu="matMenu">
+  <ng-template matMenuContent let-id="id" let-date="date">
+    <button mat-menu-item routerLink="../../view/vehicle/{{id}}"><i class="fa-solid fa-bus fa-sm"></i> <span
+        class="menuLink"><small>Details</small></span></button>
+    <button mat-menu-item (click)="deletePm(date, id)"><i class="fa-solid fa-trash fa-sm"></i> <span
+        class="menuLink"><small>Delete</small></span></button>
+  </ng-template>
+</mat-menu>
+
+<mat-menu #passdownMenu="matMenu">
+  <ng-template matMenuContent>
+    <button mat-menu-item (click)="addToPassdown('off')">Add Driver Off Time</button>
+    <button mat-menu-item (click)="addToPassdown('protection')">Add Driver Protection</button>
+    <button mat-menu-item (click)="addToPassdown('pm')">Add PM</button>
+    <button mat-menu-item (click)="addToPassdown('note')">Add Note</button>
+    <button mat-menu-item (click)="showHistoryDialog()">View History</button>
+  </ng-template>
+</mat-menu>
+
+<mat-menu #deleteCommentMenu="matMenu">
+  <ng-template matMenuContent let-id="id" let-userId="userId" let-date="date">
+    <button mat-menu-item (click)="deleteComment(id,date,userId)" *ngIf="userId === whoAmI()"><i
+        class="fa-solid fa-trash fa-sm"></i> <span class="menuLink"><small>Delete</small></span></button>
+    <button mat-menu-item *ngIf="userId != whoAmI()">No options available.</button>
+  </ng-template>
+</mat-menu>

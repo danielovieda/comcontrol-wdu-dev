@@ -1,106 +1,111 @@
-<div class="row me-3 ms-3">
-  <div class="col-3 mb-2 minwidth" *ngFor="let note of noteData; let i = index">
-    <div class="card shadow"
-      [ngClass]="[note.style ? note.style : 'text-white', note.status == 'open' && note.type == 'info' ? 'text-white bg-primary' : '', note.status == 'open' && note.type == 'oos' ? 'text-white bg-danger' : '', note.status == 'open' && note.type == 'maintenance' ? 'text-dark bg-warning text-dark' : '']">
 
-      <div class="card-header">
-        <span *ngIf="note.type == 'info' && note.vehicleId != 'none'"><i class="fas fa-info-circle"></i></span>
-        <span *ngIf="note.type == 'maintenance' && note.vehicleId != 'none'"><i class="fas fa-wrench"></i></span>
-        <span *ngIf="note.type == 'oos' && note.vehicleId != 'none'"><i class="fas fa-exclamation-triangle"></i></span>
+<div class="d-flex flex-wrap">
+  <div class="row">
+    <div class="col-sm-1 col-md-1 col-lg-2 col-xxl-1 m-1 flex-fill" *ngFor="let note of noteData; let i = index">
+      <div class="card shadow"
+        [ngClass]="[note.style ? note.style : 'text-dark', note.status == 'open' && note.type == 'info' ? 'text-white bg-primary' : '', note.status == 'open' && note.type == 'oos' ? 'text-white bg-danger' : '', note.status == 'open' && note.type == 'maintenance' ? 'text-dark bg-warning text-dark' : '']">
 
-        <span *ngIf="note.pinned" class="me-1"><i class="fas fa-thumbtack"></i></span>
-        <span *ngIf="note.vehicleId == 'none'"><i class="fas fa-sticky-note"></i></span>
+        <div class="card-header">
+          <span *ngIf="note.type == 'info' && note.vehicleId != 'none'"><i class="fas fa-info-circle"></i></span>
+          <span *ngIf="note.type == 'maintenance' && note.vehicleId != 'none'"><i class="fas fa-wrench"></i></span>
+          <span *ngIf="note.type == 'oos' && note.vehicleId != 'none'"><i
+              class="fas fa-exclamation-triangle"></i></span>
 
-        <span class="ms-1 cursor" *ngIf="page === 'passdown'" routerLink="../../view/vehicle/{{note.vehicleId}}">{{
-          note.number | uppercase }}</span>
+          <span *ngIf="note.pinned" class="me-1"><i class="fas fa-thumbtack"></i></span>
+          <span *ngIf="note.vehicleId == 'none'"><i class="fas fa-sticky-note"></i></span>
 
-        <span class="vehicleLink" [matMenuTriggerFor]="vehicleNotesMenu"
-          [matMenuTriggerData]="{vehicleId: note.vehicleId, noteId: note._id, index: i, status: note.status, userId: note.userId, passdownNoteId: note.noteId}"><i
-            class="fa-solid fa-ellipsis-vertical"></i></span>
+          <span class="ms-1 cursor" *ngIf="page === 'passdown'" routerLink="../../view/vehicle/{{note.vehicleId}}">{{
+            note.number | uppercase }}</span>
+
+          <span class="vehicleLink" [matMenuTriggerFor]="vehicleNotesMenu"
+            [matMenuTriggerData]="{vehicleId: note.vehicleId, noteId: note._id, index: i, status: note.status, userId: note.userId, passdownNoteId: note.noteId, style: note.style, note: note.note, comments: note.comments}"><i
+              class="fa-solid fa-ellipsis-vertical"></i></span>
 
 
-      </div>
+        </div>
 
 
-      <div class="card-body pb-2 pt-2">
-        <p>{{note.note}}</p>
+        <div class="card-body pb-2 pt-2">
+          <p>{{note.note}}</p>
 
-        <!-- COMMENTS LOOP -->
-        <div *ngIf="note.comments">
-          <div class="card-text mb-1 p-1 border-bottom border-dark cursor"
-          *ngFor="let comment of note.comments, let index = index" matTooltip="{{comment.user}} {{comment.timestamp}}"
-          [matMenuTriggerFor]="deleteCommentMenu"
-          [matMenuTriggerData]="{id: comment.commentId, userId: comment.userId}">
-          <div>
-            <span class="badge border bg-light text-dark p-1 me-1 fw-bold">{{ comment.user | uppercase | slice:0:1
-              }}</span>
-            <span class="badge border p-1 me-2 fw-light"
-              [ngClass]="[note.status == 'open' && note.type == 'info' ? 'text-white bg-primary' : '', note.status == 'open' && note.type == 'oos' ? 'text-white bg-danger' : '', note.status == 'open' && note.type == 'maintenance' ? 'text-dark bg-warning text-dark' : '', note.status == 'closed' ? 'text-dark': '']">{{
-              comment.timestamp | timeAgo }}</span>
-            <small>{{ comment.comment }}</small>
+          <!-- COMMENTS LOOP -->
+          <div *ngIf="note.comments">
+            <div class="card-text mb-1 p-1 border-bottom border-dark cursor"
+              *ngFor="let comment of note.comments, let index = index"
+              matTooltip="{{comment.user}} {{comment.timestamp}}" [matMenuTriggerFor]="deleteCommentMenu"
+              [matMenuTriggerData]="{id: comment.commentId, userId: comment.userId}">
+              <div>
+                <span class="badge border bg-light text-dark p-1 me-1 fw-bold">{{ comment.user | uppercase | slice:0:1
+                  }}</span>
+                <span class="badge border p-1 me-2 fw-light"
+                  [ngClass]="[note.style ? note.style : 'text-dark', note.status == 'open' && note.type == 'info' ? 'text-white bg-primary' : '', note.status == 'open' && note.type == 'oos' ? 'text-white bg-danger' : '', note.status == 'open' && note.type == 'maintenance' ? 'text-dark bg-warning text-dark' : '', note.status == 'closed' ? 'text-dark': '']">{{
+                  comment.timestamp | timeAgo }}</span>
+                <small>{{ comment.comment }}</small>
+              </div>
+            </div>
           </div>
-        </div>
-        </div>
 
-        <div *ngIf="note.comment">
-          <div class="card-text mb-1 p-1 border-bottom border-dark cursor"
-          *ngFor="let comment of note.comment, let index = index" matTooltip="{{comment.user}} {{comment.timestamp}}"
-          [matMenuTriggerFor]="deleteCommentMenu"
-          [matMenuTriggerData]="{id: comment.commentId, userId: comment.userId}">
-          <div>
-            <span class="badge border bg-light text-dark p-1 me-1 fw-bold">{{ comment.user | uppercase | slice:0:1
-              }}</span>
-            <span class="badge border p-1 me-2 fw-light"
-              [ngClass]="[note.status == 'open' && note.type == 'info' ? 'text-white bg-primary' : '', note.status == 'open' && note.type == 'oos' ? 'text-white bg-danger' : '', note.status == 'open' && note.type == 'maintenance' ? 'text-dark bg-warning text-dark' : '', note.status == 'closed' ? 'text-dark': '']">{{
-              comment.timestamp | timeAgo }}</span>
-            <small>{{ comment.comment }}</small>
+          <div *ngIf="note.comment">
+            <div class="card-text mb-1 p-1 border-bottom border-dark cursor"
+              *ngFor="let comment of note.comment, let index = index"
+              matTooltip="{{comment.user}} {{comment.timestamp}}" [matMenuTriggerFor]="deleteCommentMenu"
+              [matMenuTriggerData]="{id: comment.commentId, userId: comment.userId}">
+              <div>
+                <span class="badge border bg-light text-dark p-1 me-1 fw-bold">{{ comment.user | uppercase | slice:0:1
+                  }}</span>
+                <span class="badge border p-1 me-2 fw-light"
+                  [ngClass]="[note.style ? note.style : 'text-dark', note.status == 'open' && note.type == 'info' ? 'text-white bg-primary' : '', note.status == 'open' && note.type == 'oos' ? 'text-white bg-danger' : '', note.status == 'open' && note.type == 'maintenance' ? 'text-dark bg-warning text-dark' : '', note.status == 'closed' ? 'text-dark': '']">{{
+                  comment.timestamp | timeAgo }}</span>
+                <small>{{ comment.comment }}</small>
+              </div>
+            </div>
           </div>
-        </div>
-        </div>
-        
 
-        <div class="card-text" [id]="'comments' + i" *ngIf="showComment === i">
-          <div class="mb-1">
-            <textarea class="form-control" rows="3" #commentBox
-              (keyup.enter)="addComment(note._id, commentBox.value, note.noteId)"></textarea>
+
+          <div class="card-text" [id]="'comments' + i" *ngIf="showComment === i">
+            <div class="mb-1">
+              <textarea class="form-control" rows="3" #commentBox
+                (keyup.enter)="addComment(note._id, commentBox.value, note.noteId)"></textarea>
+            </div>
+            <div class="text-end mb-1">
+              <button class="btn btn-secondary btn-sm"
+                (click)="addComment(note._id, commentBox.value, note.noteId)"><small><i
+                    class="fa-solid fa-check"></i></small></button>
+            </div>
           </div>
-          <div class="text-end mb-1">
-            <button class="btn btn-secondary btn-sm"
-              (click)="addComment(note._id, commentBox.value, note.noteId)"><small><i
-                  class="fa-solid fa-check"></i></small></button>
+
+          <div class="text-end">
+            <p class="mb-0">
+              <span class="badge border border-dark p-1 me-1 fw-light cursor text-dark"
+                [matTooltip]="'Opened by ' + (note.username ? note.username : note.user) + ' at ' + note.timestamp"
+                [ngClass]="[note.style ? note.style : 'text-light', note.status == 'open' && note.type == 'info' ? 'text-white bg-primary border-white' : '', note.status == 'open' && note.type == 'oos' ? 'text-white bg-danger border-white' : '', note.status == 'open' && note.type == 'maintenance' ? 'text-dark bg-warning text-dark' : '', note.status == 'closed' ? 'text-dark': '']">
+                <i class="fa-solid fa-plus"></i> {{ note.timestamp | timeAgo }} by {{ note.username ? note.username :
+                note.user | uppercase | slice:0:1}}</span>
+
+              <span *ngIf="note.status === 'closed'" class="badge border p-1 me-1 fw-light cursor"
+                [matTooltip]="'Closed by ' + note.closedBy + ' at ' + note.closedTimestamp"
+                [ngClass]="[note.status === 'closed' ? 'text-light bg-success border-dark': '']">
+                <i class="fa-solid fa-check"></i> {{ note.closedTimestamp | timeAgo }} by {{ note.closedBy | uppercase |
+                slice:0:1 }}</span>
+
+              <!-- <small><i><u [matTooltip]="note.timestamp" class="cursor">{{ note.timestamp | timeAgo }} by {{ note.username }}</u></i></small> -->
+
+              <span class="ms-2 cursor" (click)="showCommentBox(i)" matTooltip="Add Comment">
+                <i class="fa-solid fa-comment"></i>
+              </span>
+
+
+
+            </p>
+
+
           </div>
-        </div>
-
-        <div class="text-end">
-          <p class="mb-0">
-            <span class="badge border border-dark p-1 me-1 fw-light cursor text-dark"
-              [matTooltip]="'Opened by ' + (note.username ? note.username : note.user) + ' at ' + note.timestamp"
-              [ngClass]="[note.style ? note.style : 'text-light', note.status == 'open' && note.type == 'info' ? 'text-white bg-primary border-white' : '', note.status == 'open' && note.type == 'oos' ? 'text-white bg-danger border-white' : '', note.status == 'open' && note.type == 'maintenance' ? 'text-dark bg-warning text-dark' : '', note.status == 'closed' ? 'text-dark': '']">
-              <i class="fa-solid fa-plus"></i> {{ note.timestamp | timeAgo }} by {{ note.username ? note.username :
-              note.user | uppercase | slice:0:1}}</span>
-
-            <span *ngIf="note.status === 'closed'" class="badge border p-1 me-1 fw-light cursor"
-              [matTooltip]="'Closed by ' + note.closedBy + ' at ' + note.closedTimestamp"
-              [ngClass]="[note.status === 'closed' ? 'text-light bg-success border-dark': '']">
-              <i class="fa-solid fa-check"></i> {{ note.closedTimestamp | timeAgo }} by {{ note.closedBy | uppercase |
-              slice:0:1 }}</span>
-
-            <!-- <small><i><u [matTooltip]="note.timestamp" class="cursor">{{ note.timestamp | timeAgo }} by {{ note.username }}</u></i></small> -->
-
-            <span class="ms-2 cursor" (click)="showCommentBox(i)" matTooltip="Add Comment">
-              <i class="fa-solid fa-comment"></i>
-            </span>
-
-
-
-          </p>
-
-
         </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <mat-menu #deleteCommentMenu="matMenu">
   <ng-template matMenuContent let-id="id" let-userId="userId">
@@ -113,14 +118,26 @@
 
 <mat-menu #vehicleNotesMenu="matMenu">
   <ng-template matMenuContent let-vehicleId="vehicleId" let-noteId="noteId" let-index="index" let-status="status"
-    let-userId="userId" let-passdownNoteId="passdownNoteId">
+    let-userId="userId" let-passdownNoteId="passdownNoteId" let-style="style" let-note="note" let-comments="comments">
     <button mat-menu-item routerLink="../../view/vehicle/{{vehicleId}}" *ngIf="page === 'passdown'"><i
         class="fa-solid fa-bus fa-sm"></i> <span class="menuLink"><small>Details</small></span></button>
-    <button mat-menu-item (click)="closeNote(noteId, index)" *ngIf="status === 'open' || !status"><i
-        class="fa-solid fa-circle-check"></i> <span class="menuLink"><small>Resolve</small></span></button>
+
+    <button mat-menu-item (click)="closeNote(noteId, index)"
+      *ngIf="status === 'open' || !status && noteType !== 'passdown'"><i class="fa-solid fa-circle-check"></i> <span
+        class="menuLink"><small>Resolve</small></span></button>
+
+    <button mat-menu-item *ngIf="userId === whoAmI() && noteType === 'pinned'" (click)="editNote(noteId,style,note, comments)"><i class="fa-solid fa-pencil"></i> <span
+        class="menuLink"><small>Edit</small></span></button>
+
+        <button mat-menu-item *ngIf="userId === whoAmI() && noteType === 'passdown'" (click)="editNote(passdownNoteId,style,note, comments)"><i class="fa-solid fa-pencil"></i> <span
+          class="menuLink"><small>Edit</small></span></button>
+
     <button mat-menu-item *ngIf="userId === whoAmI()" (click)="deleteMaintNote(noteId, index, passdownNoteId)"><i
         class="fa-solid fa-trash"></i> <span class="menuLink"><small>Delete</small></span></button>
+
     <button mat-menu-item *ngIf="status === 'closed'" (click)="reOpen(noteId)"><i
         class="fa-solid fa-arrow-rotate-right"></i> <span class="menuLink"><small>Reopen</small></span></button>
+
+    <button mat-menu-item *ngIf="userId != whoAmI() && noteType === 'passdown'">No options available.</button>
   </ng-template>
 </mat-menu>

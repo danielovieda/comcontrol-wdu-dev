@@ -4,6 +4,8 @@ import { ToastrService } from 'ngx-toastr';
 import { BackendService } from '../services/backend.service';
 import { UserService } from '../services/user.service';
 import { v4 as uuidv4 } from 'uuid';
+import { MatDialog } from '@angular/material/dialog';
+import { AddNoteComponent } from '../modal/add-note/add-note.component';
 
 @Component({
   selector: 'app-vehicle-note-card',
@@ -22,7 +24,8 @@ export class VehicleNoteCardComponent implements OnInit {
   constructor(private service: BackendService,
     private toastr: ToastrService,
     public datepipe: DatePipe,
-    private userService: UserService) { }
+    private userService: UserService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
 
@@ -215,14 +218,14 @@ export class VehicleNoteCardComponent implements OnInit {
 
     if (this.noteType === 'passdown') {
       
+      id = passdownNoteId
       
-      console.log('adding comment',id, passdownNoteId)
       this.service.addPassdownComment(id, payload).subscribe(
         response => {
           if (response) {
             this.toastr.success(response.success)
             this.service.addHistory('ADDED', 'COMMENT', payload.commentId, 'PASSDOWN NOTE', id, payload.comment).subscribe()
-            //this.reload()
+            this.reload()
           } else {
             this.toastr.error(this.genericError)
           }
@@ -299,6 +302,46 @@ export class VehicleNoteCardComponent implements OnInit {
           }
       }
     )    
+  }
+
+
+  editNote(id: string, style: string, note: string, comments: {}) {
+    console.log(id,style,note,comments)
+    
+
+    let type = 'editNote'
+
+    if (this.noteType === 'passdown') {
+      const dialogRef = this.dialog.open(AddNoteComponent, {
+        data: { vehicle: '', id: id, type: type, style: style, note: note, comments: comments }
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        this.saveEditedNote(id, result);
+      });
+    }
+    
+
+  }
+
+  saveEditedNote(id: string, data: any) {
+    if (!data) {
+      
+      return
+    }
+
+    this.service.editNote(id, data).subscribe(
+      response => {
+        if (response) {
+          this.toastr.success(response.success)
+          this.service.addHistory('EDITED', 'NOTE', id, '', '', data.note).subscribe()
+          this.reload()
+        } else {
+          this.toastr.error(this.genericError)
+        }
+      }
+    )
+
   }
 
 }
