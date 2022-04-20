@@ -11,4 +11,4 @@
 <app-search (keyup)="hideNotes($event)"></app-search>
 
     
-<app-vehicle-note-card [noteData]="passdown" *ngIf="!loading && !search" page="passdown"></app-vehicle-note-card>
+<app-vehicle-note-card [noteData]="passdown" noteType="maint" *ngIf="!loading && !search" page="passdown"></app-vehicle-note-card>

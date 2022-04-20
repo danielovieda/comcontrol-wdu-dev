@@ -71,6 +71,10 @@ export class BackendService {
 
   private addHistoryUrl = environment.BASE_API_URL + '/add/history/'
 
+  private addPinnedCommentUrl = environment.BASE_API_URL + '/add/pinnedComment/'
+
+  private removePinnedCommentUrl = environment.BASE_API_URL + '/remove/pinnedComment/'
+
   constructor(private http: HttpClient,
     private datepipe: DatePipe,
     private userService: UserService) { }
@@ -247,6 +251,14 @@ export class BackendService {
 
   getToday(): string {
     return this.datepipe.transform((new Date), 'MM-dd-yyyy')
+  }
+
+  addPinnedComment(id: string, data: any): Observable<any> {
+    return this.http.post<any>(this.addPinnedCommentUrl + id, data)
+  }
+
+  removePinnedComment(id: string, data: {}): Observable<any> {
+    return this.http.post<any>(this.removePinnedCommentUrl + id, data)
   }
 
 

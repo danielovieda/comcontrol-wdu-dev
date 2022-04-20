@@ -13,9 +13,11 @@ import { v4 as uuidv4 } from 'uuid';
 export class VehicleNoteCardComponent implements OnInit {
   @Input() noteData: any
   @Input() page: string
+  @Input() noteType: string
   showComment: number = -1
   genericError: string = "An unknown error has occurred. Please try again."
   timestamp: string
+  @Input() passdownDate: string
 
   constructor(private service: BackendService,
     private toastr: ToastrService,
@@ -34,8 +36,17 @@ export class VehicleNoteCardComponent implements OnInit {
     }
   }
 
-  deleteMaintNote(id: string, index: number) {
-    console.log('delete note', id)
+  deleteMaintNote(id: string, index: number, passdownNoteId: string) {
+    console.log(id)
+    if (this.noteType === 'pinned') {
+      this.deletePinned(id, index)
+      return
+    }
+
+    if (this.noteType === 'passdown') {
+      this.deleteNote(this.passdownDate,passdownNoteId,index)
+      return
+    }
 
     this.service.deleteMaintNote(id).subscribe(
       response => {
@@ -52,6 +63,12 @@ export class VehicleNoteCardComponent implements OnInit {
 
 
   closeNote(id: string, index: number) {
+
+    if (this.noteType === 'pinned') {
+      this.closePinned(index)
+      return
+    }
+
 
     let payload = {
       _id: id,
@@ -108,20 +125,51 @@ export class VehicleNoteCardComponent implements OnInit {
       return
     }
 
-    this.service.removeMaintComment(id, {}).subscribe(
-      response => {
-        if (response) {
-          this.toastr.success(response.success)
-          this.service.addHistory('DELETED', 'COMMENT', id, 'VEHICLE', '', '').subscribe()
-          this.reload()
-        } else {
-          this.toastr.error(this.genericError)
+    if (this.noteType === 'maint') {
+      this.service.removeMaintComment(id, {}).subscribe(
+        response => {
+          if (response) {
+            this.toastr.success(response.success)
+            this.service.addHistory('DELETED', 'COMMENT', id, 'VEHICLE', '', '').subscribe()
+            this.reload()
+          } else {
+            this.toastr.error(this.genericError)
+          }
         }
-      }
-    )
+      )
+    }
+
+    if (this.noteType === 'pinned') {
+      this.service.removePinnedComment(id, {}).subscribe(
+        response => {
+          if (response) {
+            this.toastr.success(response.success)
+            this.service.addHistory('DELETED', 'COMMENT', id, 'VEHICLE', '', '').subscribe()
+            this.reload()
+          } else {
+            this.toastr.error(this.genericError)
+          }
+        }
+      )
+    }
+
+    if(this.noteType === 'passdown') {
+      this.service.removePassdownComment(id, {}).subscribe(
+        response => {
+          if (response) {
+            this.toastr.success(response.success)
+            this.service.addHistory('DELETED','COMMENT', id, 'PASSDOWN NOTE', '', '').subscribe()
+            this.reload()
+          } else {
+            this.toastr.error(this.genericError)
+          }
+        }
+      )
+    }
+    
   }
 
-  addComment(id: string, comment: string) {
+  addComment(id: string, comment: string, passdownNoteId: string) {
     if (comment.trim().length < 3) {
       this.toastr.error("Your comment isn't long enough. Try again.")
       return
@@ -136,17 +184,51 @@ export class VehicleNoteCardComponent implements OnInit {
       userId: this.userService.getUserId()
     }
 
-    this.service.addMaintComment(id, payload).subscribe(
-      response => {
-        if (response) {
-          this.toastr.success(response.success)
-          this.service.addHistory('ADDED', 'COMMENT', payload.commentId, 'VEHICLE', id, payload.comment).subscribe()
-          this.reload()
-        } else {
-          this.toastr.error(this.genericError)
+    if (this.noteType === 'maint') {
+      this.service.addMaintComment(id, payload).subscribe(
+        response => {
+          if (response) {
+            this.toastr.success(response.success)
+            this.service.addHistory('ADDED', 'COMMENT', payload.commentId, 'VEHICLE', id, payload.comment).subscribe()
+            this.reload()
+          } else {
+            this.toastr.error(this.genericError)
+          }
         }
-      }
-    )
+      )
+    }
+
+    if (this.noteType === 'pinned') {
+      console.log('triggered')
+      this.service.addPinnedComment(id, payload).subscribe(
+        response => {
+          if (response) {
+            this.toastr.success(response.success)
+            this.service.addHistory('ADDED', 'COMMENT', payload.commentId, 'VEHICLE', id, payload.comment).subscribe()
+            this.reload()
+          } else {
+            this.toastr.error(this.genericError)
+          }
+        }
+      )
+    }
+
+    if (this.noteType === 'passdown') {
+      
+      
+      console.log('adding comment',id, passdownNoteId)
+      this.service.addPassdownComment(id, payload).subscribe(
+        response => {
+          if (response) {
+            this.toastr.success(response.success)
+            this.service.addHistory('ADDED', 'COMMENT', payload.commentId, 'PASSDOWN NOTE', id, payload.comment).subscribe()
+            //this.reload()
+          } else {
+            this.toastr.error(this.genericError)
+          }
+        }
+      )
+    }    
   }
 
   reload() {
@@ -161,6 +243,62 @@ export class VehicleNoteCardComponent implements OnInit {
 
   whoAmI(): string {
     return this.userService.getUserId()
+  }
+
+  closePinned(index: any) {
+    this.timestamp = this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss a');
+
+    let payload = this.noteData[index]
+    payload.status = 'closed'
+    payload.closedBy = this.userService.getUser()
+    payload.closedTimestamp = this.timestamp
+
+    this.service.closedPinned(payload).subscribe(
+      response => {
+        if (response) {
+          this.toastr.success(response.success)
+          this.service.addHistory('CLOSED PINNED', 'PASSDOWN NOTE',this.noteData[index].noteId,'','','').subscribe()
+          this.noteData.splice(index, 1)
+        } else {
+          this.toastr.error(this.genericError)
+        }
+      }
+    )
+
+  }
+
+  deletePinned(id: string, index: number) {
+    let payload = {
+      _id: id
+    }
+    this.service.deletePinned(payload).subscribe(
+      response => {
+        if (response) {
+          this.toastr.success(response.success)
+          this.service.addHistory('DELETED PINNED', 'PASSDOWN NOTE',id,'','','').subscribe()
+          this.noteData.splice(index, 1)
+        } else {
+          this.toastr.error(this.genericError)
+        }
+      }
+    )
+  }
+
+  deleteNote(date: string, id: string, index: number) {
+    console.log(date,id,index)
+    
+    console.log('hello')
+    this.service.removePassdownNote(date, id, {}).subscribe(
+        response => {
+          if (response) {
+            this.toastr.success(response.success)
+            this.service.addHistory('DELETED', 'PASSDOWN NOTE',id,date,'','').subscribe()
+            this.noteData.splice(index, 1)
+          } else {
+            this.toastr.error(this.genericError)
+          }
+      }
+    )    
   }
 
 }

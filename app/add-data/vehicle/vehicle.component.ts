@@ -113,8 +113,10 @@ export class VehicleComponent implements OnInit {
     }
 
     let trimmed = this.addVehicle.get('identifier').value
-
-    this.addVehicle.get('identifier').setValue(trimmed.trim())
+    if (trimmed !== null) {
+      this.addVehicle.get('identifier').setValue(trimmed.trim())
+    }
+    
 
     // if (this.addVehicle.get('defaultRouteId').value != null) {
     //   this.addVehicle.get('defaultRoute').setValue(this.addVehicle.get('defaultRouteId').)
