@@ -19,32 +19,39 @@ import { ViewrouteComponent } from './view/viewroute/viewroute.component';
 import { ViewuserComponent } from './view/viewuser/viewuser.component';
 import { ViewvehicleComponent } from './view/viewvehicle/viewvehicle.component';
 
+import { AuthGuard } from '@auth0/auth0-angular';
+
 const routes: Routes = [
   { path: '', component: DashboardComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'tasks', component: TasksComponent},
-  { path: 'profile', component: ProfileComponent },
-  { path: 'manage', component: AddDataComponent, children: [
-    { path: 'user', component: UserComponent },
-    { path: 'user/:id', component: UserComponent },
-    { path: 'route', component: RouteComponent },
-    { path: 'route/:id', component: RouteComponent},
-    { path: 'vehicle', component: VehicleComponent },
-    { path: 'vehicle/:id', component: VehicleComponent }
-  ]},
-  { path: 'list/users', component: ListComponent},
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  {
+    path: 'manage', component: AddDataComponent, canActivate: [AuthGuard], children: [
+      { path: 'user', component: UserComponent },
+      { path: 'user/:id', component: UserComponent },
+      { path: 'route', component: RouteComponent },
+      { path: 'route/:id', component: RouteComponent },
+      { path: 'vehicle', component: VehicleComponent },
+      { path: 'vehicle/:id', component: VehicleComponent }
+    ]
+  },
+  { path: 'list/users', component: ListComponent, canActivate: [AuthGuard] },
   { path: 'logout', component: LogoutComponent },
-  { path: 'view', component: ViewComponent, children: [
-    { path: 'vehicle', component: ViewvehicleComponent },
-    { path: 'vehicle/:id', component: ViewvehicleComponent },
-    { path: 'route', component: ViewrouteComponent },
-    { path: 'route/:id', component: ViewrouteComponent },
-    { path: 'user', component: ViewuserComponent },
-    { path: 'user/:id', component: ViewuserComponent },
-  ]},
-  { path: 'passdown/:date', component: PassdownComponent, children: [
-    { path: ':date', component: PassdownComponent}
-  ] },
+  {
+    path: 'view', component: ViewComponent, canActivate: [AuthGuard], children: [
+      { path: 'vehicle', component: ViewvehicleComponent },
+      { path: 'vehicle/:id', component: ViewvehicleComponent },
+      { path: 'route', component: ViewrouteComponent },
+      { path: 'route/:id', component: ViewrouteComponent },
+      { path: 'user', component: ViewuserComponent },
+      { path: 'user/:id', component: ViewuserComponent },
+    ]
+  },
+  {
+    path: 'passdown/:date', component: PassdownComponent, canActivate: [AuthGuard], children: [
+      { path: ':date', component: PassdownComponent }
+    ]
+  },
   {
     path: 'test',
     component: MentionsComponent
