@@ -54,6 +54,7 @@ import { DragDropModule} from '@angular/cdk/drag-drop';
 import { VehicleNoteCardComponent } from './vehicle-note-card/vehicle-note-card.component';
 import { ViewmodalComponent } from './view/viewmodal/viewmodal.component';
 import { ViewhistoryComponent } from './view/viewhistory/viewhistory.component';
+import { MentionsComponent } from './components/mentions/mentions.component';
 
 
 
@@ -93,6 +94,7 @@ import { ViewhistoryComponent } from './view/viewhistory/viewhistory.component';
     VehicleNoteCardComponent,
     ViewmodalComponent,
     ViewhistoryComponent,
+    MentionsComponent,
     
   ],
   imports: [

@@ -1,0 +1,18 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <textarea type="text" placeholder="type something" class="form-control" (keyup)="trackChange($event)"></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <span *ngIf="finalize">Tagging {{ stringToSave }}</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3 text-center">
+            <div class="btn btn-primary" (click)="check()">Check</div>
+        </div>
+    </div>
+</div>
