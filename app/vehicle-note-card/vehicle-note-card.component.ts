@@ -20,6 +20,7 @@ export class VehicleNoteCardComponent implements OnInit {
   genericError: string = "An unknown error has occurred. Please try again."
   timestamp: string
   @Input() passdownDate: string
+  pendingComment: boolean = false
 
   constructor(private service: BackendService,
     private toastr: ToastrService,
@@ -47,7 +48,7 @@ export class VehicleNoteCardComponent implements OnInit {
     }
 
     if (this.noteType === 'passdown') {
-      this.deleteNote(this.passdownDate,passdownNoteId,index)
+      this.deleteNote(this.passdownDate, passdownNoteId, index)
       return
     }
 
@@ -97,7 +98,7 @@ export class VehicleNoteCardComponent implements OnInit {
   }
 
   reOpen(id: string) {
-    
+
     let payload = {
       _id: id,
       status: 'open',
@@ -156,12 +157,12 @@ export class VehicleNoteCardComponent implements OnInit {
       )
     }
 
-    if(this.noteType === 'passdown') {
+    if (this.noteType === 'passdown') {
       this.service.removePassdownComment(id, {}).subscribe(
         response => {
           if (response) {
             this.toastr.success(response.success)
-            this.service.addHistory('DELETED','COMMENT', id, 'PASSDOWN NOTE', '', '').subscribe()
+            this.service.addHistory('DELETED', 'COMMENT', id, 'PASSDOWN NOTE', '', '').subscribe()
             this.reload()
           } else {
             this.toastr.error(this.genericError)
@@ -169,10 +170,18 @@ export class VehicleNoteCardComponent implements OnInit {
         }
       )
     }
-    
+
   }
 
   addComment(id: string, comment: string, passdownNoteId: string) {
+    if (this.pendingComment) {
+      this.toastr.error('Please wait for previous comment to post.')
+      return
+    }
+    
+    this.pendingComment = true
+
+
     if (comment.trim().length < 3) {
       this.toastr.error("Your comment isn't long enough. Try again.")
       return
@@ -217,9 +226,9 @@ export class VehicleNoteCardComponent implements OnInit {
     }
 
     if (this.noteType === 'passdown') {
-      
+
       id = passdownNoteId
-      
+
       this.service.addPassdownComment(id, payload).subscribe(
         response => {
           if (response) {
@@ -231,7 +240,7 @@ export class VehicleNoteCardComponent implements OnInit {
           }
         }
       )
-    }    
+    }
   }
 
   reload() {
@@ -260,7 +269,7 @@ export class VehicleNoteCardComponent implements OnInit {
       response => {
         if (response) {
           this.toastr.success(response.success)
-          this.service.addHistory('CLOSED PINNED', 'PASSDOWN NOTE',this.noteData[index].noteId,'','','').subscribe()
+          this.service.addHistory('CLOSED PINNED', 'PASSDOWN NOTE', this.noteData[index].noteId, '', '', '').subscribe()
           this.noteData.splice(index, 1)
         } else {
           this.toastr.error(this.genericError)
@@ -278,7 +287,7 @@ export class VehicleNoteCardComponent implements OnInit {
       response => {
         if (response) {
           this.toastr.success(response.success)
-          this.service.addHistory('DELETED PINNED', 'PASSDOWN NOTE',id,'','','').subscribe()
+          this.service.addHistory('DELETED PINNED', 'PASSDOWN NOTE', id, '', '', '').subscribe()
           this.noteData.splice(index, 1)
         } else {
           this.toastr.error(this.genericError)
@@ -288,26 +297,26 @@ export class VehicleNoteCardComponent implements OnInit {
   }
 
   deleteNote(date: string, id: string, index: number) {
-    console.log(date,id,index)
-    
+    console.log(date, id, index)
+
     console.log('hello')
     this.service.removePassdownNote(date, id, {}).subscribe(
-        response => {
-          if (response) {
-            this.toastr.success(response.success)
-            this.service.addHistory('DELETED', 'PASSDOWN NOTE',id,date,'','').subscribe()
-            this.noteData.splice(index, 1)
-          } else {
-            this.toastr.error(this.genericError)
-          }
+      response => {
+        if (response) {
+          this.toastr.success(response.success)
+          this.service.addHistory('DELETED', 'PASSDOWN NOTE', id, date, '', '').subscribe()
+          this.noteData.splice(index, 1)
+        } else {
+          this.toastr.error(this.genericError)
+        }
       }
-    )    
+    )
   }
 
 
   editNote(id: string, style: string, note: string, comments: {}) {
-    console.log(id,style,note,comments)
-    
+    console.log(id, style, note, comments)
+
 
     let type = 'editNote'
 
@@ -315,18 +324,18 @@ export class VehicleNoteCardComponent implements OnInit {
       const dialogRef = this.dialog.open(AddNoteComponent, {
         data: { vehicle: '', id: id, type: type, style: style, note: note, comments: comments }
       });
-  
+
       dialogRef.afterClosed().subscribe(result => {
         this.saveEditedNote(id, result);
       });
     }
-    
+
 
   }
 
   saveEditedNote(id: string, data: any) {
     if (!data) {
-      
+
       return
     }
 
