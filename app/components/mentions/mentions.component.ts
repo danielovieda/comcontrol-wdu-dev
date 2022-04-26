@@ -11,6 +11,9 @@ export class MentionsComponent implements OnInit {
   stringToSave: string
   finalize: boolean = false
 
+  temp: string
+  taggedUsers: string[]
+
   userList = [{
     user: 'Daniel',
     userId: '1'
@@ -47,7 +50,7 @@ export class MentionsComponent implements OnInit {
 
       if (key === ' ') {
         this.track = false
-        this.stringToSave = this.string.slice(0,-1)
+        this.stringToSave = this.string
         this.finalize = true
         this.string = ''
       }

@@ -20,6 +20,7 @@ import { ViewuserComponent } from './view/viewuser/viewuser.component';
 import { ViewvehicleComponent } from './view/viewvehicle/viewvehicle.component';
 
 import { AuthGuard } from '@auth0/auth0-angular';
+import { NoteWizardComponent } from './modal/note-wizard/note-wizard.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -55,6 +56,10 @@ const routes: Routes = [
   {
     path: 'test',
     component: MentionsComponent
+  },
+  {
+    path: 'wizard',
+    component: NoteWizardComponent
   }
 ];
 

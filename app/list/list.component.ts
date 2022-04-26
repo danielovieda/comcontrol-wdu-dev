@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from '../services/backend.service';
 import { ToastrService } from 'ngx-toastr';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-list',
@@ -12,19 +13,10 @@ export class ListComponent implements OnInit {
   users: any
   listUsers: boolean = true
 
-  constructor(private service: BackendService, private toastr: ToastrService) { }
+  constructor(private service: BackendService, private toastr: ToastrService, private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.service.getDriverList('mini').subscribe(
-      response => {
-        if (response) {
-          this.users = response
-          console.log(this.users)
-        } else {
-          this.toastr.error('An error has occurred.')
-        }
-      }
-    )
+    this.users = this.dataService.returnDrivers()
   }
 
 }

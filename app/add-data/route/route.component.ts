@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BackendService } from 'src/app/services/backend.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-route',
@@ -21,12 +22,13 @@ export class RouteComponent implements OnInit {
   constructor(private toastr: ToastrService,
     private service: BackendService,
     private route: ActivatedRoute,
-    private spinner: NgxSpinnerService) { }
+    private spinner: NgxSpinnerService,
+    private dataService: DataService) { }
 
   async ngOnInit(): Promise<void> {
-    await this.getVehicleList()
+    this.vehicles = this.dataService.returnVehicles()
 
-    this.getDriverList()
+    this.drivers = this.dataService.returnDrivers()
 
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.editRouteId = params.get('id')
@@ -84,17 +86,6 @@ export class RouteComponent implements OnInit {
     }
   }
 
-  async getVehicleList() {
-    this.service.getVehicleMiniList().subscribe(
-      response => this.vehicles = response
-    )
-  }
-
-  getDriverList() {
-    this.service.getDriverList("mini").subscribe(
-      response => this.drivers = response
-    )
-  }
 
   loadRoute(data: any) {
     if (data == null) {

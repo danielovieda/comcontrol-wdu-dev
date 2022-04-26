@@ -55,6 +55,7 @@ import { VehicleNoteCardComponent } from './vehicle-note-card/vehicle-note-card.
 import { ViewmodalComponent } from './view/viewmodal/viewmodal.component';
 import { ViewhistoryComponent } from './view/viewhistory/viewhistory.component';
 import { MentionsComponent } from './components/mentions/mentions.component';
+import { NoteWizardComponent } from './modal/note-wizard/note-wizard.component';
 
 
 
@@ -95,6 +96,7 @@ import { MentionsComponent } from './components/mentions/mentions.component';
     ViewmodalComponent,
     ViewhistoryComponent,
     MentionsComponent,
+    NoteWizardComponent,
     
   ],
   imports: [

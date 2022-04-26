@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
 import { ViewmodalComponent } from 'src/app/view/viewmodal/viewmodal.component';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-schedule',
@@ -23,7 +24,8 @@ export class ScheduleComponent implements OnInit {
     private dialog: MatDialog,
     public datepipe: DatePipe,
     private userService: UserService,
-    private router: Router) { }
+    private router: Router,
+    private dataService: DataService) { }
 
     driverList: any
     routeList: any
@@ -45,23 +47,11 @@ export class ScheduleComponent implements OnInit {
     )
 
 
-    this.service.getDriverList('mini').subscribe(
-      response => {
-        this.driverList = response
-      }
-    )
+    this.driverList = this.dataService.returnDrivers()
 
-    this.service.getRouteList().subscribe(
-      response => {
-        this.routeList = response
-      }
-    )
+    this.routeList = this.dataService.returnRoutes()
 
-    this.service.getVehicleMiniList().subscribe(
-      response => {
-        this.vehicleList = response
-      }
-    )
+    this.vehicleList = this.dataService.returnVehicles()
 
     
 

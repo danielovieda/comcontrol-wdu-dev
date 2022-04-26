@@ -76,7 +76,7 @@
 
           <div class="text-end">
             <p class="mb-0">
-              <span class="badge border border-dark p-1 me-1 fw-light cursor text-dark"
+              <span style="max-width: 110px" class="badge border border-dark p-1 me-1 fw-light cursor text-dark d-inline-block text-truncate"
                 [matTooltip]="'Opened by ' + (note.username ? note.username : note.user) + ' at ' + note.timestamp"
                 [ngClass]="[note.style ? note.style : 'text-light', note.status == 'open' && note.type == 'info' ? 'text-white bg-primary border-white' : '', note.status == 'open' && note.type == 'oos' ? 'text-white bg-danger border-white' : '', note.status == 'open' && note.type == 'maintenance' ? 'text-dark bg-warning text-dark' : '', note.status == 'closed' ? 'text-dark': '']">
                 <i class="fa-solid fa-plus"></i> {{ note.timestamp | timeAgo }} by {{ note.username ? note.username :

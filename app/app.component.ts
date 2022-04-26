@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { UserService } from './services/user.service';
+import { DataService } from './services/data.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import { UserService } from './services/user.service';
 
 export class AppComponent {
 
-  constructor(private auth: AuthService, private userService: UserService) { }
+  constructor(private auth: AuthService, private userService: UserService, private dataService: DataService) { }
 
 
   title = 'comcontrol';
@@ -19,16 +20,17 @@ export class AppComponent {
   debug = false
 
   ngOnInit(): void {
-    
+    console.log('x')
+
     this.auth.isLoading$.subscribe(
       response => {
         if (response) {
-          
+
         } else {
           this.auth.isAuthenticated$.subscribe(
             response => {
               if (response) {
-                
+                this.dataService.getLists()
                 this.loggedIn = true
                 this.auth.user$.subscribe(
                   response => {
@@ -37,7 +39,7 @@ export class AppComponent {
                 )
               } else {
                 this.triggerLogin()
-                
+
               }
             }
           )

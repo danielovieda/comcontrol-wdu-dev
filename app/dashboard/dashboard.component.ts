@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BackendService } from '../services/backend.service'
+import { DataService } from '../services/data.service';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -11,14 +13,14 @@ export class DashboardComponent implements OnInit {
 
   driverList: any = [{}]
 
-  constructor(private service: BackendService) { }
+  constructor(private service: BackendService, private dataService: DataService) { }
 
   ngOnInit(): void {
     this.vehicleList.pop()
     
-    this.getVehicles()
+    this.addVehicle(this.dataService.returnVehicles())
 
-    this.loadDriverList()
+    this.driverList = this.dataService.returnDrivers()
   }
 
   vehicleList = [{}]
@@ -76,21 +78,6 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  getVehicles() {
-    this.service.getVehicleList().subscribe(
-      response => {
-        this.addVehicle(response)
-
-      }
-    )
-  }
-
-  loadDriverList() {
-   
-    this.service.getDriverList("mini").subscribe(
-      response => this.driverList = response
-    )
-  }
 
   getStatusCount(status: string): number {
     const vehicles = [...this.vehicleList]
