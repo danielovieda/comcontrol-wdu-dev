@@ -1,13 +1,53 @@
 <div class="container-fluid">
-    <div class="row">
+    <div class="row mb-2">
         <div class="col-sm-3 offset-sm-3">
             <h2>Adding note</h2>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-sm-3 offset-sm-3">
-            
+    <div class="row d-flex  mb-2">
+        <div class="col d-flex justify-content-center">
+            <input type="checkbox" class="btn-check" id="btn-status" autocomplete="off">
+            <label class="btn btn-primary" for="btn-status" (click)="toggleStatus()">Update Status</label>
+        </div>
+        <div class="col d-flex justify-content-center">
+            <input type="checkbox" class="btn-check" id="btn-location" autocomplete="off">
+            <label class="btn btn-primary" for="btn-location" (click)="toggleLocation()">Update Location</label>
         </div>
     </div>
+
+    <div class="row mb-2" *ngIf="changeStatus">
+        <div class="col">
+            <select class="form-control">
+                <option>Status</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-2" *ngIf="changeLocation">
+        <div class="col">
+            <input type="text" class="form-control" placeholder="Current Location" />
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col">
+            <select class="form-control">
+                <option>Some option</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col">
+            <textarea placeholder="Note" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col">
+            <div class="btn btn-primary">Submit</div>
+        </div>
+    </div>
+
 </div>
