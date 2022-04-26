@@ -12,7 +12,7 @@ export class MentionsComponent implements OnInit {
   finalize: boolean = false
 
   temp: string
-  taggedUsers: string[]
+  taggedUsers: [{}] = [{}]
 
   userList = [{
     user: 'Daniel',
@@ -49,19 +49,37 @@ export class MentionsComponent implements OnInit {
       this.string = this.string + key
 
       if (key === ' ') {
-        this.track = false
-        this.stringToSave = this.string
-        this.finalize = true
-        this.string = ''
+        this.save()
       }
 
     }
 
-    console.log(this.string)
+
+  }
+
+  save() {
+    this.track = false
+    if (this.string.charAt(this.string.length -1) === ' ') {
+      this.string = this.string.slice(0,-1)
+    }
+    let found = this.userList.find((list: {user: string}) => list.user.toLowerCase() === this.string.toLowerCase().replace('@',''))
+    if (found) {
+      console.log('found!')
+      this.taggedUsers.push(found)
+      this.string = ''
+    } else {
+      console.log('not found!')
+      this.string = ''
+    }
   }
 
   check() {
-    console.log(this.stringToSave)
+    if (this.track) {
+      this.save()
+    }
+    console.log(this.taggedUsers)
+
+    
   }
 
 
