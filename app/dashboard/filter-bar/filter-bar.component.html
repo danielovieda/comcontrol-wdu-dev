@@ -1,5 +1,5 @@
 <div class="row m-2 me-5 text-center justify-content-end">
-    
+            <div class="col-2 m-3 cursor"><span (click)="refresh()"><i class="fa-solid fa-arrows-rotate fa-2x"></i></span></div>
             <div class="col-2 m-3 active rounded p-2 text-light cursor" (click)="filter('active')">Active <small>({{totalActive}})</small></div> 
             <div class="col-2 m-3  flag rounded   p-2 text-light cursor" (click)="filter('flag')">Active w/ Issue <small>({{totalFlag}})</small></div>
             <div class="col-2 m-3  oos rounded   p-2 text-light cursor" (click)="filter('oos')">OOS <small>({{totalOOS}})</small></div>

@@ -18,6 +18,19 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.vehicleList.pop()
     
+    if (this.dataService.returnVehicles() === null) {
+      this.dataService.getLists()
+    }
+    this.addVehicle(this.dataService.returnVehicles())
+
+    this.driverList = this.dataService.returnDrivers()
+  }
+
+  refresh() {
+    this.dataService.getVehicleList()
+    this.vehicleList = [{}]
+    this.vehicleList.pop()
+    
     this.addVehicle(this.dataService.returnVehicles())
 
     this.driverList = this.dataService.returnDrivers()

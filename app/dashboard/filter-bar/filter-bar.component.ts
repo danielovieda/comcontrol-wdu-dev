@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
+import { DataService } from 'src/app/services/data.service';
 
 
 @Component({
@@ -15,14 +16,20 @@ export class FilterBarComponent implements OnInit {
 
 
   @Output() filterEvent = new EventEmitter();
+  @Output() refreshDashboard = new EventEmitter();
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
+    
   }
 
   filter(status: string) {
     this.filterEvent.emit(status)
+  }
+
+  refresh() {
+    this.refreshDashboard.emit()
   }
 
 }
