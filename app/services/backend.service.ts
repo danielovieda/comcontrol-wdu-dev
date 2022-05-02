@@ -240,7 +240,8 @@ export class BackendService {
     let date = this.getToday()
     let data = {
       timestamp: this.getTimestamp(),
-      message: this.userService.getUser() + ' ' + action + ' ' + item + '(' + itemId + ') to ' + on + ' (' + onId + '): ' + content
+      username: this.userService.getUser(),
+      message: action + ' ' + item + '(' + itemId + ') to ' + on + ' (' + onId + '): ' + content
     }
     return this.http.post<any>(this.addHistoryUrl + date, data)
   }
