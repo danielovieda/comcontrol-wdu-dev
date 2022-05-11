@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row" *ngFor="let entry of history">
         <div class="col-sm">
-            {{entry.timestamp}}: {{entry.message}}
+            {{entry.timestamp}} {{entry.username | slice:0:10}} : {{entry.message}}
         </div>
     </div>
 </div>

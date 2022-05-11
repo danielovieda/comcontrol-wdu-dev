@@ -55,7 +55,8 @@ export class UserService {
   }
 
   getUser() {
-    return this.profile.name
+    if (this.auth.isAuthenticated$) return this.profile.name
+    if (!this.auth.isAuthenticated$) this.logout()
   }
 
   getUserId() {

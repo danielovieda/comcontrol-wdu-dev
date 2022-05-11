@@ -7,13 +7,20 @@
 (refreshDashboard)="refresh()"></app-filter-bar>
 
 
-<div class="row m-2">
+<div class="row m-2" *ngIf="vehicleList.length >= 2">
     <div class="col-md text-center">
         
             <app-vehicle-card *ngFor="let vehicles of shownVehicleList" [data]="vehicles" 
             [driverList]="driverList"
             [mini]="mini"
             ></app-vehicle-card>
+        
+    </div>
+</div>
+
+<div class="row m-2" *ngIf="vehicleList.length <= 1">
+    <div class="col-md text-center">
+    <p>Loading...</p>
         
     </div>
 </div>

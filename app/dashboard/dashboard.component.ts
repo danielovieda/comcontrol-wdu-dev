@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BackendService } from '../services/backend.service'
 import { DataService } from '../services/data.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -13,27 +14,35 @@ export class DashboardComponent implements OnInit {
 
   driverList: any = [{}]
 
-  constructor(private service: BackendService, private dataService: DataService) { }
+  timer: any
+
+  constructor(private service: BackendService, private dataService: DataService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
+
+    this.timer = setInterval(() => {
+      this.refresh()
+
+    }, 2500)
     this.vehicleList.pop()
     
-    if (this.dataService.returnVehicles() === null) {
-      this.dataService.getLists()
-    }
+    this.dataService.getLists()
     this.addVehicle(this.dataService.returnVehicles())
 
     this.driverList = this.dataService.returnDrivers()
+
+
   }
 
   refresh() {
+    
     this.dataService.getVehicleList()
     this.vehicleList = [{}]
     this.vehicleList.pop()
-    
     this.addVehicle(this.dataService.returnVehicles())
-
     this.driverList = this.dataService.returnDrivers()
+    this.timer = clearInterval(this.timer)
+    this.toastr.info('Vehicle data has been refreshed!')
   }
 
   vehicleList = [{}]

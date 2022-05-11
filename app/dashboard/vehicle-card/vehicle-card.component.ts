@@ -123,6 +123,7 @@ export class VehicleCardComponent implements OnInit {
 
   updateStatus(vehicleId: string, status: string) {
     
+
     let payload = {
       _id: vehicleId,
       status: status
@@ -131,12 +132,23 @@ export class VehicleCardComponent implements OnInit {
       response => {
         if (response) {
           this.toastr.success(response.success)
-          this.reload()
+          
+
+          this.service.addVehicleHistory(vehicleId, `Changed status to: ${status}`).subscribe(
+            response => {
+              if (response) {
+                console.log(`Successfully saved history on ${vehicleId}: ${response.success}`)
+              }
+            }
+          )
+          //this.reload()
         } else {
           this.toastr.error('An error occurred. Try again.')
         }
       } 
     )
+
+
   }
   
 

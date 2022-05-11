@@ -75,6 +75,8 @@ export class BackendService {
 
   private removePinnedCommentUrl = environment.BASE_API_URL + '/remove/pinnedComment/'
 
+  private addVehicleHistoryUrl = environment.BASE_API_URL + '/add/vehicle_history/'
+
   constructor(private http: HttpClient,
     private datepipe: DatePipe,
     private userService: UserService) { }
@@ -244,6 +246,17 @@ export class BackendService {
       message: action + ' ' + item + '(' + itemId + ') to ' + on + ' (' + onId + '): ' + content
     }
     return this.http.post<any>(this.addHistoryUrl + date, data)
+  }
+
+  addVehicleHistory(vehicleId: string, message: any): Observable<any> {
+    console.log(message)
+    let data = {
+      timestamp: this.getTimestamp(),
+      username: this.userService.getUser(),
+      message: message
+    }
+    console.log(data)
+    return this.http.post<any>(this.addVehicleHistoryUrl + vehicleId, data)
   }
 
   getTimestamp(): string {

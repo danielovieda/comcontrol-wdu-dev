@@ -94,4 +94,12 @@
         <button class="btn btn-primary" (click)="addNoteDialog(vehicleId)"><i class="fas fa-plus"></i>&nbsp; Add Note</button>
     </div>
 </div>
+
 <app-vehicle-note-card [noteData]="noteData"></app-vehicle-note-card>
+
+<div class="row me-3 ms-3 mb-1" *ngIf="vehicleData.history">
+    
+    <div class="col">
+        <p *ngFor="let history of vehicleData.history">{{history.timestamp}} - {{history.username}}: {{history.message}}</p>
+    </div>
+</div>
