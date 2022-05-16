@@ -196,6 +196,7 @@ export class VehicleNoteCardComponent implements OnInit {
       userId: this.userService.getUserId()
     }
 
+
     if (this.noteType === 'maint') {
       this.service.addMaintComment(id, payload).subscribe(
         response => {

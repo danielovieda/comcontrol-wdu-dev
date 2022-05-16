@@ -15,6 +15,7 @@ export class BackendService {
   private updateVehicleUrl = environment.BASE_API_URL + '/update/vehicle/'
   private getVehicleListUrl = environment.BASE_API_URL + '/list/vehicles'
   private getVehicleMiniListUrl = environment.BASE_API_URL + '/minilist/vehicles'
+  private getVehicleListFullUrl = environment.BASE_API_URL + '/list/vehicles_full'
   //routes
   private updateRouteUrl = environment.BASE_API_URL + '/update/route'
   private getRouteUrl = environment.BASE_API_URL + '/get/route/'
@@ -91,6 +92,10 @@ export class BackendService {
 
   getVehicleList(): Observable<any> {
     return this.http.get(this.getVehicleListUrl)
+  }
+
+  getVehicleFullList(): Observable<any> {
+    return this.http.get(this.getVehicleListFullUrl)
   }
 
   getVehicleMiniList(): Observable<any> {

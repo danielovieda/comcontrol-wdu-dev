@@ -1,0 +1,54 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col m-3">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            
+                         </th>
+                         <th scope="col">
+                            
+                        </th>
+                        <th scope="col">
+                           Status
+                        </th>
+                        <th scope="col">
+                            Unit #
+                        </th>
+                        <th scope="col">
+                            Maint #
+                        </th>
+                        <th scope="col">
+                            Location
+                        </th>
+                        <th scope="col">
+                            Plate
+                        </th>
+                        <th scope="col">
+                            Make/Model
+                        </th>
+                        <th scope="col">
+                            Year
+                        </th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let vehicle of vehicleList">
+                        <td class="cursor" [routerLink]="'../manage/vehicle/' + vehicle._id"><i class="fa-solid fa-pencil"></i></td>
+                        <td (click)="showVehicleDialog(vehicle._id)" class="cursor"><i class="fa-solid fa-eye"></i></td>
+                        <th scope="row" [class]="vehicle.status">{{vehicle.status | uppercase}}</th>
+                        <td [routerLink]="'../view/vehicle/' + vehicle._id" class="cursor"><b>{{vehicle.vehicle.number}}</b></td>
+                        <td>{{vehicle.vehicle.maintId}}</td>
+                        <td>{{vehicle.currentLocation}}</td>
+                        <td>{{vehicle.vehicle.license}}</td>
+                        <td>{{vehicle.vehicle.make}} {{vehicle.vehicle.model}}</td>
+                        <td>{{vehicle.vehicle.year}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

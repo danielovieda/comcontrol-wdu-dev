@@ -56,6 +56,7 @@ import { ViewmodalComponent } from './view/viewmodal/viewmodal.component';
 import { ViewhistoryComponent } from './view/viewhistory/viewhistory.component';
 import { MentionsComponent } from './components/mentions/mentions.component';
 import { NoteWizardComponent } from './modal/note-wizard/note-wizard.component';
+import { ReportComponent } from './report/report.component';
 
 
 
@@ -97,6 +98,7 @@ import { NoteWizardComponent } from './modal/note-wizard/note-wizard.component';
     ViewhistoryComponent,
     MentionsComponent,
     NoteWizardComponent,
+    ReportComponent,
     
   ],
   imports: [
