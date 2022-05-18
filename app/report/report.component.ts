@@ -11,21 +11,14 @@ import { ViewmodalComponent } from 'src/app/view/viewmodal/viewmodal.component';
 export class ReportComponent implements OnInit {
 
   vehicleList: any
+  isLoaded: boolean = false
+  hasRecords: boolean = true
 
   constructor(private backend: BackendService,
     private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.backend.getVehicleFullList().subscribe(
-      response => {
-        if (response) {
-          this.vehicleList = response
-          console.log(this.vehicleList)
-        } else {
-          //error
-        }
-      }
-    )
+    this.loadVehicles('Genentech')
   }
 
 
@@ -34,6 +27,33 @@ export class ReportComponent implements OnInit {
     const dialogRef = this.dialog.open(ViewmodalComponent, {
       data: { vehicle: vehicleId}
     });
+  }
+
+  changeFilter(event: any) {
+    this.loadVehicles(event.target.value)
+  }
+
+  loadVehicles(account: string) {
+    this.isLoaded = false
+
+    if (account === 'Genentech') {
+
+      this.backend.getVehicleFullList().subscribe(
+        response => {
+          if (response) {
+            this.vehicleList = response
+            this.isLoaded = true
+            this.hasRecords = true
+          } else {
+            this.hasRecords = false
+          }
+        }
+      )
+    } else {
+      this.isLoaded = true
+      this.hasRecords = false
+    }
+    
   }
 
 }

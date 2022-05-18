@@ -32,6 +32,13 @@
                 routerLinkActive="active" routerLink="/settings"><i class="fas fa-cog"></i> Settings</li> -->
                 <!-- <li class="list-group-item list-group-item-action" 
                 routerLinkActive="active" routerLink="/profile"><i class="fa-solid fa-user"></i> My Profile</li> -->
+
+                <!-- <li class="list-group-item list-group-item-action"><i class="fa-solid fa-star"></i> Admin
+                    <ul class="list-group-item border-0 bg-transparent">
+                        <li class="list-group-item border-0 rounded" routerLinkActive="active" routerLink="/admin/user/add" #rla="routerLinkActive"
+                        [ngClass]="rla.isActive ? '' : 'bg-transparent'"><i class="fa-solid fa-square-plus"></i> Add User</li>
+                    </ul>
+            </li> -->
             
                 <li class="list-group-item list-group-item-action" 
                 routerLinkActive="active" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</li>

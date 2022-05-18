@@ -57,6 +57,7 @@ import { ViewhistoryComponent } from './view/viewhistory/viewhistory.component';
 import { MentionsComponent } from './components/mentions/mentions.component';
 import { NoteWizardComponent } from './modal/note-wizard/note-wizard.component';
 import { ReportComponent } from './report/report.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 
 
@@ -99,6 +100,7 @@ import { ReportComponent } from './report/report.component';
     MentionsComponent,
     NoteWizardComponent,
     ReportComponent,
+    AdminPanelComponent,
     
   ],
   imports: [

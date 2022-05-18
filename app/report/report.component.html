@@ -1,7 +1,20 @@
 <div class="container-fluid">
     <div class="row">
+        <div class="col m-3 d-flex justify-content-center">
+            <div class="input-group mb-3 w-50">
+                <label class="input-group-text" for="inputGroupSelect01">Account Filter</label>
+                <select class="form-select" id="inputGroupSelect01" (change)="changeFilter($event)">
+                  
+                  <option value="Genentech" selected>Genentech</option>
+                  <option value="Gilead">Gilead</option>
+                  <option value="Facebook">Facebook</option>
+                </select>
+              </div>
+        </div>
+    </div>
+    <div class="row"  *ngIf="isLoaded && hasRecords">
         <div class="col m-3">
-            <table class="table">
+            <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th scope="col">
@@ -49,6 +62,22 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" *ngIf="!isLoaded">
+    <div class="row">
+        <div class="col text-center">
+            <h1>Loading...</h1>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" *ngIf="!hasRecords">
+    <div class="row">
+        <div class="col text-center">
+            <h1>No vehicles found.</h1>
         </div>
     </div>
 </div>

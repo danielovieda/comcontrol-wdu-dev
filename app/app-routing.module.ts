@@ -22,9 +22,13 @@ import { ViewvehicleComponent } from './view/viewvehicle/viewvehicle.component';
 import { AuthGuard } from '@auth0/auth0-angular';
 import { NoteWizardComponent } from './modal/note-wizard/note-wizard.component';
 import { ReportComponent } from './report/report.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
+  { path: 'admin', component: AdminPanelComponent, canActivate: [AuthGuard], children: [
+    { path: 'user/add', component: AdminPanelComponent, canActivate: [AuthGuard]}
+  ]},
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'report', component: ReportComponent, canActivate: [AuthGuard]},
