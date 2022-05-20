@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row" *ngFor="let entry of history">
-        <div class="col-sm">
+        <div class="col-sm overflow-auto">
             {{entry.timestamp}} {{entry.username | slice:0:10}} : {{entry.message}}
         </div>
     </div>

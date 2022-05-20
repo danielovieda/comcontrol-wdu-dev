@@ -46,8 +46,13 @@ export class ScheduleComponent implements OnInit {
       }
     )
 
+    this.dataService.getDriverList()
 
-    this.driverList = this.dataService.returnDrivers()
+   
+
+    setTimeout(() => {
+      this.driverList = this.dataService.returnDrivers()
+    }, 3000)
 
     this.routeList = this.dataService.returnRoutes()
 
@@ -406,7 +411,7 @@ export class ScheduleComponent implements OnInit {
    
     
     const dialogRef = this.dialog.open(ViewmodalComponent, {
-      data: { history: this.data.history }
+      data: { history: this.data.history }, height: '90%'
     });
   }
 
