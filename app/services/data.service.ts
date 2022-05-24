@@ -26,8 +26,10 @@ export class DataService {
       response => {
         if (response) {
           this.vehicleList = response
+          return response
         } else {
           console.log('Error getting vehicle list.')
+          return null
         }
       }
     )

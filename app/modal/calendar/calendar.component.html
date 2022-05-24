@@ -1,9 +1,21 @@
-<mat-card class="demo-inline-calendar-card">
-    <mat-calendar [(selected)]="selected"></mat-calendar>
-  </mat-card>
-  <p>Selected date: {{selected}}</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col text-center">
+            <mat-card class="demo-inline-calendar-card">
+                <mat-calendar [(selected)]="selected"></mat-calendar>
+              </mat-card>
+            
+              <div mat-dialog-actions *ngIf="!passdownButtons">
+                <button mat-button (click)="save()" class="btn btn-primary">Select Date & Copy</button>
+                <button mat-button (click)="dialogRef.close()" class="btn btn-danger">Cancel</button>
+            </div>
+            
+            <div mat-dialog-actions *ngIf="passdownButtons">
+                <button mat-button (click)="save()" class="btn btn-primary">Go to Date</button>
+                <button mat-button (click)="dialogRef.close()" class="btn btn-danger">Cancel</button>
+            </div>
 
-  <div mat-dialog-actions>
-    <button mat-button (click)="save()" class="btn btn-primary">Select Date</button>
-    <button mat-button (click)="dialogRef.close()" class="btn btn-danger">Cancel</button>
+        </div>
+    </div>
 </div>
+

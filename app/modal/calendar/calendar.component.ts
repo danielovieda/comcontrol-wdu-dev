@@ -8,12 +8,13 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class CalendarModalComponent implements OnInit {
   selected: any
+  passdownButtons: boolean = false
 
   constructor(public dialogRef: MatDialogRef<CalendarModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
-    
+    if (this.data.passdownDate) this.passdownButtons = true
   }
 
   save() {

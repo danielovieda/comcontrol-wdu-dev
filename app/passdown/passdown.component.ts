@@ -22,13 +22,7 @@ export class PassdownComponent implements OnInit {
   loading: boolean = false
   scheduleData: any
   passdownDate: string
-  dummySchedule: any = {
-    date: '02-14-2022',
-    off_time: [{}],
-    protection: [{}],
-    pm: [{}],
-    note: [{}]
-  }
+
   search: boolean = false
   showComment: number = -1
   genericError: string = "An error has occurred. Please try again."
@@ -49,7 +43,7 @@ export class PassdownComponent implements OnInit {
     })
 
     
-    
+
 
     this.service.getPassdown('none').subscribe(
       response => {

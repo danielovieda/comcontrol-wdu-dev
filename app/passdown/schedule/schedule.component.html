@@ -1,6 +1,6 @@
 <div class="card shadow-sm mb-2">
-  <div class="card-header"><span class="cursor" (click)="navBack()"><i class="fa-solid fa-caret-left fa-lg"></i></span>
-    {{ data.date }} <span class="cursor" (click)="navNext()"><i class="fa-solid fa-caret-right fa-lg"></i></span>
+  <div class="card-header bigger"><span class="cursor me-2" (click)="navBack()"><i class="fa-solid fa-caret-left fa-lg"></i></span>
+    <span class="cursor" (click)="goToPassdownDate()">{{ data.date }}</span> <span class="cursor ms-2" (click)="navNext()"><i class="fa-solid fa-caret-right fa-lg"></i></span>
 
     <span class="menuLink" [matMenuTriggerFor]="passdownMenu"><i class="fa-solid fa-ellipsis-vertical"></i></span>
   </div>
@@ -43,7 +43,7 @@
       </div>
       <div class="col-md-1 w-auto" *ngFor="let drivers of data.protection; let i = index">
         <div class="card mb-2 p-2 shadow-sm text-center cursor" [matMenuTriggerFor]="protectionMenu"
-          [matMenuTriggerData]="{id: drivers.driverId, date: data.date, protectionId: drivers.uid}"
+          [matMenuTriggerData]="{id: drivers.driverId, date: data.date, protectionId: drivers.uid, driverIndex: i}"
           [ngClass]="drivers.confirmed != '' ? 'text-white bg-success' : ''"
           [matTooltip]="drivers.confirmed != '' ? 'Confirmed by: ' + drivers.confirmedBy + ' @ ' + drivers.confirmed + ' (' + drivers.note + ')' : 'Added by: ' + drivers.user + ' @ ' + drivers.timestamp + ' (' + drivers.note + ')'"
           [matTooltipClass]="drivers.confirmed != '' ? 'btn btn-success btn-sm' : 'btn btn-danger btn-sm'">
@@ -192,23 +192,27 @@
         class="menuLink"><small>Manage Driver</small></span></button>
     <button mat-menu-item routerLink="../../manage/route/{{routeId}}"><i class="fa-solid fa-route"></i> <span
         class="menuLink"><small>Manage Route</small></span></button>
-    <button mat-menu-item (click)="deleteCallOut(date, id)"><i class="fa-solid fa-trash fa-sm"></i> <span
-        class="menuLink"><small>Delete</small></span></button>
       <button mat-menu-item (click)="showCalendar('off', driverIndex)"><i class="fa-solid fa-clone"></i> <span
         class="menuLink"><small>Copy To...</small></span></button>
         <button mat-menu-item *ngIf="lastCopyDate" (click)="repeatCopy('off', driverIndex)"><i class="fa-solid fa-clone me-1"></i> <span
           class="menuLink"><small>Repeat Copy to {{lastCopyDate}}</small></span></button>
+          <button mat-menu-item (click)="deleteCallOut(date, id)"><i class="fa-solid fa-trash fa-sm"></i> <span
+            class="menuLink"><small>Delete</small></span></button>
   </ng-template>
 </mat-menu>
 
 <mat-menu #protectionMenu="matMenu">
-  <ng-template matMenuContent let-id="id" let-date="date" let-protection="protectionId">
+  <ng-template matMenuContent let-id="id" let-date="date" let-protection="protectionId" let-driverIndex="driverIndex">
     <button mat-menu-item (click)="confirmProtection(protection)"><i class="fa-solid fa-check-double fa-sm"></i> <span
         class="menuLink"><small>Confirm</small></span></button>
     <button mat-menu-item routerLink="../../manage/user/{{id}}"><i class="fa-solid fa-person fa-sm"></i> <span
         class="menuLink"><small>Manage Driver</small></span></button>
     <button mat-menu-item (click)="doSomething(id)"><i class="fa-solid fa-route fa-sm"></i> <span
         class="menuLink"><small>Manage Route</small></span></button>
+        <button mat-menu-item (click)="showCalendar('protection', driverIndex)"><i class="fa-solid fa-clone"></i> <span
+          class="menuLink"><small>Copy To...</small></span></button>
+          <button mat-menu-item *ngIf="lastCopyDate" (click)="repeatCopy('protection', driverIndex)"><i class="fa-solid fa-clone me-1"></i> <span
+            class="menuLink"><small>Repeat Copy to {{lastCopyDate}}</small></span></button>
     <button mat-menu-item (click)="deleteProtection(date, id)"><i class="fa-solid fa-trash fa-sm"></i> <span
         class="menuLink"><small>Delete</small></span></button>
   </ng-template>

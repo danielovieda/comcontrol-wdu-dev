@@ -50,7 +50,8 @@ export class ScheduleComponent implements OnInit {
 
     this.dataService.getDriverList()
     this.dataService.getRouteList()
-    this.dataService.getVehicleList()
+    this.vehicleList = this.dataService.getVehicleList()
+    console.log('wtf', this.vehicleList)
 
    
 
@@ -225,6 +226,7 @@ export class ScheduleComponent implements OnInit {
           if (response) {
             this.toastr.success(response.success)
             this.service.addHistory('ADDED', 'DRIVER PROTECTION', '', data.driver, data.driverId, data.note).subscribe()
+            if (date === this.data.date) this.data.protection.push(data)
           } else {
             this.toastr.error(this.genericError)
           }
@@ -239,6 +241,7 @@ export class ScheduleComponent implements OnInit {
           if (response) {
             this.toastr.success(response.success)
             this.service.addHistory('ADDED', 'VEHICLE PM', '', data.vehicle, data.vehicleId, data.note).subscribe()
+            if (date === this.data.date) this.data.pm.push(data)
           } else {
             this.toastr.error(this.genericError)
           }
@@ -428,22 +431,33 @@ export class ScheduleComponent implements OnInit {
 
   copyTo(type: string, date: string, index: number) {
     
+    var copyPayload: any
 
-    console.log(type,date, this.data.off_time[index])
+    if (type === 'off') copyPayload = Object.assign({}, this.data.off_time[index])
+    if (type === 'protection') copyPayload = Object.assign({}, this.data.protection[index])
 
-    let copyPayload = Object.assign({}, this.data.off_time[index])
+    
     copyPayload.note = copyPayload.note + ' [Copied from ' + copyPayload.timestamp + ']'
     copyPayload.timestamp = this.service.getTimestamp()
     copyPayload.user = this.userService.getUser()
     copyPayload.userId = this.userService.getUserId()
 
+    if (type === 'protection') copyPayload.confirmed = ''
+
     console.log('new data ', copyPayload)
-     if (this.saveNote(copyPayload, 'off', date)) this.toastr.success('Copied successfully!')
+    if (type === 'off') {
+      if (this.saveNote(copyPayload, 'off', date)) this.toastr.success('Copied successfully!')
+    }
+
+    if (type === 'protection') {
+      if (this.saveNote(copyPayload, 'protection', date)) this.toastr.success('Copied successfully!')
+    }
+     
   }
 
   showCalendar(type: string, index: number) {
     const dialogRef = this.dialog.open(CalendarModalComponent, {});
-    var passdownDate
+    var passdownDate: string
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -459,6 +473,21 @@ export class ScheduleComponent implements OnInit {
 
   repeatCopy(type: string, index: number) {
     this.copyTo(type, this.lastCopyDate, index)
+  }
+
+  goToPassdownDate() {
+    const dialogRef = this.dialog.open(CalendarModalComponent, {
+      data: {passdownDate: true}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.router.navigateByUrl('/passdown/' + this.datepipe.transform(result.date, 'MM-dd-yyyy')).then(() => {
+          window.location.reload()
+        })
+      }
+    })
+
   }
 
 }
