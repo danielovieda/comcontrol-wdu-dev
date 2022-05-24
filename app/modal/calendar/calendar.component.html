@@ -1,0 +1,9 @@
+<mat-card class="demo-inline-calendar-card">
+    <mat-calendar [(selected)]="selected"></mat-calendar>
+  </mat-card>
+  <p>Selected date: {{selected}}</p>
+
+  <div mat-dialog-actions>
+    <button mat-button (click)="save()" class="btn btn-primary">Select Date</button>
+    <button mat-button (click)="dialogRef.close()" class="btn btn-danger">Cancel</button>
+</div>

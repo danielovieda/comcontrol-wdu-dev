@@ -17,7 +17,7 @@
           matTooltip="{{ drivers.note }} ({{ drivers.user }} {{ drivers.timestamp }})"
           [matTooltipClass]="[drivers.type == 'vacation' ? 'btn btn-success btn-sm' : '', drivers.type == 'sick' ? 'btn btn-danger btn-sm' : '', drivers.type == 'other' ? 'btn btn-primary btn-sm' : '']"
           [matMenuTriggerFor]="calloutMenu"
-          [matMenuTriggerData]="{id: drivers.driverId, date: data.date, routeId: drivers.routeId}">
+          [matMenuTriggerData]="{id: drivers.driverId, date: data.date, routeId: drivers.routeId, driverIndex: i}">
 
           <span *ngIf="drivers.routeId">{{ drivers.driver }} ({{drivers.route}})</span>
           <span *ngIf="!drivers.routeId">{{ drivers.driver }}</span>
@@ -187,13 +187,17 @@
 
 
 <mat-menu #calloutMenu="matMenu">
-  <ng-template matMenuContent let-id="id" let-date="date" let-routeId="routeId">
+  <ng-template matMenuContent let-id="id" let-date="date" let-routeId="routeId" let-driverIndex="driverIndex">
     <button mat-menu-item routerLink="../../manage/user/{{id}}"><i class="fa-solid fa-person fa-sm"></i> <span
         class="menuLink"><small>Manage Driver</small></span></button>
     <button mat-menu-item routerLink="../../manage/route/{{routeId}}"><i class="fa-solid fa-route"></i> <span
         class="menuLink"><small>Manage Route</small></span></button>
     <button mat-menu-item (click)="deleteCallOut(date, id)"><i class="fa-solid fa-trash fa-sm"></i> <span
         class="menuLink"><small>Delete</small></span></button>
+      <button mat-menu-item (click)="showCalendar('off', driverIndex)"><i class="fa-solid fa-clone"></i> <span
+        class="menuLink"><small>Copy To...</small></span></button>
+        <button mat-menu-item *ngIf="lastCopyDate" (click)="repeatCopy('off', driverIndex)"><i class="fa-solid fa-clone me-1"></i> <span
+          class="menuLink"><small>Repeat Copy to {{lastCopyDate}}</small></span></button>
   </ng-template>
 </mat-menu>
 

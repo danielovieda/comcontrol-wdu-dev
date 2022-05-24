@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
 import { ViewmodalComponent } from 'src/app/view/viewmodal/viewmodal.component';
 import { DataService } from 'src/app/services/data.service';
+import { CalendarModalComponent } from 'src/app/modal/calendar/calendar.component';
 
 @Component({
   selector: 'app-schedule',
@@ -35,6 +36,7 @@ export class ScheduleComponent implements OnInit {
     showComment = -1
     showDelete = -1
     currentComment: string = ''
+    lastCopyDate: string
 
     genericError: string = 'An error has occurred. Please try again.'
 
@@ -47,16 +49,20 @@ export class ScheduleComponent implements OnInit {
     )
 
     this.dataService.getDriverList()
+    this.dataService.getRouteList()
+    this.dataService.getVehicleList()
 
    
 
     setTimeout(() => {
       this.driverList = this.dataService.returnDrivers()
+      this.routeList = this.dataService.returnRoutes()
+      this.vehicleList = this.dataService.returnVehicles()
     }, 3000)
 
-    this.routeList = this.dataService.returnRoutes()
+    
 
-    this.vehicleList = this.dataService.returnVehicles()
+    
 
     
 
@@ -190,11 +196,11 @@ export class ScheduleComponent implements OnInit {
      )
   }
 
-  saveNote(data: any, type: string, date: string) {
+  saveNote(data: any, type: string, date: string): boolean {
     
     if (!data) {
      
-      return
+      return false
     }
 
     if (type == 'off') {
@@ -203,8 +209,11 @@ export class ScheduleComponent implements OnInit {
           if (response) {
             this.toastr.success(response.success)
             this.service.addHistory('ADDED', 'DRIVER OFF TIME', '', data.driver, data.driverId, data.note).subscribe()
+            if (date === this.data.date) this.data.off_time.push(data)
+            return true
           } else {
             this.toastr.error(this.genericError)
+            return false
           }
         }
       )
@@ -267,8 +276,8 @@ export class ScheduleComponent implements OnInit {
       )
     }
 
-    this.reload()
-
+    //this.reload()
+    return false
     
   }
 
@@ -377,7 +386,9 @@ export class ScheduleComponent implements OnInit {
     )
   }
 
-  confirmProtection(id: string) {
+  confirmProtection(id: string, index?: number) {
+
+    //TODO: 
     
     this.timestamp = this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss a');
 
@@ -413,6 +424,41 @@ export class ScheduleComponent implements OnInit {
     const dialogRef = this.dialog.open(ViewmodalComponent, {
       data: { history: this.data.history }, height: '90%'
     });
+  }
+
+  copyTo(type: string, date: string, index: number) {
+    
+
+    console.log(type,date, this.data.off_time[index])
+
+    let copyPayload = Object.assign({}, this.data.off_time[index])
+    copyPayload.note = copyPayload.note + ' [Copied from ' + copyPayload.timestamp + ']'
+    copyPayload.timestamp = this.service.getTimestamp()
+    copyPayload.user = this.userService.getUser()
+    copyPayload.userId = this.userService.getUserId()
+
+    console.log('new data ', copyPayload)
+     if (this.saveNote(copyPayload, 'off', date)) this.toastr.success('Copied successfully!')
+  }
+
+  showCalendar(type: string, index: number) {
+    const dialogRef = this.dialog.open(CalendarModalComponent, {});
+    var passdownDate
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        passdownDate = this.datepipe.transform(result.date, 'MM-dd-yyyy');
+        this.lastCopyDate = passdownDate
+        this.copyTo(type, passdownDate, index)
+      } else {
+        return
+      }
+      console.log('date to pass: ', passdownDate)
+    });
+  }
+
+  repeatCopy(type: string, index: number) {
+    this.copyTo(type, this.lastCopyDate, index)
   }
 
 }

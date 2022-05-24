@@ -35,6 +35,8 @@ import { ViewComponent } from './view/view.component';
 import { ViewvehicleComponent } from './view/viewvehicle/viewvehicle.component';
 import { AddNoteComponent } from './modal/add-note/add-note.component';
 import { DatePipe } from '@angular/common';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { AuthModule } from '@auth0/auth0-angular';
 import { PassdownComponent } from './passdown/passdown.component';
@@ -58,6 +60,7 @@ import { MentionsComponent } from './components/mentions/mentions.component';
 import { NoteWizardComponent } from './modal/note-wizard/note-wizard.component';
 import { ReportComponent } from './report/report.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { CalendarModalComponent } from './modal/calendar/calendar.component';
 
 
 
@@ -101,7 +104,7 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
     NoteWizardComponent,
     ReportComponent,
     AdminPanelComponent,
-    
+    CalendarModalComponent
   ],
   imports: [
     BrowserModule,
@@ -130,7 +133,9 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
     MatTooltipModule,
     MatMenuModule,
     MatCheckboxModule,
-    DragDropModule
+    DragDropModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     DatePipe,
