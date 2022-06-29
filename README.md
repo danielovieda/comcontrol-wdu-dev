@@ -1,6 +1,6 @@
 # Command & Control
 
-## Fleet & Dispatch management application
+## Fleet & Dispatch Management Application
 
 # Features
 - Tracking vehicle maintenance, status history, location, metadata, drivers, routes
